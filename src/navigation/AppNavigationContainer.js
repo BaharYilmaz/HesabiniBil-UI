@@ -6,6 +6,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import RootStackScreen from './RootStackScreen';
+import SideMenu from './SideMenu';
 
 import Home from '../screens/Home';
 import Profile from '../screens/Profile';
@@ -15,13 +16,19 @@ import Login from '../screens/Login';
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
-const Drawer = createDrawerNavigator();
+//const Drawer = createDrawerNavigator();
 
-const initialLoginState = {
-  isLoading: true,
-  userName: null,
-  userToken: null,
-};
+import { Drawer } from 'native-base';
+
+import Header from '../screens/Header';
+import SideBar from './SideBar';
+
+
+// const initialLoginState = {
+//   isLoading: true,
+//   userName: null,
+//   userToken: null,
+// };
 /*
 const HomeStackScreen  = () => {
     return (
@@ -34,34 +41,53 @@ const HomeStackScreen  = () => {
             </HomeStack.Navigator>
     );
 };*/
-/*const NavigationContainer = () => {
-    return (
-      <NavigationContainer>
-        <Drawer.Navigator initialRouteName="Login">
-          <Drawer.Screen name="Home" component={HomeStackScreen} />
-          <Drawer.Screen name="Ortak Hesap" component={OrtakHesap} />
-        </Drawer.Navigator>
-      </NavigationContainer>
-    );
+// const AppNavigationContainer = () => {
+//     return (
+//       <NavigationContainer>
+//         <Drawer.Navigator initialRouteName="Home">
+//           <Drawer.Screen name="Home" component={Home} />
+//           <Drawer.Screen name="Ortak Hesap" component={OrtakHesap} />
+//         </Drawer.Navigator>
+//       </NavigationContainer>
+//     );
+//   };
+
+export default class AppNavigationContainer extends Component {
+
+   closeDrawer = () => {
+    this.drawer._root.close()
   };
-  */
-const AppNavigationContainer = () => {
-  const loginState = null;
+  
+   openDrawer = () => { this.drawer._root.open() };
+  render() {
+    const loginState = 1;
+
   return (
-    <NavigationContainer>
-      { loginState !== null ? (
+    <Drawer
+      ref={(ref) => { this.drawer = ref; }}
+      content={<SideBar />}
+      onClose={() => this.closeDrawer()} >
 
-        <Tab.Navigator initialRouteName="Home">
+      <Header
+openDrawer={this.openDrawer.bind(this)}
+      />
+      <NavigationContainer>
+        {loginState !== null ? (
 
-          <Tab.Screen name="Home" component={Home} />
-          <Tab.Screen name="Profile" component={Profile} />
-        </Tab.Navigator>
-      )
-        :
-        <RootStackScreen />}
-    </NavigationContainer>
+
+          <Tab.Navigator initialRouteName="Home">
+            <Tab.Screen name="Home" component={Home} />
+            <Tab.Screen name="Profile" component={Profile} />
+          </Tab.Navigator>
+
+        )
+          :
+          <RootStackScreen />
+        }
+      </NavigationContainer>
+    </Drawer>
   );
 };
+}
 
-
-export default AppNavigationContainer;
+//export default AppNavigationContainer;

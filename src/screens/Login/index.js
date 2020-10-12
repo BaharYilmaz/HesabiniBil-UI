@@ -17,12 +17,13 @@ import {
 
 import { Container, Header, Content, Button, Form, Item, Input, Title, H2, H3, Text, Body, Badge } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Col, Row, Grid } from 'react-native-easy-grid';
+
+
 
 class Login extends Component {
     constructor(props) {
         super(props); // super arguman geçmenizi sağlar eğer constructor kullanmak isterseniz kullanmak zorunlu oluyor.
-        this.navigator = this.props.navigator; // index.ios.js de navigator diğer geçtiğimizi burada aldık
+        this.navigation = this.props.navigation; // index.ios.js de navigator diğer geçtiğimizi burada aldık
     }
     render() {
         const { height: screenHeight } = Dimensions.get('window');
@@ -38,6 +39,7 @@ class Login extends Component {
                     </Left>
                     <Body>
                         <Title>Title</Title>
+                        color="#635DB7"
                     </Body> 
                 </Header>*/}
                 <Content >
@@ -59,7 +61,7 @@ class Login extends Component {
                             <Button block rounded style={{ margin: 15, padding: 5 }} ><Text> Giriş Yap </Text></Button>
                             <View style={{ alignItems: 'center' }}>
                                 <Text> Hesabın yok mu ?</Text>
-                                <Button transparent block >
+                                <Button transparent block  onPress={() =>this.navigation.navigate('SignUp')} >
                                     <Text style={{ textDecorationLine: 'underline' }}>Kayıt Ol</Text>
                                 </Button>
                             </View>

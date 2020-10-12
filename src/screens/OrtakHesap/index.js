@@ -5,7 +5,7 @@ class OrtakHesap extends Component {
     render() {
         return (
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Text>History Screen</Text>
+                <Text>ortak hesap Screen</Text>
             </View>
         );
     }

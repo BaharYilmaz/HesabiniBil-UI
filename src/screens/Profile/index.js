@@ -11,13 +11,11 @@ class Profile extends Component {
 
 
     render() {
-        const {username, password} = this.props.route.params;
         
         return (
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <Text>Profile Screen</Text>
-                <Text>username: {username}</Text>
-                <Text>password: {password}</Text>
+               
             </View>
         );
     }
