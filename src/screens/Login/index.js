@@ -22,8 +22,8 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 class Login extends Component {
     constructor(props) {
-        super(props); // super arguman geçmenizi sağlar eğer constructor kullanmak isterseniz kullanmak zorunlu oluyor.
-        this.navigation = this.props.navigation; // index.ios.js de navigator diğer geçtiğimizi burada aldık
+        super(props); 
+        this.navigation = this.props.navigation; 
     }
     render() {
         const { height: screenHeight } = Dimensions.get('window');

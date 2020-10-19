@@ -1,42 +1,49 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity } from 'react-native';
-import { Container, Header, Content, Button, Form, Item, Input, Title, Left, Text, Body, Right } from 'native-base';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import SideMenu from '../../navigation/SideMenu';
+import {
+    Alert,
+    LayoutAnimation,
+    TouchableOpacity,
+    Dimensions,
+    Image,
+    UIManager,
+    KeyboardAvoidingView,
+    StyleSheet,
+    ScrollView,
+    Linking,
+    View,
+} from 'react-native';
 
-import { NavigationContainer, DrawerActions } from '@react-navigation/native';
+
+
+import { Container, Content, Button, Form, Item, Input, Title, H2, H3, Text, Body, Badge } from 'native-base';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Header from '../Header'
+
 
 class Home extends Component {
     constructor(props) {
         super(props);
         this.navigation = this.props.navigation;
     }
-
-
     render() {
+        const { height: screenHeight } = Dimensions.get('window');
         return (
 
             <Container >
-                <Header>
-                    <Left />
-                    <Body>
-                        <Title>Hesabını Bil</Title>
-                    </Body>
-                    <Right />
-                    <Right>
-                        <Button transparent onPress={() =>this.navigation.dispatch(DrawerActions.toggleDrawer())}>
-                            <Icon name="menu" size={30} color="white" />
+                <Header />
 
-                        </Button>
-                        
-                    </Right>
-                </Header>
-                <Content ></Content>
+                <Content >
+                    <Text>home</Text>
+                    <TouchableOpacity
+                        onPress={() => this.navigation.navigate('Hesabım')} >
+                        <Text >İptal</Text>
+                    </TouchableOpacity>
+                </Content>
             </Container>
-
-
         );
     }
+
 }
+//                                <Col style={{ backgroundColor: '#00CE9F', height: 200 }}></Col>
 
 export default Home;

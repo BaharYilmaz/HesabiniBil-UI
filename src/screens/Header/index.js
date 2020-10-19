@@ -11,17 +11,17 @@ export default class AppHeader extends Component {
       <Header>
        <Left>
        <Button transparent
-              onPress={()=>this.props.openDrawer()}
+              //onPress={()=>this.props.navigation.openDrawer()}
        >
          <Icon name='menu' />
        </Button>
        </Left>
        <Body>
-         <Title>SDCC Wallet</Title>
+       <Title>Hesabını Bil</Title>
        </Body>
        <Right>
          <Button transparent>
-           <Icon name='bulb' />
+           <Icon name='help' />
          </Button>
        </Right>
      </Header>
