@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { AppContext } from '../provider/AppProvider'
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -76,75 +76,73 @@ const AppNavigationContainer = () => {
   //const {loginState} = this.state;
   //const dimensions = useWindowDimensions();
 
+  const login = useContext(AppContext);
   return (
 
-    <AppContext.Consumer>
-      {
-        login =>
-          <NavigationContainer>
-            {login.loginState !== null ? (
-              <Drawer.Navigator initialRouteName="Home"
-              drawerContent={(props) => <SideBar {...props} />}
-               drawerContentOptions={{
-                itemStyle: { marginVertical: 5 },
-                drawerType: 'slide',
-                drawerStyle: {
-                  backgroundColor: 'blue',
-                  width: 240,
-                },
-                overlayColor: "transparent"
 
-              }} //headerMode="screen"
-                // screenOptions={{
-                //   headerTintColor: 'white',
-                //   headerStyle: { backgroundColor: 'tomato' },
-                // }}
-                screenOptions={{
-                  header: () => (
-                    <Header />
-                  ),
-                }}
-              >
+    <NavigationContainer>
+      {login.loginState !== 1 ? (
+        <Drawer.Navigator initialRouteName="Home"
+          drawerContent={(props) => <SideBar {...props} />}
+          drawerContentOptions={{
+            itemStyle: { marginVertical: 5 },
+            drawerType: 'slide',
+            drawerStyle: {
+              backgroundColor: 'blue',
+              width: 240,
+            },
+            overlayColor: "transparent"
 
-                <Drawer.Screen name="Home" component={Home}
-                  options={{
-                    title: 'Ana Sayfa', drawerIcon: ({ focused, size }) => (
-                      <Icon
-                        name="home"
-                        size={size}
-                        color={focused ? '#7cc' : '#ccc'}
-                      />)
-                  }} />
-                <Drawer.Screen name="Profile" component={Profile} />
-                <Drawer.Screen name="Çıkış Yap" component={LogOut} />
-                <Drawer.Screen name="Hesabı Sil" component={DeleteAccount} />
+          }} //headerMode="screen"
+          // screenOptions={{
+          //   headerTintColor: 'white',
+          //   headerStyle: { backgroundColor: 'tomato' },
+          // }}
+          screenOptions={{
+            header: () => (
+              <Header />
+            ),
+          }}
+        >
 
-              </Drawer.Navigator>
+          <Drawer.Screen name="Home" component={Home}
+            options={{
+              title: 'Ana Sayfa', drawerIcon: ({ focused, size }) => (
+                <Icon
+                  name="home"
+                  size={size}
+                  color={focused ? '#7cc' : '#ccc'}
+                />)
+            }} />
+          <Drawer.Screen name="Profile" component={Profile} />
+          <Drawer.Screen name="Çıkış Yap" component={LogOut} />
+          <Drawer.Screen name="Hesabı Sil" component={DeleteAccount} />
 
-              // <Drawer 
-              //   ref={(ref) => { this.drawer = ref; }}
-              //   onClose={() => this.closeDrawer()}
-              //   content={<Sidebar/>}
-              //    >
-              //      {/* <AppStack/> */}
-              //   <Header
-              //     openDrawer={this.openDrawer.bind(this)}
-              //   />
+        </Drawer.Navigator>
 
-              // <AppStackScreen />
+        // <Drawer 
+        //   ref={(ref) => { this.drawer = ref; }}
+        //   onClose={() => this.closeDrawer()}
+        //   content={<Sidebar/>}
+        //    >
+        //      {/* <AppStack/> */}
+        //   <Header
+        //     openDrawer={this.openDrawer.bind(this)}
+        //   />
 
-              // {/* // <Tab.Navigator initialRouteName="Home">
-              // //   <Tab.Screen name="Home" component={Home} />
-              // //   <Tab.Screen name="Profile" component={Profile} />
-              // // </Tab.Navigator>  */}
-              // // </Drawer>
-            )
-              :
-              <RootStackScreen />
-            }
-          </NavigationContainer>
+        // <AppStackScreen />
+
+        // {/* // <Tab.Navigator initialRouteName="Home">
+        // //   <Tab.Screen name="Home" component={Home} />
+        // //   <Tab.Screen name="Profile" component={Profile} />
+        // // </Tab.Navigator>  */}
+        // // </Drawer>
+      )
+        :
+        <RootStackScreen />
       }
-    </AppContext.Consumer>
+    </NavigationContainer>
+
   );
 };
 

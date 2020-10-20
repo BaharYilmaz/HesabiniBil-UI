@@ -1,15 +1,8 @@
-import React, { Component } from 'react';
+import React, { useContext } from 'react';
+import { AppContext } from '../../provider/AppProvider'
+
 import {
-    Alert,
-    LayoutAnimation,
-    TouchableOpacity,
     Dimensions,
-    Image,
-    UIManager,
-    KeyboardAvoidingView,
-    StyleSheet,
-    ScrollView,
-    Linking,
     View,
 } from 'react-native';
 
@@ -20,18 +13,30 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 
-class Login extends Component {
-    constructor(props) {
-        super(props); 
-        this.navigation = this.props.navigation; 
-    }
-    render() {
-        const { height: screenHeight } = Dimensions.get('window');
-        return (
+const Login = (props) => {
 
-            <Container >
-                <Header />
-                {/* <Header>
+    const login = useContext(AppContext);
+    const { height: screenHeight } = Dimensions.get('window');
+
+    const usernameChange = (val) => {
+        login.setLoginData({ ...login.loginData, username: val });
+    }
+    const passwordChange = (val) => {
+        login.setLoginData({ ...login.loginData, password: val });
+    }
+    const handleSubmit = () => {
+
+        // if (userForm.valid) { 
+        // } else {
+        // }
+        login.handleLogin();
+    }
+
+    return (
+
+        <Container >
+            <Header />
+            {/* <Header>
                     <Left>
                         <Button transparent>
                             <Icon name='arrow-left-thick' size={30} color="white" />
@@ -42,38 +47,34 @@ class Login extends Component {
                         color="#635DB7"
                     </Body> 
                 </Header>*/}
-                <Content >
-                    <View style={{ flex: 1, height: screenHeight, justifyContent: 'center' }}>
-                        <View style={{ alignItems: 'center' }}>
-                            <H2 style={{ color: 'gray', marginBottom: 50 }}>HESABINI BİL</H2>
-                        </View>
-
-                        <Form style={{ margin: 20 }}>
-                            <Item style={{ margin: 20, padding: 5 }}>
-                                <Input placeholder="Kullanıcı Adı" />
-                                <Icon name='account-outline' size={30} color="gray" />
-
-                            </Item>
-                            <Item style={{ margin: 20, padding: 5 }}>
-                                <Input placeholder="Şifre" />
-                                <Icon name='lock-outline' size={30} color="gray" />
-                            </Item>
-                            <Button block rounded style={{ margin: 15, padding: 5 }} ><Text> Giriş Yap </Text></Button>
-                            <View style={{ alignItems: 'center' }}>
-                                <Text> Hesabın yok mu ?</Text>
-                                <Button transparent block  onPress={() =>this.navigation.navigate('SignUp')} >
-                                    <Text style={{ textDecorationLine: 'underline' }}>Kayıt Ol</Text>
-                                </Button>
-                            </View>
-
-
-                        </Form>
+            <Content >
+                <View style={{ flex: 1, height: screenHeight, justifyContent: 'center' }}>
+                    <View style={{ alignItems: 'center' }}>
+                        <H2 style={{ color: 'gray', marginBottom: 50 }}>HESABINI BİL</H2>
                     </View>
-                </Content>
-            </Container>
-        );
-    }
 
+                    <Form style={{ margin: 20 }}>
+                        <Item style={{ margin: 20, padding: 5 }}>
+                            <Input placeholder="Kullanıcı Adı" onChangeText={(val) => usernameChange(val)} />
+                            <Icon name='account-outline' size={30} color="gray" />
+
+                        </Item>
+                        <Item style={{ margin: 20, padding: 5 }}>
+                            <Input placeholder="Şifre" onChangeText={(val) => passwordChange(val)} />
+                            <Icon name='lock-outline' size={30} color="gray" />
+                        </Item>
+                        <Button block rounded style={{ margin: 15, padding: 5 }} onPress={handleSubmit} ><Text> Giriş Yap </Text></Button>
+                        <View style={{ alignItems: 'center' }}>
+                            <Text> Hesabın yok mu ?</Text>
+                            <Button transparent block onPress={() => props.navigation.navigate('SignUp')} >
+                                <Text style={{ textDecorationLine: 'underline' }}>Kayıt Ol</Text>
+                            </Button>
+                        </View>
+                    </Form>
+                </View>
+            </Content>
+        </Container>
+    );
 }
 //                                <Col style={{ backgroundColor: '#00CE9F', height: 200 }}></Col>
 
