@@ -18,8 +18,8 @@ const Login = (props) => {
     const login = useContext(AppContext);
     const { height: screenHeight } = Dimensions.get('window');
 
-    const usernameChange = (val) => {
-        login.setLoginData({ ...login.loginData, username: val });
+    const emailChange = (val) => {
+        login.setLoginData({ ...login.loginData, email: val });
     }
     const passwordChange = (val) => {
         login.setLoginData({ ...login.loginData, password: val });
@@ -55,7 +55,7 @@ const Login = (props) => {
 
                     <Form style={{ margin: 20 }}>
                         <Item style={{ margin: 20, padding: 5 }}>
-                            <Input placeholder="Kullanıcı Adı" onChangeText={(val) => usernameChange(val)} />
+                            <Input placeholder="E-posta" onChangeText={(val) => emailChange(val)} />
                             <Icon name='account-outline' size={30} color="gray" />
 
                         </Item>

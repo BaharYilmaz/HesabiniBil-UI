@@ -42,11 +42,11 @@ class Sidebar extends Component {
 
             <TouchableOpacity style={styles.menu2}>
               <Icon name='logout' size={24} />
-              <Text style={styles.menuText} type='h5White'>Çıkış Yap</Text>
+              <Text style={styles.menuText} type='h5White' onPress={() => this.navigation.navigate('LogOut')}>Çıkış Yap</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.menu2}>
               <Icon name='delete' size={24} />
-              <Text style={styles.menuText} type='h5White'>Hesabı Sil</Text>
+              <Text style={styles.menuText} type='h5White' onPress={() => this.navigation.navigate('DeleteAccount')}>Hesabı Sil</Text>
             </TouchableOpacity>
 
           </View>

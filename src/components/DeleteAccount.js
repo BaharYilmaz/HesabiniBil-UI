@@ -5,7 +5,7 @@ import { Modal, Text, TouchableOpacity, View, Alert, StyleSheet } from 'react-na
 
 const DeleteAccount = (props) => {
 
-    const login = useContext(AppContext);
+    const user = useContext(AppContext);
 
     return (
 
@@ -23,7 +23,7 @@ const DeleteAccount = (props) => {
                                     onPress={() => props.navigation.navigate('Ana Sayfa')}>
                                     <Text style={styles.actionText}>İptal</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={{ ...styles.actions, backgroundColor: "#21ba45" }} onPress={() => login.changeLoginState(null)}>
+                                <TouchableOpacity style={{ ...styles.actions, backgroundColor: "#21ba45" }} onPress={() => user.changeLoginState(0)}>
                                     <Text style={styles.actionText}>Devam</Text>
                                 </TouchableOpacity>
                             </View>

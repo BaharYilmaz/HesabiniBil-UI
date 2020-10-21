@@ -4,13 +4,11 @@ const AppContext = React.createContext();
 
 const AppProvider = (props) => {
 
-    const apiBaseUrl = 'http://localhost:5001';
-    const [loginState, changeLoginState] = useState(1);
-    const [loginData, setLoginData] = React.useState({
-        username: '',
-        password: '',
+    const apiBaseUrl = 'http://10.0.3.2:5001/api';
 
-    });
+    const [loginState, changeLoginState] = useState(0);
+    const [loginData, setLoginData] = React.useState({email: '', password: ''});
+    const [registerData, setRegisterData] = React.useState({email: '', password: '',firstName:'',lastName:''});
 
     console.log(loginState)
     // state = {
@@ -27,23 +25,53 @@ const AppProvider = (props) => {
     //     const data = await result.json()
 
     // })
-    let data={
-        email: 'bak',
-        password: 'kfhkla'
-    }
+  
     const handleLogin = () => {
-
         console.log("login")
-        fetch('http://10.0.2.2:5001/api/auth/login',
+        fetch(apiBaseUrl + '/auth/login',
             {
-
                 method: 'POST',
                 headers: { 'Content-type': 'application/json' },
-                body: JSON.stringify(data)
+                body: JSON.stringify(loginData)
             })
-            .then(response => response.json())
+            .then(response =>response.json())
+            .then(token =>{
+                if(token!=null)
+                {
+                    changeLoginState(1)
+                }
+              
+             })
             .catch(error => console.log(error));
-    }       
+
+        // fetch('http://10.0.3.2:5001/api/auth/deneme')
+        //     .then((response) => response.json())
+        //     .then((json) => {
+        //         console.log('başarılı');
+        //     })
+        //     .catch((error) => console.error(error))
+
+    }
+    const handleRegister = () => {
+        console.log(registerData)
+
+        fetch(apiBaseUrl + '/auth/register',
+            {
+                method: 'POST',
+                headers: { 'Content-type': 'application/json' },
+                body: JSON.stringify(registerData)
+            })
+            .then(response =>response.json())
+            .then(token =>{
+                if(token!=null)
+                {
+                    changeLoginState(1)
+                }
+              
+             })
+            .catch(error => console.log(error));
+
+    }
 
     return (
         <AppContext.Provider
@@ -52,7 +80,10 @@ const AppProvider = (props) => {
                 changeLoginState,
                 loginData,
                 setLoginData,
-                handleLogin
+                handleLogin,
+                registerData,
+                setRegisterData,
+                handleRegister
             }}>
             {props.children}
         </AppContext.Provider>
@@ -60,4 +91,4 @@ const AppProvider = (props) => {
 
 }
 
-export { AppProvider, AppContext };3
+export { AppProvider, AppContext }; 3

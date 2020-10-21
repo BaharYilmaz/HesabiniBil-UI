@@ -81,7 +81,7 @@ const AppNavigationContainer = () => {
 
 
     <NavigationContainer>
-      {login.loginState !== 1 ? (
+      {login.loginState !== 0 ? (
         <Drawer.Navigator initialRouteName="Home"
           drawerContent={(props) => <SideBar {...props} />}
           drawerContentOptions={{
@@ -105,18 +105,10 @@ const AppNavigationContainer = () => {
           }}
         >
 
-          <Drawer.Screen name="Home" component={Home}
-            options={{
-              title: 'Ana Sayfa', drawerIcon: ({ focused, size }) => (
-                <Icon
-                  name="home"
-                  size={size}
-                  color={focused ? '#7cc' : '#ccc'}
-                />)
-            }} />
+          <Drawer.Screen name="Home" component={Home} />
           <Drawer.Screen name="Profile" component={Profile} />
-          <Drawer.Screen name="Çıkış Yap" component={LogOut} />
-          <Drawer.Screen name="Hesabı Sil" component={DeleteAccount} />
+          <Drawer.Screen name="LogOut" component={LogOut} />
+          <Drawer.Screen name="DeleteAccount" component={DeleteAccount} />
 
         </Drawer.Navigator>
 
