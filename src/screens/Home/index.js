@@ -15,9 +15,11 @@ import {
 
 
 
-import { Container, Content, Button, Form, Item, Input, Title, H2, H3, Text, Body, Badge } from 'native-base';
+import { Container, Content, Button, Form, Item, Input, Title, H2, H3, Text, Tab, Tabs } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Header from '../Header'
+import CommonAccounts from '../CommonAccounts'
+import DebtTracking from '../DebtTracking'
 
 
 class Home extends Component {
@@ -30,15 +32,21 @@ class Home extends Component {
         return (
 
             <Container >
-                <Header />
+                <Header hasTabs />
+                {/* 
+                <View style={{ padding: 50, alignItems: 'center' }}>
+                    <H3>Hoşgeldiniz !</H3>
+                </View> */}
 
-                <Content >
-                    <Text>home</Text>
-                    <TouchableOpacity
-                        onPress={() => this.navigation.navigate('Hesabım')} >
-                        <Text >İptal</Text>
-                    </TouchableOpacity>
-                </Content>
+                <Tabs tabBarPosition="overlayBottom">
+                    <Tab heading="Ortak Hesaplar">
+                        <CommonAccounts />
+                    </Tab>
+                    <Tab heading="Borç Takibi">
+                        <DebtTracking />
+                    </Tab>
+                </Tabs>
+
             </Container>
         );
     }
