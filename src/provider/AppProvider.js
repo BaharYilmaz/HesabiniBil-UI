@@ -7,8 +7,10 @@ const AppProvider = (props) => {
     const apiBaseUrl = 'http://10.0.3.2:5001/api';
 
     const [loginState, changeLoginState] = useState(0);
-    const [loginData, setLoginData] = React.useState({email: '', password: ''});
-    const [registerData, setRegisterData] = React.useState({email: '', password: '',firstName:'',lastName:''});
+    const [loginData, setLoginData] = React.useState({ email: '', password: '' });
+    const [registerData, setRegisterData] = React.useState({ email: '', password: '', firstName: '', lastName: '' });
+    const [isModalVisible, setModalVisible] = React.useState(false);
+
 
     console.log(loginState)
     // state = {
@@ -25,7 +27,7 @@ const AppProvider = (props) => {
     //     const data = await result.json()
 
     // })
-  
+
     const handleLogin = () => {
         console.log("login")
         fetch(apiBaseUrl + '/auth/login',
@@ -34,14 +36,13 @@ const AppProvider = (props) => {
                 headers: { 'Content-type': 'application/json' },
                 body: JSON.stringify(loginData)
             })
-            .then(response =>response.json())
-            .then(token =>{
-                if(token!=null)
-                {
+            .then(response => response.json())
+            .then(token => {
+                if (token != null) {
                     changeLoginState(1)
                 }
-              
-             })
+
+            })
             .catch(error => console.log(error));
 
         // fetch('http://10.0.3.2:5001/api/auth/deneme')
@@ -61,14 +62,13 @@ const AppProvider = (props) => {
                 headers: { 'Content-type': 'application/json' },
                 body: JSON.stringify(registerData)
             })
-            .then(response =>response.json())
-            .then(token =>{
-                if(token!=null)
-                {
+            .then(response => response.json())
+            .then(token => {
+                if (token != null) {
                     changeLoginState(1)
                 }
-              
-             })
+
+            })
             .catch(error => console.log(error));
 
     }
@@ -76,14 +76,10 @@ const AppProvider = (props) => {
     return (
         <AppContext.Provider
             value={{
-                loginState,
-                changeLoginState,
-                loginData,
-                setLoginData,
-                handleLogin,
-                registerData,
-                setRegisterData,
-                handleRegister
+                loginState, changeLoginState,
+                loginData, setLoginData, handleLogin,
+                registerData, setRegisterData, handleRegister,
+                isModalVisible, setModalVisible
             }}>
             {props.children}
         </AppContext.Provider>

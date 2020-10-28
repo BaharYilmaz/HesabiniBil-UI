@@ -4,12 +4,16 @@ import { AppContext } from '../../provider/AppProvider'
 import {
     Dimensions,
     View,
+    Alert,
+    SafeAreaView,
+    StyleSheet,
+    TouchableOpacity
 } from 'react-native';
 
 
 import { Container, Header, Content, Button, Form, Item, Input, Title, H2, H3, Text, Body, Badge } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import Modal from '../../components/MessageModal';
 
 
 const Login = (props) => {
@@ -18,6 +22,7 @@ const Login = (props) => {
     const { height: screenHeight } = Dimensions.get('window');
 
     const [loginForm, setValid] = React.useState({ emailValid: false, passwordValid: false, emailError: false, passwordError: false });
+    const [isModalVisible, setModalVisible] = React.useState(false);
 
     const emailChange = (val) => {
 
@@ -52,10 +57,28 @@ const Login = (props) => {
         else {
             // mesaj
             console.log("hata")
+           login.setModalVisible(true);
+            // Alert.alert(
+            //     'Uyarı !',
+            //     'Bu form boş bırakılamaz',
+            //     [
+            //         //   {
+            //         //     text: 'Ask me later',
+            //         //     onPress: () => console.log('Ask me later pressed')
+            //         //   },
+            //         //   {
+            //         //     text: 'Cancel',
+            //         //     onPress: () => console.log('Cancel Pressed'),
+            //         //     style: 'cancel'
+            //         //   },
+            //         { text: 'Tamam', onPress: () => console.log('OK Pressed') }
+            //     ],
+            //     { cancelable: false }
+            // );
         }
 
     }
-
+   
     return (
 
         <Container >
@@ -72,17 +95,13 @@ const Login = (props) => {
                             <Input placeholder="E-posta" onChangeText={(val) => emailChange(val)} />
                             <Icon name='email-outline' size={30} color="gray" />
                         </Item>
-                        {loginForm.emailError ?  <Text style={{ margin: 15, padding: 5, color: 'red' }}>Lütfen uygun bir mail adresi giriniz !</Text> :null
-                           
-                        }
+                        {loginForm.emailError ? <Text style={{ margin: 15, padding: 5, color: 'red' }}>Lütfen uygun bir mail adresi giriniz !</Text> : null}
 
                         <Item style={{ margin: 15, padding: 5 }} >
                             <Input placeholder="Şifre" onChangeText={(val) => passwordChange(val)} />
                             <Icon name='lock-outline' size={30} color="gray" />
                         </Item>
-                        {loginForm.passwordError ?  <Text error style={{ margin: 15, padding: 5, color: 'red' }}>Lütfen şifrenizi giriniz !</Text> :null
-                           
-                        }
+                        {loginForm.passwordError ? <Text error style={{ margin: 15, padding: 5, color: 'red' }}>Lütfen şifrenizi giriniz !</Text> : null}
 
                         <Button block rounded disabled={loginForm.formInvalid} style={{ margin: 25, padding: 5 }} onPress={handleSubmit} ><Text> Giriş Yap </Text></Button>
                         <View style={{ alignItems: 'center' }}>
@@ -92,12 +111,16 @@ const Login = (props) => {
                             </Button>
                         </View>
                     </Form>
+
+                   <Modal/>
+
                 </View>
 
             </Content>
         </Container>
     );
 }
+
 //                                <Col style={{ backgroundColor: '#00CE9F', height: 200 }}></Col>
 
 export default Login;

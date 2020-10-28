@@ -4,12 +4,14 @@ import { AppContext } from '../../provider/AppProvider'
 import {
     Dimensions,
     View,
+    Alert
 } from 'react-native';
 
 
 
 import { Container, Header, Content, Button, Form, Item, Input, Title, H2, Left, Text, Body, Right, Fab } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Modal from '../../components/MessageModal';
 
 
 //this.props.navigation.goBack();
@@ -71,6 +73,7 @@ const SignUp = (props) => {
         }
         else {
             console.log("hata register");
+            register.setModalVisible(true);
         }
     }
 
@@ -95,22 +98,23 @@ const SignUp = (props) => {
                         <Item style={{ margin: 20, padding: 5 }}>
                             <Input placeholder="İsim" onChangeText={(val) => firstNameChange(val)} />
                         </Item>
-                        {registerForm.firstNameError ?  <Text style={{ margin: 15, padding: 5, color: 'red' }}>Lütfen adınızı giriniz !</Text> :null }
+                        {registerForm.firstNameError ? <Text style={{ margin: 15, padding: 5, color: 'red' }}>Lütfen adınızı giriniz !</Text> : null}
                         <Item style={{ margin: 20, padding: 5 }}>
                             <Input placeholder="Soyisim" onChangeText={(val) => lastNameChange(val)} />
                         </Item>
-                        {registerForm.lastNameError ?  <Text style={{ margin: 15, padding: 5, color: 'red' }}>Lütfen soyadınızı giriniz !</Text> :null }
+                        {registerForm.lastNameError ? <Text style={{ margin: 15, padding: 5, color: 'red' }}>Lütfen soyadınızı giriniz !</Text> : null}
                         <Item style={{ margin: 20, padding: 5 }}>
                             <Input placeholder="E-posta" onChangeText={(val) => emailChange(val)} />
                         </Item>
-                        {registerForm.emailError ?  <Text style={{ margin: 15, padding: 5, color: 'red' }}>Lütfen uygun bir mail adresi giriniz !</Text> :null }
+                        {registerForm.emailError ? <Text style={{ margin: 15, padding: 5, color: 'red' }}>Lütfen uygun bir mail adresi giriniz !</Text> : null}
                         <Item style={{ margin: 20, padding: 5 }}>
                             <Input placeholder="Şifre" onChangeText={(val) => passwordChange(val)} />
                         </Item>
-                        {registerForm.passwordError ?  <Text style={{ margin: 15, padding: 5, color: 'red' }}>Lütfen şifrenizi giriniz !</Text> :null }
+                        {registerForm.passwordError ? <Text style={{ margin: 15, padding: 5, color: 'red' }}>Lütfen şifrenizi giriniz !</Text> : null}
 
                         <Button block rounded style={{ margin: 15, padding: 5 }} onPress={handleSubmit}  ><Text> Kayıt ol </Text></Button>
                     </Form>
+                    <Modal/>
                 </View>
             </Content>
         </Container>
