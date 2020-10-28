@@ -9,7 +9,7 @@ import {
 
 
 
-import { Container, Header, Content, Button, Form, Item, Input, Title, H2, Left, Text, Body, Right, Fab } from 'native-base';
+import { Container, Header, Content, Button, Form, Item, Input, Title, H2, Left, Text, Body, Right } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Modal from '../../components/MessageModal';
 
@@ -88,6 +88,9 @@ const SignUp = (props) => {
                         <Icon name='arrow-left-thick' size={30} color="white" />
                     </Button>
                 </Left>
+                <Body>
+            <Title>Kayıt Ekranı</Title>
+          </Body>
             </Header>
             <Content >
                 <View style={{ flex: 1, height: screenHeight, justifyContent: 'center' }}>

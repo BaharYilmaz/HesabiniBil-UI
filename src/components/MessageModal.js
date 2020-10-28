@@ -11,7 +11,7 @@ const MessageModal = () => {
     const modal = useContext(AppContext);
 
     const toggleModal = () => {
-       modal.setModalVisible(!modal.isModalVisible);
+        modal.setModalVisible(!modal.isModalVisible);
     };
     return (
         <Modal
@@ -47,15 +47,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     modalContainer: {
-        backgroundColor: "#635DB7",
-        // borderWidth:5,
-        // borderColor:'#635DB7',
+        backgroundColor: "#fff",
         borderRadius: 5,
-    },
-    divider: {
-        width: "100%",
-        height: 1,
-        backgroundColor: "lightgray"
     },
     modalBody: {
         backgroundColor: "#fff",
