@@ -17,41 +17,45 @@ const Login = (props) => {
     const login = useContext(AppContext);
     const { height: screenHeight } = Dimensions.get('window');
 
-    const [loginForm, setValid] = React.useState({ emailValid: true, passwordValid: true });
+    const [loginForm, setValid] = React.useState({ emailValid: false, passwordValid: false, emailError: false, passwordError: false });
 
     const emailChange = (val) => {
 
         let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-        if (reg.test(val) === false ) {
+        if (reg.test(val) === false) {
             login.setLoginData({ ...login.loginData, email: val });
-            setValid({ ...loginForm, emailValid: false });
+            setValid({ ...loginForm, emailValid: false, emailError: true });
         }
         else {
             login.setLoginData({ ...login.loginData, email: val });
-            setValid({ ...loginForm, emailValid: true });
+            setValid({ ...loginForm, emailValid: true, emailError: false });
         }
     }
     const passwordChange = (val) => {
 
         if (val.trim().length > 0) {
             login.setLoginData({ ...login.loginData, password: val });
-            setValid({ ...loginForm, passwordValid: true });
+            setValid({ ...loginForm, passwordValid: true, passwordError: false });
         }
         else {
             login.setLoginData({ ...login.loginData, password: val });
-            setValid({ ...loginForm, passwordValid: false });
+            setValid({ ...loginForm, passwordValid: false, passwordError: true });
         }
     }
 
     const handleSubmit = () => {
 
-        if (login.password != null && login.email != null) {
+        if (loginForm.passwordValid == true && loginForm.emailValid == true) {
             login.handleLogin();
+
         }
         else {
-            setValid({ emailValid: false, passwordValid: false });
+            // mesaj
+            console.log("hata")
         }
+
     }
+
     return (
 
         <Container >
@@ -68,19 +72,19 @@ const Login = (props) => {
                             <Input placeholder="E-posta" onChangeText={(val) => emailChange(val)} />
                             <Icon name='email-outline' size={30} color="gray" />
                         </Item>
-                        {loginForm.emailValid ? null :
-                            <Text style={{ margin: 15, padding: 5 ,color:'red' }}>Lütfen uygun bir mail adresi giriniz !</Text>
+                        {loginForm.emailError ?  <Text style={{ margin: 15, padding: 5, color: 'red' }}>Lütfen uygun bir mail adresi giriniz !</Text> :null
+                           
                         }
 
                         <Item style={{ margin: 15, padding: 5 }} >
                             <Input placeholder="Şifre" onChangeText={(val) => passwordChange(val)} />
                             <Icon name='lock-outline' size={30} color="gray" />
                         </Item>
-                        {loginForm.passwordValid ? null :
-                            <Text error style={{ margin: 15, padding: 5 ,color:'red' }}>Lütfen şifrenizi giriniz !</Text>
+                        {loginForm.passwordError ?  <Text error style={{ margin: 15, padding: 5, color: 'red' }}>Lütfen şifrenizi giriniz !</Text> :null
+                           
                         }
 
-                        <Button block rounded style={{ margin: 25, padding: 5}} onPress={handleSubmit} ><Text> Giriş Yap </Text></Button>
+                        <Button block rounded disabled={loginForm.formInvalid} style={{ margin: 25, padding: 5 }} onPress={handleSubmit} ><Text> Giriş Yap </Text></Button>
                         <View style={{ alignItems: 'center' }}>
                             <Text> Hesabın yok mu ?</Text>
                             <Button transparent block onPress={() => props.navigation.navigate('SignUp')} >

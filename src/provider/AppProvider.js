@@ -6,7 +6,7 @@ const AppProvider = (props) => {
 
     const apiBaseUrl = 'http://10.0.3.2:5001/api';
 
-    const [loginState, changeLoginState] = useState(1);
+    const [loginState, changeLoginState] = useState(0);
     const [loginData, setLoginData] = React.useState({email: '', password: ''});
     const [registerData, setRegisterData] = React.useState({email: '', password: '',firstName:'',lastName:''});
 
