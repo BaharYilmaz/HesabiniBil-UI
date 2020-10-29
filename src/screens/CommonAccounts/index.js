@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 
 
-import { Container, Header, Content, Button, Form, Item, Input, Title, Left, Right, Body, List, ListItem, Thumbnail, Separator, Text,H1, H2 ,H3,H4} from 'native-base';
+import { Container, Header, Content, Button, Form, Item, Input, Title, Left, Right, Body, List, ListItem, Badge, Thumbnail, Separator, Footer, FooterTab, Text, H1, H2, H3, H4 } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 
@@ -19,72 +19,63 @@ const CommonAccounts = (props) => {
 
         <Container >
 
-            <Content >
-                <Grid  style={{marginTop:20}} >
-                    {/* <Col style={{}}>
-                        
-                        <Separator style={{backgroundColor:'lightgreen',margin:5}}>
-                        <H3 style={{color:'white'}}>Alacaklarım</H3> 
-                        </Separator>
-                        <List >
-                            <ListItem thumbnail >
+            <Content style={{ margin: 20 }}>
 
-                                <Body>
-                                    <Text>100 TL</Text>
-                                    <Text note numberOfLines={2}>Taha Soydan</Text>
+                <View style={{ backgroundColor: 'lightblue', margin: 5, padding: 10, alignItems: 'center', borderRadius: 5 }}>
+                    <H3 style={{ color: 'white' }}>Ortak Hesaplar</H3>
+                </View>
+                <List >
+                    <ListItem thumbnail >
 
-                                </Body>
-                                <Right>
+                        <Body>
+                            <Text style={{ marginBottom: 10 }}>Hesap 1</Text>
+                            <Badge warning>
+                                <Text style={{ color: 'white' }} note numberOfLines={1}>Aile</Text>
+                            </Badge>
 
-                                </Right>
+                        </Body>
+                        <Right>
+                            <Button transparent>
+                                <Text>Hesaba Git</Text>
+                            </Button>
+                        </Right>
 
-                            </ListItem>
-                            <ListItem thumbnail>
+                    </ListItem>
+                    <ListItem thumbnail>
 
-                                <Body>
-                                    <Text>100 TL</Text>
-                                    <Text note numberOfLines={2}>Taha Soydan</Text>
+                        <Body>
+                            <Text style={{ marginBottom: 10 }}>Hesap 2</Text>
+                            <Badge warning>
+                                <Text style={{ color: 'white' }} note numberOfLines={1}>Ev Arkadaşları</Text>
+                            </Badge>
+                        </Body>
+                        <Right>
+                            <Button transparent>
+                                <Text>Hesaba Git</Text>
+                            </Button>
+                        </Right>
+                    </ListItem>
 
-                                </Body>
-                                <Right>
-
-                                </Right>
-
-                            </ListItem>
-                        </List>
-                    </Col>
-                    <Col style={{}}>
-                        <Separator  style={{backgroundColor:'lightsalmon',margin:5}}>
-                            <H3 style={{color:'white'}}>Borçlarım</H3>
-                        </Separator>
-                        <List>
-                            <ListItem thumbnail>
-
-                                <Body>
-                                    <Text>100 TL</Text>
-                                    <Text note numberOfLines={1}>Mustafa Taha Soydan</Text>
-                                </Body>
-                                <Right>
-                                    <Button transparent>
-                                        <Text>Ödeme{"\n"} Bildir</Text>
-                                    </Button>
-                                </Right>
-                            </ListItem>
-                            <ListItem thumbnail>
-                                <Body>
-                                    <Text>100 TL</Text>
-                                    <Text note numberOfLines={1}>Mustafa Taha Soydan</Text>
-                                </Body>
-                                <Right>
-                                    <Button transparent>
-                                        <Text>Ödeme{"\n"} Bildir</Text>
-                                    </Button>
-                                </Right>
-                            </ListItem>
-                        </List>
-                    </Col> */}
-                </Grid>
+                </List>
             </Content>
+            <Footer style={{ backgroundColor: 'transparent', margin: 30 }}>
+                <FooterTab style={{ backgroundColor: 'transparent', margin: 20 }}>
+                    <Left>
+                        <Button rounded style={{ backgroundColor: 'lightgreen' }}>
+                            <Text>Hesap Oluştur</Text>
+
+                        </Button>
+                    </Left>
+
+                    <Right>
+                        <Button rounded style={{ backgroundColor: 'lightpink' }}>
+                            <Text>Hesaba Üye Ol</Text>
+                        </Button>
+                    </Right>
+
+                </FooterTab>
+            </Footer>
+
         </Container>
     );
 }

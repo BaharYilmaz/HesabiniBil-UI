@@ -61,7 +61,7 @@ const DebtTracking = (props) => {
                 <Grid  style={{marginTop:20}} >
                     <Col style={{}}>
                         
-                        <Separator style={{backgroundColor:'lightgreen',margin:5}}>
+                        <Separator style={{backgroundColor:'lightgreen',margin:5,borderRadius: 5}}>
                         <H3 style={{color:'white'}}>Alacaklarım</H3> 
                         </Separator>
                         <List >
@@ -92,7 +92,7 @@ const DebtTracking = (props) => {
                         </List>
                     </Col>
                     <Col style={{}}>
-                        <Separator  style={{backgroundColor:'lightsalmon',margin:5}}>
+                        <Separator  style={{backgroundColor:'lightsalmon',margin:5,borderRadius: 5}}>
                             <H3 style={{color:'white'}}>Borçlarım</H3>
                         </Separator>
                         <List>
