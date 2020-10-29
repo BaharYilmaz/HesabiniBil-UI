@@ -38,19 +38,9 @@ const AppProvider = (props) => {
             })
             .then(response => response.json())
             .then(token => {
-                if (token != null) {
-                    changeLoginState(1)
-                }
-
+                if (token != null) { changeLoginState(1) }
             })
             .catch(error => console.log(error));
-
-        // fetch('http://10.0.3.2:5001/api/auth/deneme')
-        //     .then((response) => response.json())
-        //     .then((json) => {
-        //         console.log('başarılı');
-        //     })
-        //     .catch((error) => console.error(error))
 
     }
     const handleRegister = () => {
@@ -64,13 +54,12 @@ const AppProvider = (props) => {
             })
             .then(response => response.json())
             .then(token => {
-                if (token != null) {
-                    changeLoginState(1)
-                }
-
+                if (token != null) { changeLoginState(1) }
             })
             .catch(error => console.log(error));
-
+    }
+    const deleteUserAccount = () => {
+        console.log("delete account")
     }
 
     return (
@@ -79,7 +68,8 @@ const AppProvider = (props) => {
                 loginState, changeLoginState,
                 loginData, setLoginData, handleLogin,
                 registerData, setRegisterData, handleRegister,
-                isModalVisible, setModalVisible
+                isModalVisible, setModalVisible,
+                deleteUserAccount
             }}>
             {props.children}
         </AppContext.Provider>

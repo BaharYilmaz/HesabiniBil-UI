@@ -1,41 +1,46 @@
 import React, { useContext, useState } from "react";
+import { View, StyleSheet } from 'react-native';
+import { Button, Text,Left,Right } from 'native-base';
+
+import Modal from 'react-native-modal';
 import { AppContext } from '../provider/AppProvider'
 
-import { Modal, Text, TouchableOpacity, View, Alert, StyleSheet } from 'react-native';
+const MessageModal = (props) => {
 
-const DeleteAccount = (props) => {
-
-    const user = useContext(AppContext);
-
+    const user = useContext(AppContext);   
     return (
 
-        <View style={styles.container}>
-            <View style={styles.modal}>
-                <View>
+        <Modal
+            isVisible={true}
+        >
+            <View style={styles.container}>
+                <View style={styles.modal}>
                     <View style={styles.modalContainer}>
                         <View style={styles.modalBody}>
-                            <Text style={styles.bodyText}>Hesabınızı Silmek Üzeresiniz !</Text>
-                        </View>
-                        <View >
-                            <View style={styles.divider}></View>
-                            <View style={{ flexDirection: "row-reverse", margin: 10 }}>
-                                <TouchableOpacity style={{ ...styles.actions, backgroundColor: "#db2828" }}
-                                    onPress={() => props.navigation.navigate('Ana Sayfa')}>
-                                    <Text style={styles.actionText}>İptal</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={{ ...styles.actions, backgroundColor: "#21ba45" }} onPress={() => user.changeLoginState(0)}>
-                                    <Text style={styles.actionText}>Devam</Text>
-                                </TouchableOpacity>
+                            <Text style={styles.bodyText}>Hesabınızı silmek üzeresiniz !</Text>
+
+                            <View style={{ flexDirection: "row", marginVertical: 20, alignItems: 'center' }}>
+
+                                <Left>
+                                    <Button block style={{ margin: 10}}  onPress={() => user.deleteUserAccount} >
+                                        <Text >Devam</Text>
+                                    </Button>
+                                </Left>
+
+                                <Right>
+                                    <Button block style={{ margin: 10 ,backgroundColor:'indianred' }} onPress={() => props.navigation.navigate('Home')}>
+                                        <Text >İptal</Text>
+                                    </Button>
+                                </Right>
+
                             </View>
                         </View>
                     </View>
                 </View>
             </View>
-        </View>
+        </Modal>
     );
-
-}
-
+};
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -48,31 +53,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     modalContainer: {
-        backgroundColor: "#f9fafb",
-        // borderWidth:5,
-        // borderColor:'#635DB7',
+        backgroundColor: "#fff",
         borderRadius: 5,
-    },
-    divider: {
-        width: "100%",
-        height: 1,
-        backgroundColor: "lightgray"
     },
     modalBody: {
         backgroundColor: "#fff",
-        paddingVertical: 40,
-        paddingHorizontal: 30,
+        paddingVertical: 30,
+        paddingHorizontal: 20,
         borderRadius: 5
     },
-    actions: {
-        borderRadius: 5,
-        marginHorizontal: 10,
-        paddingVertical: 10,
-        paddingHorizontal: 20
-    },
-    actionText: {
-        color: "#fff"
-    }
-});
 
-export default DeleteAccount;
+});
+export default MessageModal;

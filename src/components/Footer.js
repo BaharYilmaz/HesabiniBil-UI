@@ -11,14 +11,12 @@ const AppFooter = (props) => {
                     <Button  onPress={() => props.navigation.navigate('CommonAccounts')}>
                         <Text>Ortak Hesaplar</Text>
                     </Button>
-                    <Button onPress={() => props.navigation.navigate('DebtTracking')} >
+                    <Button  onPress={() => props.navigation.navigate('DebtTracking')} >
                         <Text>Borç Takibi</Text>
                     </Button>
             </FooterTab>
         </Footer> 
-        // <Container>
-        //     <Text>footer</Text>
-        // </Container>
+       
     );
 }
 
