@@ -7,50 +7,49 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import RootStackScreen from './RootStackScreen';
-import AppStack from './drawer';
 
-import SideMenu from './SideMenu';
 
 import Home from '../screens/Home';
 import Profile from '../screens/Profile';
-import OrtakHesap from '../screens/OrtakHesap';
-import Login from '../screens/Login';
+import CommonAccounts from '../screens/CommonAccounts';
+import CreateHomeAccount from '../screens/CreateHomeAccount';
+import DebtTracking from '../screens/DebtTracking';
+import JoinAccount from '../screens/JoinAccount';
 
 
 const Tab = createBottomTabNavigator();
-const HomeStack = createStackNavigator();
+const AppStack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
 //
 //import { Drawer } from 'native-base';
 
-import Header from '../screens/Header';
+import Header from '../components/Header';
 import SideBar from './SideBar';
-import AppStackScreen from './appStack';
-import Sidebar from './SideBar';
 
 import LogOut from '../components/LogOut'
 import DeleteAccount from '../components/DeleteAccount'
 
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 // const initialLoginState = {
 //   isLoading: true,
 //   userName: null,
 //   userToken: null,
 // };
-/*
-const HomeStackScreen  = () => {
-    return (
-        //routing
-            <HomeStack.Navigator initialRouteName="Login">
-                 <HomeStack.Screen name="Login" component={Login} />
 
-                <HomeStack.Screen name="Home" component={Home} />
-                <HomeStack.Screen name="Profile" component={Profile} />
-            </HomeStack.Navigator>
-    );
-};*/
+const AppStackScreen = () => {
+  return (
+
+    <AppStack.Navigator  headerMode='none'  >
+      <AppStack.Screen name="CommonAccounts" component={CommonAccounts} />
+      <AppStack.Screen name="CreateHomeAccount" component={CreateHomeAccount} />
+      <AppStack.Screen name="DebtTracking" component={DebtTracking} />
+      <AppStack.Screen name="JoinAccount" component={JoinAccount} />
+
+
+    </AppStack.Navigator>
+  );
+};
 // const AppNavigationContai ner = () => {
 //     return (
 //       <NavigationContainer>
@@ -105,12 +104,13 @@ const AppNavigationContainer = () => {
           }}
         >
 
-          <Drawer.Screen name="Home" component={Home} />
+          <Drawer.Screen name="Home" component={AppStackScreen} />
           <Drawer.Screen name="Profile" component={Profile} />
           <Drawer.Screen name="LogOut" component={LogOut} />
           <Drawer.Screen name="DeleteAccount" component={DeleteAccount} />
 
         </Drawer.Navigator>
+
 
         // <Drawer 
         //   ref={(ref) => { this.drawer = ref; }}
@@ -137,6 +137,8 @@ const AppNavigationContainer = () => {
 
   );
 };
+
+
 
 
 export default AppNavigationContainer;

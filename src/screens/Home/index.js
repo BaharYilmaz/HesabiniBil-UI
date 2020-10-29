@@ -17,10 +17,10 @@ import {
 
 import { Container, Content, Button, Form, Item, Input, Title, H2, H3, Text, Tab, Tabs } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Header from '../Header'
+import Header from '../../components/Header'
 import CommonAccounts from '../CommonAccounts'
 import DebtTracking from '../DebtTracking'
-
+import Footer from '../../components/Footer'
 
 class Home extends Component {
     constructor(props) {
@@ -32,20 +32,10 @@ class Home extends Component {
         return (
 
             <Container >
-                <Header hasTabs />
-                {/* 
-                <View style={{ padding: 50, alignItems: 'center' }}>
-                    <H3>Hoşgeldiniz !</H3>
-                </View> */}
+                <Header />
 
-                <Tabs tabBarPosition="overlayBottom">
-                    <Tab heading="Ortak Hesaplar">
-                        <CommonAccounts />
-                    </Tab>
-                    <Tab heading="Borç Takibi">
-                        <DebtTracking />
-                    </Tab>
-                </Tabs>
+
+                <Footer />
 
             </Container>
         );

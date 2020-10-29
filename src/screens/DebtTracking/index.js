@@ -10,6 +10,7 @@ import {
 import { Container, Header, Content, Button, Form, Item, Input, Title, Left, Right, Body, List, ListItem, Thumbnail, Separator, Text,H1, H2 ,H3,H4} from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Col, Row, Grid } from 'react-native-easy-grid';
+import AppFooter from '../../components/Footer'
 
 
 
@@ -56,6 +57,7 @@ const DebtTracking = (props) => {
     return (
 
         <Container >
+                <Header />
 
             <Content >
                 <Grid  style={{marginTop:20}} >
@@ -123,6 +125,8 @@ const DebtTracking = (props) => {
                     </Col>
                 </Grid>
             </Content>
+            <AppFooter {...props} />
+
         </Container>
     );
 }

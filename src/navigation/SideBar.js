@@ -48,7 +48,7 @@ class Sidebar extends Component {
               <Icon name='delete' size={24} />
               <Text style={styles.menuText} type='h5White' onPress={() => this.navigation.navigate('DeleteAccount')}>Hesabı Sil</Text>
             </TouchableOpacity>
-
+          
           </View>
 
         </Content>
