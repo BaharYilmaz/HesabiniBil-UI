@@ -7,9 +7,8 @@ const AppProvider = (props) => {
     const apiBaseUrl = 'http://10.0.3.2:5001/api';
 
     const [loginState, changeLoginState] = useState(1);
-    const [loginData, setLoginData] = React.useState({ email: '', password: '' });
-    const [registerData, setRegisterData] = React.useState({ email: '', password: '', firstName: '', lastName: '' });
     const [isModalVisible, setModalVisible] = React.useState(false);
+
 
 
     console.log(loginState)
@@ -28,13 +27,13 @@ const AppProvider = (props) => {
 
     // })
 
-    const handleLogin = () => {
-        console.log("login")
+    const handleLogin = (data) => {
+        console.log(data)
         fetch(apiBaseUrl + '/auth/login',
             {
                 method: 'POST',
                 headers: { 'Content-type': 'application/json' },
-                body: JSON.stringify(loginData)
+                body: JSON.stringify(data)
             })
             .then(response => response.json())
             .then(token => {
@@ -43,14 +42,14 @@ const AppProvider = (props) => {
             .catch(error => console.log(error));
 
     }
-    const handleRegister = () => {
-        console.log(registerData)
+    const handleRegister = (data) => {
+        console.log(data)
 
         fetch(apiBaseUrl + '/auth/register',
             {
                 method: 'POST',
                 headers: { 'Content-type': 'application/json' },
-                body: JSON.stringify(registerData)
+                body: JSON.stringify(data)
             })
             .then(response => response.json())
             .then(token => {
@@ -61,15 +60,18 @@ const AppProvider = (props) => {
     const deleteUserAccount = () => {
         console.log("delete account")
     }
-
+    const createAccount = (data) => {
+        console.log(data)
+    }
     return (
         <AppContext.Provider
             value={{
                 loginState, changeLoginState,
-                loginData, setLoginData, handleLogin,
-                registerData, setRegisterData, handleRegister,
+                handleLogin,
+                handleRegister,
                 isModalVisible, setModalVisible,
-                deleteUserAccount
+                createAccount,
+                deleteUserAccount,
             }}>
             {props.children}
         </AppContext.Provider>

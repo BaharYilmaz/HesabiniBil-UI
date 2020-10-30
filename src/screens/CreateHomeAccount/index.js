@@ -1,26 +1,42 @@
-import React, { useContext } from 'react';
+import React, { useContext,useEffect } from 'react';
 import { AppContext } from '../../provider/AppProvider'
+import { useForm, Controller } from 'react-hook-form'
+import { Dimensions, View,TextInput } from 'react-native';
 
-import {
-    Dimensions,
-    View,
-    Alert,
-    SafeAreaView,
-    StyleSheet,
-    TouchableOpacity
-} from 'react-native';
-
-
-import { Container, Header, Content, Button, Form, Item, Input, Title, H2, H3, Text, Body, Badge } from 'native-base';
+import { Container, Header, Content, Button, Form, Item, Input, Title, H2, ListItem, Text, Radio, Left, Right } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Modal from '../../components/MessageModal';
 import AppFooter from '../../components/Footer'
+import { Col, Row, Grid } from 'react-native-easy-grid';
 
 
 const CreateHomeAccount = (props) => {
 
-    const login = useContext(AppContext);
+    const state = useContext(AppContext);
+    const [accountType, setAccountType] = React.useState('Roommate');
+    const { control, handleSubmit, errors } = useForm();
+
     const { height: screenHeight } = Dimensions.get('window');
+    const radioItem = [
+        { label: 'Aile', value: 'Family' },
+        { label: 'Ev Arkadaşları', value: 'Roommate' }
+    ];
+
+
+    const onSubmit = (data) => {
+
+        let accountModel={
+            accountName:data.accountName,
+            accountType:accountType,
+        }
+
+        if (accountModel != null) {
+            state.createAccount(accountModel)
+        }
+        else {
+            console.log("hata account");
+        }
+    }
   
     return (
 
@@ -29,18 +45,54 @@ const CreateHomeAccount = (props) => {
             <Content >
                 <View style={{ flex: 1, height: screenHeight, justifyContent: 'center' }}>
                     <View style={{ alignItems: 'center' }}>
-                        <H2 style={{ color: 'gray', marginBottom: 50 }}>HESABINI BİL</H2>
+                        <H2 style={{ color: 'gray', marginBottom: 50 }}>Yeni Ortak Hesap Oluştur</H2>
                     </View>
 
-                   
-               </View>
+                    <View style={{ margin: 30 }}>
+                        <Item style={{ marginLeft: 20,marginRight: 30,marginBottom:15, padding: 5 }}>
+                            <Controller
+                                control={control} name="accountName" rules={{ required: true }} defaultValue=""
+                                render={({ onChange, onBlur, value }) => (
+                                    <TextInput onChangeText={value => onChange(value)} value={value} placeholder='İsim' style={{ fontSize: 20}} />
+                                )}
+                            />
+                        </Item >
+                        {errors.accountName && <Text style={{ color: 'red', marginLeft: 25 }}>Lütfen adınızı giriniz !</Text>}
 
+                        <View style={{ margin: 20, padding: 5 }}>
+
+                            <Text >Hesap Tipi Seçiniz</Text>
+                            {
+                                radioItem.map((data, key) => {
+                                    return (
+                                        <ListItem key={key}>
+
+                                            <Left>
+                                                <Text style={{ color: 'dimgray' }}>{data.label}</Text>
+                                            </Left>
+                                            <Right>
+                                                <Radio
+                                                    onPress={() => setAccountType(data.value )}
+                                                    color={"gray"}
+                                                    selectedColor={"darkseagreen"}
+                                                    selected={data.value === accountType}
+                                                />
+                                            </Right>
+                                        </ListItem>
+                                    )
+                                })
+                            }
+                        </View>
+                        <Button block rounded style={{ margin: 30, backgroundColor: 'darkseagreen' }} onPress={handleSubmit(onSubmit)}  ><Text>Oluştur</Text></Button>
+                    </View>
+                    {/* <Modal /> */}
+                </View>
             </Content>
             <AppFooter {...props} />
         </Container>
     );
 }
 
-//                                <Col style={{ backgroundColor: '#00CE9F', height: 200 }}></Col>
+//            slateblue                    <Col style={{ backgroundColor: '#00CE9F', height: 200 }}></Col>
 
 export default CreateHomeAccount;
