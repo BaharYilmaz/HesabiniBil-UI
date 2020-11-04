@@ -11,10 +11,11 @@ import RootStackScreen from './RootStackScreen';
 
 import Home from '../screens/Home';
 import Profile from '../screens/Profile';
-import CommonAccounts from '../screens/CommonAccounts';
-import CreateHomeAccount from '../screens/CreateHomeAccount';
+import CommonAccounts from '../screens/Account/CommonAccounts';
+import CreateHomeAccount from '../screens/Account/CreateHomeAccount';
 import DebtTracking from '../screens/DebtTracking';
-import JoinAccount from '../screens/JoinAccount';
+import JoinAccount from '../screens/Account/JoinAccount';
+import HomeAccount from '../screens/Account/HomeAccount';
 
 
 const Tab = createBottomTabNavigator();
@@ -43,6 +44,7 @@ const AppStackScreen = () => {
     <AppStack.Navigator  headerMode='none'  >
       <AppStack.Screen name="CommonAccounts" component={CommonAccounts} />
       <AppStack.Screen name="CreateHomeAccount" component={CreateHomeAccount} />
+      <AppStack.Screen name="HomeAccount" component={HomeAccount} />
       <AppStack.Screen name="DebtTracking" component={DebtTracking} />
       <AppStack.Screen name="JoinAccount" component={JoinAccount} />
 

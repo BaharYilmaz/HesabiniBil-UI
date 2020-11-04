@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { AppContext } from '../../provider/AppProvider'
+import React, { useContext, useState } from 'react';
+import { AppContext } from '../../../provider/AppProvider'
 import { useForm, Controller } from 'react-hook-form'
 
 import {
@@ -10,7 +10,7 @@ import {
 
 import { Container, Header, Content, Button, Form, Item, Input, Title, H2, Left, Text, Body, Right } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Modal from '../../components/MessageModal';
+import Modal from '../../../components/MessageModal';
 
 
 //this.props.navigation.goBack();
@@ -18,15 +18,34 @@ const SignUp = (props) => {
 
     const { control, handleSubmit, errors } = useForm();
     const state = useContext(AppContext);
+    const [password, setPasswordMatch] = useState(true)
 
     const onSubmit = (data) => {
 
-        if (data != null) {
-            state.handleRegister(data);
+        var passwordMatch = isPasswordMatch(data.password, data.passwordAgain)
+
+        if (data != null && passwordMatch == true) {
+            let registerModel = {
+                firstName: data.firstName,
+                lastName: data.lastName,
+                email: data.email,
+                password: data.password
+            }
+            state.handleRegister(registerModel);
         }
         else {
             console.log("hata register");
             //register.setModalVisible(true);
+        }
+    }
+    const isPasswordMatch = (password, passwordAgain) => {
+        if (password === passwordAgain) {
+            setPasswordMatch(true);
+            return true;
+        }
+        else {
+            setPasswordMatch(false)
+            return false;
         }
     }
 
@@ -90,12 +109,22 @@ const SignUp = (props) => {
                             <Controller
                                 control={control} name="password" defaultValue="" rules={{ required: true }}
                                 render={({ onChange, onBlur, value }) => (
-                                    <TextInput onChangeText={value => onChange(value)} value={value} placeholder='Şifre' style={{ fontSize: 20 }} secureTextEntry={true} />
+                                    <TextInput onChangeText={value => onChange(value)} value={value} placeholder='Şifre' secureTextEntry={true} style={{ fontSize: 20 }} />
                                 )}
                             />
                         </Item>
                         {errors.password && <Text style={{ color: 'red', marginLeft: 10 }}>Lütfen şifrenizi giriniz !</Text>}
+                        <Item style={{ margin: 20, padding: 5 }}>
+                            <Controller
+                                control={control} name="passwordAgain" defaultValue="" rules={{ required: true }}
+                                render={({ onChange, onBlur, value }) => (
+                                    <TextInput onChangeText={value => onChange(value)} value={value} placeholder='Şifre(Tekrar)' secureTextEntry={true} style={{ fontSize: 20 }} />
+                                )}
+                            />
+                        </Item>
+                        {errors.passwordAgain && <Text style={{ color: 'red', marginLeft: 10 }}>Lütfen şifrenizi tekrar giriniz !</Text>}
 
+                        {password ? null : <Text style={{ color: 'red', marginLeft: 10 }}>Şifre eşleşmedi !</Text>}
                         <Button block rounded style={{ margin: 20, padding: 5 }} onPress={handleSubmit(onSubmit)} ><Text>Kayıt Ol</Text></Button>
                     </View>
                     <Modal />

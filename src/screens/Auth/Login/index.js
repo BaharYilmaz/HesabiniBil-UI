@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { AppContext } from '../../provider/AppProvider'
+import { AppContext } from '../../../provider/AppProvider'
 import { useForm, Controller } from 'react-hook-form'
 
 import { Dimensions, View, TextInput } from 'react-native';
@@ -7,7 +7,7 @@ import { Dimensions, View, TextInput } from 'react-native';
 
 import { Container, Header, Content, Button, Form, Item, Input, Title, H2, H3, Text, Body, Badge, Right } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Modal from '../../components/MessageModal';
+import Modal from '../../../components/MessageModal';
 
 
 const Login = (props) => {
@@ -17,7 +17,7 @@ const Login = (props) => {
     const { control, handleSubmit, errors } = useForm();
 
     const onSubmit = (data) => {
-       
+
         if (data != null) {
             state.handleLogin(data);
         }
@@ -61,7 +61,7 @@ const Login = (props) => {
                                 control={control} name="password" defaultValue="" rules={{ required: true }}
                                 render={({ onChange, onBlur, value }) => (
                                     <View style={{ flexDirection: 'row' }}>
-                                        <TextInput onChangeText={value => onChange(value)} value={value} placeholder='Şifre' style={{ fontSize: 20 }} secureTextEntry={true} />
+                                        <TextInput onChangeText={value => onChange(value)} value={value} placeholder='Şifre' secureTextEntry={true} style={{ fontSize: 20 }} />
                                         <Right>
                                             <Icon name='lock-outline' size={30} color="gray" />
                                         </Right>
@@ -71,7 +71,10 @@ const Login = (props) => {
                         </Item>
                         {errors.password && <Text style={{ color: 'red', marginLeft: 10 }}>Lütfen şifrenizi giriniz !</Text>}
 
-                        <Button block rounded style={{ margin: 20, padding: 5 }} onPress={handleSubmit(onSubmit)} ><Text>Kayıt Ol</Text></Button>
+                        <Button block rounded style={{ margin: 5, padding: 5 }} onPress={handleSubmit(onSubmit)} ><Text>Giriş Yap</Text></Button>
+                        <Button transparent block onPress={() => props.navigation.navigate('SignUp')} >
+                            <Text style={{ textDecorationLine: 'underline', color: 'green' }}>Şifremi unuttum</Text>
+                        </Button>
                         <View style={{ alignItems: 'center' }}>
                             <Text> Hesabın yok mu ?</Text>
                             <Button transparent block onPress={() => props.navigation.navigate('SignUp')} >

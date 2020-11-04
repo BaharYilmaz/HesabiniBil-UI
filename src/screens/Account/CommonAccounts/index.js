@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { AppContext } from '../../provider/AppProvider'
+import { AppContext } from '../../../provider/AppProvider'
 
 import {
     Dimensions,
@@ -10,17 +10,16 @@ import {
 import { Container, Header, Content, Button, Form, Item, Input, Title, Left, Right, Body, List, ListItem, Badge, Tabs, Tab, Footer, FooterTab, Text, H1, H2, H3, H4 } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Col, Row, Grid } from 'react-native-easy-grid';
-import CreateHomeAccount from '../CreateHomeAccount';
-import JoinAccount from '../JoinAccount';
 
-import AppFooter from '../../components/Footer'
+
+import AppFooter from '../../../components/Footer'
 
 const CommonAccounts = (props) => {
 
     return (
 
         <Container >
-                <Header />
+            <Header />
 
             <Content style={{ margin: 20 }}>
 
@@ -36,7 +35,7 @@ const CommonAccounts = (props) => {
                             </Badge>
                         </Body>
                         <Right>
-                            <Button transparent >
+                            <Button transparent onPress={() => props.navigation.navigate('HomeAccount', { accountId: 1 })}>
                                 <Text>Hesaba Git</Text>
                             </Button>
                         </Right>
@@ -71,7 +70,7 @@ const CommonAccounts = (props) => {
                     </Right>
                 </FooterTab>
             </Footer>
-           
+
             <AppFooter {...props} />
 
         </Container>

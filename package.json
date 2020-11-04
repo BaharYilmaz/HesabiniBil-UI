@@ -10,14 +10,17 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/bottom-tabs": "^5.9.2",
     "@react-navigation/drawer": "^5.9.3",
     "@react-navigation/native": "^5.7.6",
     "@react-navigation/stack": "^5.9.3",
     "antd-mobile": "^2.3.4",
+    "jwt-decode": "3.0.0",
     "native-base": "^2.13.14",
-    "react": "16.13.1",
+    "react": "^16.13.1",
+    "react-dom": "^17.0.1",
     "react-hook-form": "^6.9.5",
     "react-native": "0.63.3",
     "react-native-elements": "^2.3.2",

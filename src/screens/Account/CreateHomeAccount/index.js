@@ -1,12 +1,12 @@
 import React, { useContext,useEffect } from 'react';
-import { AppContext } from '../../provider/AppProvider'
+import { AppContext } from '../../../provider/AppProvider'
 import { useForm, Controller } from 'react-hook-form'
 import { Dimensions, View,TextInput } from 'react-native';
 
 import { Container, Header, Content, Button, Form, Item, Input, Title, H2, ListItem, Text, Radio, Left, Right } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Modal from '../../components/MessageModal';
-import AppFooter from '../../components/Footer'
+// import Modal from '../../components/MessageModal';
+import AppFooter from '../../../components/Footer'
 import { Col, Row, Grid } from 'react-native-easy-grid';
 
 
@@ -31,7 +31,12 @@ const CreateHomeAccount = (props) => {
         }
 
         if (accountModel != null) {
-            state.createAccount(accountModel)
+            var result=state.createAccount(accountModel)
+            console.log(result)
+            if(result)
+            {
+                props.navigation.navigate('CommonAccounts')
+            }
         }
         else {
             console.log("hata account");
@@ -57,7 +62,7 @@ const CreateHomeAccount = (props) => {
                                 )}
                             />
                         </Item >
-                        {errors.accountName && <Text style={{ color: 'red', marginLeft: 25 }}>Lütfen adınızı giriniz !</Text>}
+                        {errors.accountName && <Text style={{ color: 'red', marginLeft: 25 }}>Lütfen bir ev adı giriniz !</Text>}
 
                         <View style={{ margin: 20, padding: 5 }}>
 
