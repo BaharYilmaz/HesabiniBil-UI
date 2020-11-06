@@ -41,14 +41,12 @@ import DeleteAccount from '../components/DeleteAccount'
 const AppStackScreen = () => {
   return (
 
-    <AppStack.Navigator  headerMode='none'  >
+    <AppStack.Navigator headerMode='none'  >
       <AppStack.Screen name="CommonAccounts" component={CommonAccounts} />
       <AppStack.Screen name="CreateHomeAccount" component={CreateHomeAccount} />
       <AppStack.Screen name="HomeAccount" component={HomeAccount} />
       <AppStack.Screen name="DebtTracking" component={DebtTracking} />
       <AppStack.Screen name="JoinAccount" component={JoinAccount} />
-
-
     </AppStack.Navigator>
   );
 };
@@ -78,11 +76,11 @@ const AppNavigationContainer = () => {
   //const dimensions = useWindowDimensions();
 
   const login = useContext(AppContext);
+
+
   return (
-
-
     <NavigationContainer>
-      {login.loginState !== 0 ? (
+      {login.loginState !== null ? (
         <Drawer.Navigator initialRouteName="Home"
           drawerContent={(props) => <SideBar {...props} />}
           drawerContentOptions={{

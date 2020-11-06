@@ -19,16 +19,13 @@ const JoinAccount = (props) => {
     const login = useContext(AppContext);
     const { height: screenHeight } = Dimensions.get('window');
 
-
-   
     return (
 
         <Container >
                 <Header />
 
             <Content >
-               
-                        
+                                       
                         <H3 style={{color:'white'}}>join</H3> 
                        
                    

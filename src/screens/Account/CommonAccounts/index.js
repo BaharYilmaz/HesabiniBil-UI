@@ -1,8 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { AppContext } from '../../../provider/AppProvider'
 
 import {
     Dimensions,
+    ScrollView,
     View,
 } from 'react-native';
 
@@ -16,44 +17,56 @@ import AppFooter from '../../../components/Footer'
 
 const CommonAccounts = (props) => {
 
-    return (
+    const state = useContext(AppContext);
+    const accountList = state.accountList;
 
-        <Container >
+    useEffect(() => {
+        state.getAccounts()
+        console.log("lst", accountList)
+    })
+
+    // {
+    //     productList.map(list =>
+    //         <Option key={list.productID} value={list.productID}>{list.productCode} - {list.productName} - {list.productDescription}</Option>
+    //     )
+    // }
+
+    return (
+        < Container >
             <Header />
 
             <Content style={{ margin: 20 }}>
 
-                <View style={{ backgroundColor: 'lightblue', margin: 5, padding: 10, borderRadius: 5 }}>
+                <View  style={{ backgroundColor: 'lightblue', margin: 5, padding: 10, borderRadius: 5 }}>
                     <H3 style={{ color: 'white' }}>Ortak Hesaplar</H3>
                 </View>
-                <List >
-                    <ListItem thumbnail >
-                        <Body>
-                            <Text style={{ marginBottom: 10 }}>Hesap 1</Text>
-                            <Badge warning>
-                                <Text style={{ color: 'white' }} note numberOfLines={1}>Aile</Text>
-                            </Badge>
-                        </Body>
-                        <Right>
-                            <Button transparent onPress={() => props.navigation.navigate('HomeAccount', { accountId: 1 })}>
-                                <Text>Hesaba Git</Text>
-                            </Button>
-                        </Right>
-                    </ListItem>
-                    <ListItem thumbnail>
-                        <Body>
-                            <Text style={{ marginBottom: 10 }}>Hesap 2</Text>
-                            <Badge warning>
-                                <Text style={{ color: 'white' }} note numberOfLines={1}>Ev Arkadaşları</Text>
-                            </Badge>
-                        </Body>
-                        <Right>
-                            <Button transparent>
-                                <Text>Hesaba Git</Text>
-                            </Button>
-                        </Right>
-                    </ListItem>
-                </List>
+                <View>
+
+
+                    <List >
+                        <ScrollView >
+
+                            {
+                                accountList.map(list =>
+                                    <ListItem thumbnail key={list.ortakHesapID} >
+                                        <Body>
+                                            <Text style={{ marginBottom: 10 }}>{list.hesapAd}</Text>
+                                            <Badge warning>
+                                                <Text style={{ color: 'white' }} note numberOfLines={1}>{list.hesapTurID==1?'Aile':'Ev Arkadaşları'}</Text>
+                                            </Badge>
+                                        </Body>
+                                        <Right>
+                                            <Button transparent onPress={() => props.navigation.navigate('HomeAccount', { accountId: list.ortakHesapID })}>
+                                                <Text>Hesaba Git</Text>
+                                            </Button>
+                                        </Right>
+                                    </ListItem>
+                                )
+                            }
+
+                        </ScrollView>
+                    </List>
+                </View>
 
             </Content>
             <Footer style={{ backgroundColor: 'transparent', margin: 30 }}>
@@ -73,7 +86,7 @@ const CommonAccounts = (props) => {
 
             <AppFooter {...props} />
 
-        </Container>
+        </Container >
     );
 }
 //                                <Col style={{ backgroundColor: '#00CE9F', height: 200 }}></Col>

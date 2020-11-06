@@ -8,13 +8,24 @@ const AppProvider = (props) => {
 
     const apiBaseUrl = 'http://10.0.3.2:5001/api';
 
-    const [loginState, changeLoginState] = useState(0);
+    const [loginState, changeLoginState] = useState('');
     const [isModalVisible, setModalVisible] = React.useState(false);
-    const [token, setToken] = useState('');
+    const [accountList, setAccountList] = React.useState([]);
 
+    useEffect(() => { let result = getMyToken() })
 
-
-    console.log(loginState)
+    const getMyToken = async () => {
+        var token = await getToken();
+        changeLoginState(token)
+        return token
+    }
+    const getToken = async () => await AsyncStorage.getItem("token");
+    const saveToken = async (key, value) => {
+        try {
+            await AsyncStorage.setItem(key, value);
+            changeLoginState(value);
+        } catch (e) { }
+    };
 
     const handleLogin = (data) => {
         console.log(data)
@@ -26,30 +37,10 @@ const AppProvider = (props) => {
             })
             .then(response => response.json())
             .then(data => {
-                if (data != null) {
-                    console.log(data.token)
-                    saveToken("token", data.token);
-                }
+                if (data != null) { saveToken("token", data.token); }
             })
             .catch(error => console.log("hata", error));
 
-    }
-    const saveToken = async (key, value) => {
-        try {
-            await AsyncStorage.setItem(key, value);
-        } catch (error) {
-            console.log('AsyncStorage Error: ' + error.message);
-        }
-    };
-    const getToken = async (storage_Key) => {
-        try {
-            const token = await AsyncStorage.getItem(storage_Key)
-            console.log("1", token)
-            return token
-            // setToken(value);
-        } catch (e) {
-            console.log('AsyncStorage Get Error: ' + error.message);
-        }
     }
 
     const handleRegister = (data) => {
@@ -62,21 +53,18 @@ const AppProvider = (props) => {
             })
             .then(response => response.json())
             .then(data => {
-                if (data != null) {
-                    console.log(data.token)
-                    saveToken.saveItem("id_token", data.token);
-                }
+                if (data != null) { saveToken("token", data.token); }
             })
             .catch(error => console.log(error));
     }
 
-    const deleteUserAccount = () => {
+    const deleteUserAccount = async () => {
         console.log("delete account")
     }
-    const createAccount = (data) => {
-        console.log("token 3", getToken("token"))
-
-        fetch(apiBaseUrl + '/auth/register',
+    const createAccount = async (data) => {
+        var token = await getToken();
+        console.log(data)
+        fetch(apiBaseUrl + '/account/AddAccount',
             {
                 method: 'POST',
                 headers: new Headers({
@@ -86,16 +74,25 @@ const AppProvider = (props) => {
                 body: JSON.stringify(data)
             })
             .then(response => response.json())
-            .then(data => {
-                if (data != null) {
-                    console.log(data.token)
-                    saveToken.saveItem("id_token", data.token);
-                }
-            })
-            .catch(error => console.log(error));
-        console.log(data)
+            .then(data => { console.log(data) })
+            .catch(error => console.log("hata", error));
         return true;
+
     }
+    const getAccounts = async () => {
+        var token = await getToken();
+         fetch(apiBaseUrl + '/account/getAccounts',
+            {
+                method: 'GET',
+                headers: new Headers({
+                    'Authorization': "Bearer " + token,
+                    'Content-Type': 'application/json'
+                })
+            })
+            .then(response => response.json())
+            .then(data => { setAccountList(data)  })
+    }
+
     return (
         <AppContext.Provider
             value={{
@@ -105,7 +102,7 @@ const AppProvider = (props) => {
                 isModalVisible, setModalVisible,
                 createAccount,
                 deleteUserAccount,
-                getToken
+                getAccounts,accountList
             }}>
             {props.children}
         </AppContext.Provider>

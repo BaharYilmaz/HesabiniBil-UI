@@ -1,7 +1,7 @@
-import React, { useContext,useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { AppContext } from '../../../provider/AppProvider'
 import { useForm, Controller } from 'react-hook-form'
-import { Dimensions, View,TextInput } from 'react-native';
+import { Dimensions, View, TextInput } from 'react-native';
 
 import { Container, Header, Content, Button, Form, Item, Input, Title, H2, ListItem, Text, Radio, Left, Right } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -13,28 +13,26 @@ import { Col, Row, Grid } from 'react-native-easy-grid';
 const CreateHomeAccount = (props) => {
 
     const state = useContext(AppContext);
-    const [accountType, setAccountType] = React.useState('Roommate');
+    const [accountType, setAccountType] = React.useState(2);
     const { control, handleSubmit, errors } = useForm();
 
     const { height: screenHeight } = Dimensions.get('window');
     const radioItem = [
-        { label: 'Aile', value: 'Family' },
-        { label: 'Ev Arkadaşları', value: 'Roommate' }
+        { label: 'Aile', value: 1 },
+        { label: 'Ev Arkadaşları', value: 2 }
     ];
-
 
     const onSubmit = (data) => {
 
-        let accountModel={
-            accountName:data.accountName,
-            accountType:accountType,
+        let accountModel = {
+            HesapAd: data.accountName,
+            HesapTurID: accountType,
+            HesapAktifDurum: true
         }
-
         if (accountModel != null) {
-            var result=state.createAccount(accountModel)
+            var result = state.createAccount(accountModel)
             console.log(result)
-            if(result)
-            {
+            if (result) {
                 props.navigation.navigate('CommonAccounts')
             }
         }
@@ -42,7 +40,7 @@ const CreateHomeAccount = (props) => {
             console.log("hata account");
         }
     }
-  
+
     return (
 
         <Container >
@@ -54,11 +52,11 @@ const CreateHomeAccount = (props) => {
                     </View>
 
                     <View style={{ margin: 30 }}>
-                        <Item style={{ marginLeft: 20,marginRight: 30,marginBottom:15, padding: 5 }}>
+                        <Item style={{ marginLeft: 20, marginRight: 30, marginBottom: 15, padding: 5 }}>
                             <Controller
                                 control={control} name="accountName" rules={{ required: true }} defaultValue=""
                                 render={({ onChange, onBlur, value }) => (
-                                    <TextInput onChangeText={value => onChange(value)} value={value} placeholder='İsim' style={{ fontSize: 20}} />
+                                    <TextInput onChangeText={value => onChange(value)} value={value} placeholder='İsim' style={{ fontSize: 20 }} />
                                 )}
                             />
                         </Item >
@@ -77,7 +75,7 @@ const CreateHomeAccount = (props) => {
                                             </Left>
                                             <Right>
                                                 <Radio
-                                                    onPress={() => setAccountType(data.value )}
+                                                    onPress={() => setAccountType(data.value)}
                                                     color={"gray"}
                                                     selectedColor={"darkseagreen"}
                                                     selected={data.value === accountType}
