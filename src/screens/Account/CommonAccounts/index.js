@@ -1,11 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { AppContext } from '../../../provider/AppProvider'
 
-import {
-    Dimensions,
-    ScrollView,
-    View,
-} from 'react-native';
+import { Dimensions, ScrollView, FlatList, View, SafeAreaView,StyleSheet } from 'react-native';
 
 
 import { Container, Header, Content, Button, Form, Item, Input, Title, Left, Right, Body, List, ListItem, Badge, Tabs, Tab, Footer, FooterTab, Text, H1, H2, H3, H4 } from 'native-base';
@@ -21,28 +17,19 @@ const CommonAccounts = (props) => {
     const accountList = state.accountList;
 
     useEffect(() => {
+        console.log("This line will be run only after the first render ");
         state.getAccounts()
-        console.log("lst", accountList)
-    })
-
-    // {
-    //     productList.map(list =>
-    //         <Option key={list.productID} value={list.productID}>{list.productCode} - {list.productName} - {list.productDescription}</Option>
-    //     )
-    // }
+    }, []);
 
     return (
         < Container >
             <Header />
-
-            <Content style={{ margin: 20 }}>
-
-                <View  style={{ backgroundColor: 'lightblue', margin: 5, padding: 10, borderRadius: 5 }}>
+            <View style={{ backgroundColor: 'lightblue', margin: 30, padding: 10, borderRadius: 5,alignItems:'center' }}>
                     <H3 style={{ color: 'white' }}>Ortak Hesaplar</H3>
                 </View>
-                <View>
-
-
+            <Content style={{ marginHorizontal: 20 }}>
+               
+                <SafeAreaView >
                     <List >
                         <ScrollView >
 
@@ -52,7 +39,7 @@ const CommonAccounts = (props) => {
                                         <Body>
                                             <Text style={{ marginBottom: 10 }}>{list.hesapAd}</Text>
                                             <Badge warning>
-                                                <Text style={{ color: 'white' }} note numberOfLines={1}>{list.hesapTurID==1?'Aile':'Ev Arkadaşları'}</Text>
+                                                <Text style={{ color: 'white' }} note numberOfLines={1}>{list.hesapTurID == 1 ? 'Aile' : 'Ev Arkadaşları'}</Text>
                                             </Badge>
                                         </Body>
                                         <Right>
@@ -63,10 +50,9 @@ const CommonAccounts = (props) => {
                                     </ListItem>
                                 )
                             }
-
                         </ScrollView>
                     </List>
-                </View>
+                </SafeAreaView >
 
             </Content>
             <Footer style={{ backgroundColor: 'transparent', margin: 30 }}>

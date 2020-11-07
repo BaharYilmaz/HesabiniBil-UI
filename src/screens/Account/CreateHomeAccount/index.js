@@ -25,9 +25,9 @@ const CreateHomeAccount = (props) => {
     const onSubmit = (data) => {
 
         let accountModel = {
-            HesapAd: data.accountName,
-            HesapTurID: accountType,
-            HesapAktifDurum: true
+            hesapAd: data.accountName,
+            hesapTurID: accountType,
+            hesapAktifDurum: true
         }
         if (accountModel != null) {
             var result = state.createAccount(accountModel)

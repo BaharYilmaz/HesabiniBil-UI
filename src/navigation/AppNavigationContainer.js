@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { AppContext } from '../provider/AppProvider'
+import { AsyncStorage } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -28,7 +29,6 @@ const Drawer = createDrawerNavigator();
 import Header from '../components/Header';
 import SideBar from './SideBar';
 
-import LogOut from '../components/LogOut'
 import DeleteAccount from '../components/DeleteAccount'
 
 
@@ -50,6 +50,13 @@ const AppStackScreen = () => {
     </AppStack.Navigator>
   );
 };
+
+const LogOut = () => {
+  const login = useContext(AppContext);
+  login.handleLogOut();
+  return (<RootStackScreen/>)
+
+}
 // const AppNavigationContai ner = () => {
 //     return (
 //       <NavigationContainer>
@@ -76,7 +83,7 @@ const AppNavigationContainer = () => {
   //const dimensions = useWindowDimensions();
 
   const login = useContext(AppContext);
-
+ 
 
   return (
     <NavigationContainer>

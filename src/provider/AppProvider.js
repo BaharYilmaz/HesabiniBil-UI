@@ -12,11 +12,12 @@ const AppProvider = (props) => {
     const [isModalVisible, setModalVisible] = React.useState(false);
     const [accountList, setAccountList] = React.useState([]);
 
-    useEffect(() => { let result = getMyToken() })
+    useEffect(() => { loggedIn() }, [])
 
-    const getMyToken = async () => {
+    const loggedIn = async () => {
         var token = await getToken();
         changeLoginState(token)
+        console.log("token var mı", token)
         return token
     }
     const getToken = async () => await AsyncStorage.getItem("token");
@@ -37,10 +38,16 @@ const AppProvider = (props) => {
             })
             .then(response => response.json())
             .then(data => {
-                if (data != null) { saveToken("token", data.token); }
+                if (data != null) { saveToken("token", data.token); loggedIn() }
             })
             .catch(error => console.log("hata", error));
 
+    }
+    const handleLogOut = async () => {
+        try {
+            await AsyncStorage.removeItem("token")
+            loggedIn();
+        } catch (e) { }
     }
 
     const handleRegister = (data) => {
@@ -53,7 +60,7 @@ const AppProvider = (props) => {
             })
             .then(response => response.json())
             .then(data => {
-                if (data != null) { saveToken("token", data.token); }
+                if (data != null) { saveToken("token", data.token); loggedIn() }
             })
             .catch(error => console.log(error));
     }
@@ -74,14 +81,16 @@ const AppProvider = (props) => {
                 body: JSON.stringify(data)
             })
             .then(response => response.json())
-            .then(data => { console.log(data) })
-            .catch(error => console.log("hata", error));
+            .then(data => { console.log(data); getAccounts() })
+            .catch(error =>{ console.log("hata", error); getAccounts()});
+           
         return true;
 
     }
     const getAccounts = async () => {
         var token = await getToken();
-         fetch(apiBaseUrl + '/account/getAccounts',
+        console.log("giden token",token)
+        fetch(apiBaseUrl + '/account/getAccounts',
             {
                 method: 'GET',
                 headers: new Headers({
@@ -90,7 +99,9 @@ const AppProvider = (props) => {
                 })
             })
             .then(response => response.json())
-            .then(data => { setAccountList(data)  })
+            .then(data => { setAccountList(data) })
+        console.log("hesap listesi alındı")
+
     }
 
     return (
@@ -99,10 +110,11 @@ const AppProvider = (props) => {
                 loginState, changeLoginState,
                 handleLogin,
                 handleRegister,
+                handleLogOut,
                 isModalVisible, setModalVisible,
                 createAccount,
                 deleteUserAccount,
-                getAccounts,accountList
+                getAccounts, accountList
             }}>
             {props.children}
         </AppContext.Provider>
