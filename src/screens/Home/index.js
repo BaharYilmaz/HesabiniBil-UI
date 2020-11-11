@@ -19,7 +19,7 @@ import { Container, Content, Button, Form, Item, Input, Title, H2, H3, Text, Tab
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Header from '../../components/Header'
 import CommonAccounts from '../Account/CommonAccounts'
-import DebtTracking from '../DebtTracking'
+import DebtTracking from '../Debt/DebtTracking'
 import Footer from '../../components/Footer'
 
 class Home extends Component {

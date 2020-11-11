@@ -43,7 +43,7 @@ const CommonAccounts = (props) => {
                                             </Badge>
                                         </Body>
                                         <Right>
-                                            <Button transparent onPress={() => props.navigation.navigate('HomeAccount', { accountId: list.ortakHesapID })}>
+                                            <Button transparent onPress={() => props.navigation.navigate('HomeAccount', { account: list })}>
                                                 <Text>Hesaba Git</Text>
                                             </Button>
                                         </Right>

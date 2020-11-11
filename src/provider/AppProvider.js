@@ -1,30 +1,62 @@
 import React, { useState, Component, useEffect } from 'react';
+import { View, StyleSheet, Button, Alert } from "react-native";
 import { AsyncStorage } from 'react-native';
-
-import deviceStorage from '../services/deviceStorage'
+import moment from "moment";
 const AppContext = React.createContext();
+import jwt_decode from "jwt-decode";
 
 const AppProvider = (props) => {
 
     const apiBaseUrl = 'http://10.0.3.2:5001/api';
 
-    const [loginState, changeLoginState] = useState('');
-    const [isModalVisible, setModalVisible] = React.useState(false);
+    const [loginState, changeLoginState] = useState(false);
+    const [userId, setUserId] = useState('');
+
+    const [modal, setModal] = React.useState({ modalVisible: false, modalMessage: '' });
     const [accountList, setAccountList] = React.useState([]);
+    const [accountMembers, setAccountMembers] = React.useState([]);
+
+    var tokenUserId = '';
 
     useEffect(() => { loggedIn() }, [])
 
     const loggedIn = async () => {
-        var token = await getToken();
-        changeLoginState(token)
-        console.log("token var mı", token)
-        return token
+        var result = await getToken();
+        result = JSON.parse(result)
+
+        if (result === null) {
+            changeLoginState(false); console.log("token yok", loginState)
+        }
+        else {
+            var tokenDate = moment(result.expiration).format('YYYY-MM-DD HH:mm:ss')
+            var date = moment().format('YYYY-MM-DD HH:mm:ss')
+            var decoded = jwt_decode(result.token);
+
+            console.log("decoded", decoded.nameIdentifier);
+            if (moment(tokenDate).isAfter(date)) {
+                console.log("token geçerli")
+                changeLoginState(true)
+                await setUserId(decoded.nameIdentifier)
+                tokenUserId = decoded.nameIdentifier;
+                console.log("decoded user ıd", tokenUserId)
+                //  changeLoginState(result.token)
+
+            }
+            else {
+                changeLoginState(false);
+                setUserId('')
+                console.log("token geçersiz")
+            }
+        }
+        // return result
     }
+
     const getToken = async () => await AsyncStorage.getItem("token");
     const saveToken = async (key, value) => {
         try {
-            await AsyncStorage.setItem(key, value);
-            changeLoginState(value);
+            await AsyncStorage.setItem(key, JSON.stringify(value));
+            loggedIn()
+
         } catch (e) { }
     };
 
@@ -38,14 +70,18 @@ const AppProvider = (props) => {
             })
             .then(response => response.json())
             .then(data => {
-                if (data != null) { saveToken("token", data.token); loggedIn() }
+                if (data != null) {
+                    saveToken("token", data);
+                }
             })
-            .catch(error => console.log("hata", error));
-
+            .catch(error => 
+                console.log("hata", error)
+            );
     }
     const handleLogOut = async () => {
         try {
             await AsyncStorage.removeItem("token")
+            console.log("çıkış yapıldı")
             loggedIn();
         } catch (e) { }
     }
@@ -60,7 +96,7 @@ const AppProvider = (props) => {
             })
             .then(response => response.json())
             .then(data => {
-                if (data != null) { saveToken("token", data.token); loggedIn() }
+                if (data != null) { saveToken("token", data); }
             })
             .catch(error => console.log(error));
     }
@@ -69,57 +105,113 @@ const AppProvider = (props) => {
         console.log("delete account")
     }
     const createAccount = async (data) => {
-        var token = await getToken();
-        console.log(data)
+        var result = JSON.parse(await getToken());
+
+        console.log("giden token", result.token)
         fetch(apiBaseUrl + '/account/AddAccount',
             {
                 method: 'POST',
                 headers: new Headers({
-                    'Authorization': "Bearer " + token,
+                    'Authorization': "Bearer " + result.token,
                     'Content-Type': 'application/json'
                 }),
                 body: JSON.stringify(data)
             })
             .then(response => response.json())
-            .then(data => { console.log(data); getAccounts() })
-            .catch(error =>{ console.log("hata", error); getAccounts()});
-           
-        return true;
+            .then(data => { console.log("data", data); getAccounts() })
+            .catch(error => { console.log("hata", error); getAccounts() });
 
+        return true;
     }
     const getAccounts = async () => {
-        var token = await getToken();
-        console.log("giden token",token)
-        fetch(apiBaseUrl + '/account/getAccounts',
+        console.log("ıd", userId)
+
+        var result = await getToken();
+        result = JSON.parse(result)
+        var decoded = jwt_decode(result.token);
+        var tokenId = decoded.nameIdentifier
+        console.log("USER ıd", tokenId)
+        fetch(apiBaseUrl + '/account/getAccountsByStatus/' + tokenId + '/true',
             {
                 method: 'GET',
                 headers: new Headers({
-                    'Authorization': "Bearer " + token,
                     'Content-Type': 'application/json'
                 })
             })
             .then(response => response.json())
             .then(data => { setAccountList(data) })
-        console.log("hesap listesi alındı")
+            .catch(error => { console.log("hata", error); })
+        console.log("hesap listesi alındı", accountList)
+    }
+    // const getAccounts = async () => {
+    //     var result = await getToken();
+    //     result = JSON.parse(result)
+    //     var decoded = jwt_decode(result.token);
+    //     var tokenId = decoded.nameIdentifier
+    //     console.log("USER ıd", tokenId)
 
+    //     fetch(apiBaseUrl + '/account/getAccounts/' + tokenId,
+    //         {
+    //             method: 'GET',
+    //             headers: new Headers({
+    //                 'Content-Type': 'application/json'
+    //             })
+    //         })
+    //         .then(response => response.json())
+    //         .then(data => { setAccountList(data) ;console.log(data)})
+    //         .catch(error => { console.log("hata list", error); })
+    //     // console.log("data")
+    // }
+
+    // const getAccountsById = async (ortakHesapId) => {
+    //     console.log(ortakHesapId)
+    //     fetch(apiBaseUrl + '/account/api/Account/getAccountsByID/'+ortakHesapId,
+    //         {
+    //             method: 'GET',
+    //             headers: new Headers({
+    //                 'Content-Type': 'application/json'
+    //             })
+    //         })
+    //         .then(response => response.json())
+    //         .then(data => { setAccountList(data);console.log(data) })
+    //         .catch(error => { console.log("hata", error); })
+
+    //     console.log("hesap alındı")
+    // }
+    // /api/Account/getAccountMembers/{OrtakHesapID}
+
+    const getAccountMembers = (ortakHesapId) => {
+        console.log(ortakHesapId)
+        fetch(apiBaseUrl + '/account/getAccountMembers/' + ortakHesapId,
+            {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json'
+                })
+            })
+            .then(response => response.json())
+            .then(data => { setAccountMembers(data); console.log(data) })
+            .catch(error => { console.log("hata", error); })
+
+        console.log("member alındı", accountMembers)
     }
 
     return (
         <AppContext.Provider
             value={{
                 loginState, changeLoginState,
+                userId, setUserId,
                 handleLogin,
                 handleRegister,
                 handleLogOut,
-                isModalVisible, setModalVisible,
                 createAccount,
                 deleteUserAccount,
-                getAccounts, accountList
+                getAccounts, accountList,
+                getAccountMembers, accountMembers,
             }}>
             {props.children}
         </AppContext.Provider>
     )
-
 }
 
-export { AppProvider, AppContext }; 3
+export { AppProvider, AppContext }; 

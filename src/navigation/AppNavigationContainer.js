@@ -14,7 +14,7 @@ import Home from '../screens/Home';
 import Profile from '../screens/Profile';
 import CommonAccounts from '../screens/Account/CommonAccounts';
 import CreateHomeAccount from '../screens/Account/CreateHomeAccount';
-import DebtTracking from '../screens/DebtTracking';
+import DebtTracking from '../screens/Debt/DebtTracking';
 import JoinAccount from '../screens/Account/JoinAccount';
 import HomeAccount from '../screens/Account/HomeAccount';
 
@@ -30,6 +30,7 @@ import Header from '../components/Header';
 import SideBar from './SideBar';
 
 import DeleteAccount from '../components/DeleteAccount'
+import LogOut from '../components/LogOut'
 
 
 // const initialLoginState = {
@@ -51,12 +52,7 @@ const AppStackScreen = () => {
   );
 };
 
-const LogOut = () => {
-  const login = useContext(AppContext);
-  login.handleLogOut();
-  return (<RootStackScreen/>)
 
-}
 // const AppNavigationContai ner = () => {
 //     return (
 //       <NavigationContainer>
@@ -83,11 +79,11 @@ const AppNavigationContainer = () => {
   //const dimensions = useWindowDimensions();
 
   const login = useContext(AppContext);
- 
+
 
   return (
     <NavigationContainer>
-      {login.loginState !== null ? (
+      {login.loginState ? (
         <Drawer.Navigator initialRouteName="Home"
           drawerContent={(props) => <SideBar {...props} />}
           drawerContentOptions={{
