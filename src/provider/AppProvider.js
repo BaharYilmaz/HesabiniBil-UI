@@ -36,7 +36,7 @@ const AppProvider = (props) => {
             if (moment(tokenDate).isAfter(date)) {
                 console.log("token geçerli")
                 changeLoginState(true)
-                await setUserId(decoded.nameIdentifier)
+                setUserId(decoded.nameIdentifier)
                 tokenUserId = decoded.nameIdentifier;
                 console.log("decoded user ıd", tokenUserId)
                 //  changeLoginState(result.token)
@@ -127,12 +127,12 @@ const AppProvider = (props) => {
     const getAccounts = async () => {
         console.log("ıd", userId)
 
-        var result = await getToken();
-        result = JSON.parse(result)
-        var decoded = jwt_decode(result.token);
-        var tokenId = decoded.nameIdentifier
-        console.log("USER ıd", tokenId)
-        fetch(apiBaseUrl + '/account/getAccountsByStatus/' + tokenId + '/true',
+        // var result = await getToken();
+        // result = JSON.parse(result)
+        // var decoded = jwt_decode(result.token);
+        // var tokenId = decoded.nameIdentifier
+        // console.log("USER ıd", tokenId)
+        fetch(apiBaseUrl + '/account/getAccountsByStatus/' + userId + '/true',
             {
                 method: 'GET',
                 headers: new Headers({
@@ -182,7 +182,6 @@ const AppProvider = (props) => {
     // /api/Account/getAccountMembers/{OrtakHesapID}
 
     const getAccountMembers = (ortakHesapId) => {
-        console.log(ortakHesapId)
         fetch(apiBaseUrl + '/account/getAccountMembers/' + ortakHesapId,
             {
                 method: 'GET',
