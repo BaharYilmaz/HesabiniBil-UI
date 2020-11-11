@@ -74,8 +74,9 @@ const AppProvider = (props) => {
                     saveToken("token", data);
                 }
             })
-            .catch(error => 
-                console.log("hata", error)
+            .catch(error =>
+                // console.log("hata", error)
+                setModal({ modalVisible: true, modalMessage: 'Kullanıcı adı veya Şifre yanlış!' })
             );
     }
     const handleLogOut = async () => {
@@ -98,7 +99,7 @@ const AppProvider = (props) => {
             .then(data => {
                 if (data != null) { saveToken("token", data); }
             })
-            .catch(error => console.log(error));
+            .catch(error => setModal({ modalVisible: true, modalMessage: 'Kayıt başarısız, tekrar deneyiniz!' }));
     }
 
     const deleteUserAccount = async () => {
@@ -119,7 +120,7 @@ const AppProvider = (props) => {
             })
             .then(response => response.json())
             .then(data => { console.log("data", data); getAccounts() })
-            .catch(error => { console.log("hata", error); getAccounts() });
+            .catch(error =>{ setModal({ modalVisible: true, modalMessage: 'İşlem başarısız, tekrar deneyiniz!' });getAccounts()});
 
         return true;
     }
@@ -200,6 +201,7 @@ const AppProvider = (props) => {
         <AppContext.Provider
             value={{
                 loginState, changeLoginState,
+                modal, setModal,
                 userId, setUserId,
                 handleLogin,
                 handleRegister,

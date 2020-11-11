@@ -7,6 +7,7 @@ import { Container, Header, Content, Button, Form, Item, Input, Title, H2, ListI
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 // import Modal from '../../components/MessageModal';
 import AppFooter from '../../../components/Footer'
+import Modal  from "../../../components/MessageModal";
 import { Col, Row, Grid } from 'react-native-easy-grid';
 
 
@@ -88,8 +89,9 @@ const CreateHomeAccount = (props) => {
                         </View>
                         <Button block rounded style={{ margin: 30, backgroundColor: 'darkseagreen' }} onPress={handleSubmit(onSubmit)}  ><Text>Oluştur</Text></Button>
                     </View>
-                    {/* <Modal /> */}
                 </View>
+                <Modal />
+
             </Content>
             <AppFooter {...props} />
         </Container>

@@ -8,24 +8,24 @@ import { AppContext } from '../provider/AppProvider'
 
 const MessageModal = () => {
 
-    const modal = useContext(AppContext);
+    const state = useContext(AppContext);
 
     const toggleModal = () => {
-        modal.setModalVisible(!modal.isModalVisible);
+        state.setModal({modalVisible:false,modalMessage:''});
     };
     return (
         <Modal
-            isVisible={modal.isModalVisible}
+            isVisible={state.modal.modalVisible}
         >
             <View style={styles.container}>
                 <View style={styles.modal}>
                     <View style={styles.modalContainer}>
                         <View style={styles.modalBody}>
-                            <Text style={styles.bodyText}>Lütfen formu eksiksiz doldurunuz !</Text>
+                            <Text style={styles.bodyText}>{state.modal.modalMessage}</Text>
 
                             <View style={{ marginTop: 10, padding: 30 }}>
                                 <Button block onPress={toggleModal} >
-                                    <Text >Tamam</Text>
+                                    <Text>Tamam</Text>
                                 </Button>
                             </View>
                         </View>
