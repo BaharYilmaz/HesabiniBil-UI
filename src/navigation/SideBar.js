@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import jwt_decode from "jwt-decode";
+import { AsyncStorage } from 'react-native';
+
 
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Container, Content, Header, ListItem, Left, Separator, Button, Right, Footer, FooterTab, Switch, Text, Body, Title, Subtitle } from 'native-base';
@@ -12,17 +15,29 @@ import { createStackNavigator } from '@react-navigation/stack';
 class Sidebar extends Component {
   constructor(props) {
     super(props);
-    this.navigation = this.props.navigation; 
-
+    this.state = { name: '' }
+    this.navigation = this.props.navigation;
+    this._getToken()
   }
+
+  _getToken = async () => {
+    var result = await this.getToken();
+    result = JSON.parse(result);
+    var decoded = jwt_decode(result.token);
+    this.setState({ name: decoded.Name })
+  }
+  getToken = async () => await AsyncStorage.getItem("token");
+
+
   render() {
     //const{navigation}=this.props;
+
     return (
       <Container >
         <Header span>
           <Body>
             <Icon name='account-circle' size={50} color="white"></Icon>
-            <Title>  Bahar Yılmaz</Title>
+            <Title>{this.state.name}</Title>
           </Body>
         </Header>
 
@@ -30,12 +45,12 @@ class Sidebar extends Component {
           backgroundColor: '#FFFFFF'
         }}>
           <View style={{ paddingHorizontal: 30, marginTop: 20 }}>
-        
+
             <TouchableOpacity style={[styles.menu, { backgroundColor: 'rgba(255,255,255,0.3)', borderRadius: 5 }]} onPress={() => this.navigation.navigate('Home')}>
               <Icon name='home' size={24} />
               <Text style={styles.menuText} type='h5White'>Ana Sayfa</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.menu} onPress={() =>this.navigation.navigate('Profile')}>
+            <TouchableOpacity style={styles.menu} onPress={() => this.navigation.navigate('Profile')}>
               <Icon name='account' size={24} />
               <Text style={styles.menuText} type='h5White'>Hesabım</Text>
             </TouchableOpacity>
@@ -48,7 +63,7 @@ class Sidebar extends Component {
               <Icon name='delete' size={24} />
               <Text style={styles.menuText} type='h5White' onPress={() => this.navigation.navigate('DeleteAccount')}>Hesabı Sil</Text>
             </TouchableOpacity>
-          
+
           </View>
 
         </Content>
