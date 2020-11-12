@@ -10,7 +10,6 @@ import {
 
 import { Container, Header, Content, Button, Form, Item, Input, Title, H2, Left, Text, Body, Right } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Modal from '../../../components/MessageModal';
 
 
 //this.props.navigation.goBack();
@@ -127,7 +126,6 @@ const SignUp = (props) => {
                         {password ? null : <Text style={{ color: 'red', marginLeft: 10 }}>Şifre eşleşmedi !</Text>}
                         <Button block rounded style={{ margin: 20, padding: 5 }} onPress={handleSubmit(onSubmit)} ><Text>Kayıt Ol</Text></Button>
                     </View>
-                    <Modal />
                 </View>
             </Content>
         </Container>

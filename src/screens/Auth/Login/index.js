@@ -7,7 +7,6 @@ import { Dimensions, View, TextInput } from 'react-native';
 
 import { Container, Header, Content, Button, Form, Item, Input, Title, H2, H3, Text, Body, Badge, Right } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Modal from '../../../components/MessageModal';
 
 
 const Login = (props) => {
@@ -83,7 +82,6 @@ const Login = (props) => {
                         </View>
                     </View>
 
-                    <Modal />
 
                 </View>
 

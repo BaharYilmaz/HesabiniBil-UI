@@ -1,30 +1,45 @@
 import React, { useContext } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Button, Text } from 'native-base';
+import { View, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { useForm, Controller } from 'react-hook-form'
+
+import Clipboard from '@react-native-community/clipboard';
+import { Button, Text, Item } from 'native-base';
 import Modal from 'react-native-modal';
 import { AppContext } from '../provider/AppProvider'
-
+import Toast from 'react-native-simple-toast';
 
 
 const InvitationModal = () => {
 
     const state = useContext(AppContext);
+    const { control, handleSubmit, errors } = useForm();
 
     const toggleModal = () => {
-        state.setModal({modalVisible:false,modalMessage:''});
+        state.setModalInvitation({ modalVisible: false, modalMessage: '' });
     };
+
+    const copyToClipboard = (kod) => {
+        Clipboard.setString(kod);
+        Toast.showWithGravity('Davet kodu panoya kopyalandı.', Toast.LONG, Toast.TOP);
+    };
+
+    
     return (
         <Modal
-            isVisible={state.modal.modalVisible}
+            isVisible={state.modalInvitation.modalVisible}
         >
             <View style={styles.container}>
                 <View style={styles.modal}>
                     <View style={styles.modalContainer}>
                         <View style={styles.modalBody}>
-                            <Text style={styles.bodyText}>{state.modal.modalMessage}</Text>
+                            <Text style={styles.bodyText}>GRUP DAVET KODU:</Text>
 
-                            <View style={{ marginTop: 10, padding: 30 }}>
-                                <Button block onPress={toggleModal} >
+                            <TouchableOpacity onPress={() => copyToClipboard(state.modalInvitation.modalMessage)}>
+                                <Text style={styles.textDetail}>{state.modalInvitation.modalMessage}</Text>
+                            </TouchableOpacity>
+
+                            <View style={{ marginTop: 15, padding: 10 }}>
+                                <Button block onPress={toggleModal} style={{backgroundColor: 'darkseagreen'}} >
                                     <Text>Tamam</Text>
                                 </Button>
                             </View>
@@ -56,6 +71,14 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         borderRadius: 5
     },
-
+    bodyText: {
+        textAlign: 'center'
+    },
+    textDetail: {
+        textAlign: 'center',
+        color: 'gray',
+        marginTop: 20,
+        fontSize: 20,
+    }
 });
 export default InvitationModal;

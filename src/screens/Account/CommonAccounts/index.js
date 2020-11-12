@@ -2,11 +2,13 @@ import React, { useContext, useEffect } from 'react';
 import { AppContext } from '../../../provider/AppProvider'
 
 import { Dimensions, ScrollView, FlatList, View, SafeAreaView, StyleSheet } from 'react-native';
+import { useForm, Controller } from 'react-hook-form'
 
 
 import { Container, Header, Content, Button, Form, Item, Input, Title, Left, Right, Body, List, ListItem, Badge, Tabs, Tab, Footer, FooterTab, Text, H1, H2, H3, H4 } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Col, Row, Grid } from 'react-native-easy-grid';
+import Modal from '../../../components/JoinAccountModal';
 
 
 import AppFooter from '../../../components/Footer'
@@ -15,11 +17,13 @@ const CommonAccounts = (props) => {
 
     const state = useContext(AppContext);
     const accountList = state.accountList;
+    const { control, handleSubmit, errors } = useForm();
+
 
     useEffect(() => {
         console.log("This line will be run only after the first render ");
         state.getAccounts()
-        console.log("sayı",accountList.length)
+        console.log("sayı", accountList.length)
     }, [state.userId]);
 
     return (
@@ -28,10 +32,10 @@ const CommonAccounts = (props) => {
             <View style={{ backgroundColor: 'lightblue', margin: 30, padding: 10, borderRadius: 5, alignItems: 'center' }}>
                 <H3 style={{ color: 'white' }}>Ortak Hesaplar</H3>
             </View>
-            <Content style={{ marginHorizontal: 20 }}>
+            <Content style={{ marginHorizontal: 20 }} >
 
                 <SafeAreaView >
-                    {accountList.length>0? 
+                    {accountList.length > 0 ?
                         <List >
 
                             <ScrollView >
@@ -55,7 +59,7 @@ const CommonAccounts = (props) => {
                                 }
                             </ScrollView>
                         </List>
-                        :<Text style={{ color: 'lightgray' ,textAlign:'center'}}>Üyesi olduğunuz bir ev hesabı yok... </Text> 
+                        : <Text style={{ color: 'lightgray', textAlign: 'center' }}>Üyesi olduğunuz bir ev hesabı yok... </Text>
                     }
                 </SafeAreaView >
 
@@ -68,9 +72,11 @@ const CommonAccounts = (props) => {
                         </Button>
                     </Left>
                     <Right>
-                        <Button rounded style={{ backgroundColor: 'palevioletred' }} onPress={() => props.navigation.navigate('JoinAccount')}>
+                        <Button rounded style={{ backgroundColor: 'palevioletred' }}
+                            onPress={() => state.setModalJoin({ modalVisible: true})}>
                             <Text>Hesaba Üye Ol</Text>
                         </Button>
+                        <Modal/>
                     </Right>
                 </FooterTab>
             </Footer>

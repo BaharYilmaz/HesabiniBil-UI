@@ -13,7 +13,9 @@ const AppProvider = (props) => {
     const [loginState, changeLoginState] = useState(false);
     const [userId, setUserId] = useState('');
 
-    const [modal, setModal] = React.useState({ modalVisible: false, modalMessage: '', modalMessageDetail: '' });
+    const [modalJoin, setModalJoin] = React.useState({ modalVisible: false});
+    const [modalInvitation, setModalInvitation] = React.useState({ modalVisible: false,modalMessage:''});
+
     const [accountList, setAccountList] = React.useState([]);
     const [accountMembers, setAccountMembers] = React.useState([]);
 
@@ -202,7 +204,8 @@ const AppProvider = (props) => {
         <AppContext.Provider
             value={{
                 loginState, changeLoginState,
-                modal, setModal,
+                modalJoin, setModalJoin,
+                modalInvitation,setModalInvitation,
                 userId, setUserId,
                 handleLogin,
                 handleRegister,

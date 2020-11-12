@@ -9,7 +9,7 @@ import { AppContext } from '../../../provider/AppProvider'
 import AppFooter from '../../../components/Footer'
 import Members from '../Members';
 import Bills from "../Bills";
-import Modal from '../../../components/MessageModal';
+import Modal from '../../../components/InvitationModal';
 
 
 const HomeAccount = (props) => {
@@ -50,7 +50,7 @@ const HomeAccount = (props) => {
                         <List style={styles.menu}
                         >
                             <ListItem onPress={() => toggleMenu()}><Text style={{ color: 'white' }}>Aylık Harcama</Text></ListItem>
-                            <ListItem onPress={() => state.setModal({ modalVisible: true, modalMessage: 'GRUP DAVET KODU:', modalMessageDetail: 'blbla' })}><Text style={{ color: 'white' }}>Davet Kodu Al</Text></ListItem>
+                            <ListItem onPress={() => state.setModalInvitation({ modalVisible: true, modalMessage: 'blbla'})}><Text style={{ color: 'white' }}>Davet Kodu Al</Text></ListItem>
                             <ListItem onPress={() => toggleMenu()}><Text style={{ color: 'white' }}>Hesabı Düzenle</Text></ListItem>
                             <ListItem onPress={() => toggleMenu()}><Text style={{ color: 'white' }}>Hesaptan Çık</Text></ListItem>
                             <ListItem onPress={() => toggleMenu()}><Text style={{ color: 'white' }}>Hesabı Sil</Text></ListItem>
