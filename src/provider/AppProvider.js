@@ -2,6 +2,7 @@ import React, { useState, Component, useEffect } from 'react';
 import { View, StyleSheet, Button, Alert } from "react-native";
 import { AsyncStorage } from 'react-native';
 import moment from "moment";
+import Toast from 'react-native-simple-toast';
 const AppContext = React.createContext();
 import jwt_decode from "jwt-decode";
 
@@ -12,7 +13,7 @@ const AppProvider = (props) => {
     const [loginState, changeLoginState] = useState(false);
     const [userId, setUserId] = useState('');
 
-    const [modal, setModal] = React.useState({ modalVisible: false, modalMessage: '' ,modalMessageDetail: '' });
+    const [modal, setModal] = React.useState({ modalVisible: false, modalMessage: '', modalMessageDetail: '' });
     const [accountList, setAccountList] = React.useState([]);
     const [accountMembers, setAccountMembers] = React.useState([]);
 
@@ -76,8 +77,8 @@ const AppProvider = (props) => {
             })
             .catch(error =>
                 // console.log("hata", error)
-                setModal({ modalVisible: true, modalMessage: 'Kullanıcı adı veya Şifre yanlış!',modalMessageDetail: '' })
-            );
+                //setModal({ modalVisible: true, modalMessage: 'Kullanıcı adı veya Şifre yanlış!',modalMessageDetail: '' })
+                Toast.show('Kullanıcı adı veya Şifre yanlış!', Toast.LONG));
     }
     const handleLogOut = async () => {
         try {
@@ -99,7 +100,8 @@ const AppProvider = (props) => {
             .then(data => {
                 if (data != null) { saveToken("token", data); }
             })
-            .catch(error => setModal({ modalVisible: true, modalMessage: 'Kayıt başarısız, tekrar deneyiniz!',modalMessageDetail: ''}));
+            .catch(error =>
+                Toast.show('Kayıt başarısız, tekrar deneyiniz!', Toast.LONG));
     }
 
     const deleteUserAccount = async () => {
@@ -120,7 +122,7 @@ const AppProvider = (props) => {
             })
             .then(response => response.json())
             .then(data => { console.log("data", data); getAccounts() })
-            .catch(error =>{ setModal({ modalVisible: true, modalMessage: 'İşlem başarısız, tekrar deneyiniz!',modalMessageDetail: '' });getAccounts()});
+            .catch(error => { Toast.show('İşlem başarısız, tekrar deneyiniz!', Toast.LONG); getAccounts() });
 
         return true;
     }

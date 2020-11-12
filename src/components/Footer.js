@@ -1,22 +1,26 @@
 import React, { Component } from 'react';
 
-import { Container, Content, Button, Form, Right, Left, Title, Footer, FooterTab, Text, Tab, Tabs } from 'native-base';
+import { Container, Content, Button, Form, Right, Left, Title, Footer, FooterTab, Text, Tab, Tabs, Body } from 'native-base';
 
 
 const AppFooter = (props) => {
 
     return (
         <Footer >
-            <FooterTab >
-                    <Button  onPress={() => props.navigation.navigate('CommonAccounts')}>
+            <FooterTab style={{marginHorizontal:20}} >
+                <Left>
+                    <Button onPress={() => props.navigation.navigate('CommonAccounts')}>
                         <Text>Ortak Hesaplar</Text>
                     </Button>
-                    <Button  onPress={() => props.navigation.navigate('DebtTracking')} >
+                </Left>
+                <Right>
+                    <Button onPress={() => props.navigation.navigate('DebtTracking')} >
                         <Text>Borç Takibi</Text>
                     </Button>
+                </Right>
             </FooterTab>
-        </Footer> 
-       
+        </Footer>
+
     );
 }
 

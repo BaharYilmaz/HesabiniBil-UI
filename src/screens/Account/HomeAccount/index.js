@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Container, Header, Content, Button, Form, Item, Input, Title, Picker, Left, Right, TabHeading, Body, List, ListItem, Badge, Tabs, Tab, Footer, FooterTab, Text, H1, H2, H3, H4 } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Dimensions, ScrollView, FlatList, View, SafeAreaView, StyleSheet,Clipboard  } from 'react-native';
+import { Dimensions, ScrollView, FlatList, View, SafeAreaView, StyleSheet, Clipboard } from 'react-native';
 import Menu, { MenuItem, MenuDivider } from 'react-native-material-menu';
 
 import { AppContext } from '../../../provider/AppProvider'
@@ -50,7 +50,7 @@ const HomeAccount = (props) => {
                         <List style={styles.menu}
                         >
                             <ListItem onPress={() => toggleMenu()}><Text style={{ color: 'white' }}>Aylık Harcama</Text></ListItem>
-                            <ListItem onPress={() => state.setModal({ modalVisible: true, modalMessage: 'GRUP DAVET KODU:',modalMessageDetail: 'blbla'})}><Text style={{ color: 'white' }}>Davet Kodu Al</Text></ListItem>
+                            <ListItem onPress={() => state.setModal({ modalVisible: true, modalMessage: 'GRUP DAVET KODU:', modalMessageDetail: 'blbla' })}><Text style={{ color: 'white' }}>Davet Kodu Al</Text></ListItem>
                             <ListItem onPress={() => toggleMenu()}><Text style={{ color: 'white' }}>Hesabı Düzenle</Text></ListItem>
                             <ListItem onPress={() => toggleMenu()}><Text style={{ color: 'white' }}>Hesaptan Çık</Text></ListItem>
                             <ListItem onPress={() => toggleMenu()}><Text style={{ color: 'white' }}>Hesabı Sil</Text></ListItem>
@@ -84,20 +84,18 @@ const HomeAccount = (props) => {
                     {
                         screen === 1 ? <Bills /> : <Members />
                     }
-                    <Modal/>
+                    <Modal />
 
                 </SafeAreaView >
             </Content>
 
-            <Footer style={{ marginHorizontal: 30, backgroundColor: 'transparent' }} >
-                <FooterTab style={{ backgroundColor: 'transparent' }} >
-                    <Body>
-                        <Button rounded >
-                            <Text>Fiş Yükle</Text>
-                        </Button>
-                    </Body>
-                </FooterTab>
-            </Footer>
+            <View style={{alignSelf:'center',marginVertical:30}}>
+                <Button rounded style={{backgroundColor: 'crimson'}} >
+                    <Text style={{fontWeight: 'bold'}}>Fiş Yükle</Text>
+                </Button>
+            </View>
+
+
 
             <AppFooter {...props} />
 
