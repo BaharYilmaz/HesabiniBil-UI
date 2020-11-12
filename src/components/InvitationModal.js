@@ -1,23 +1,18 @@
 import React, { useContext } from 'react';
-import { View, StyleSheet, TextInput ,TouchableOpacity} from 'react-native';
-import Clipboard from '@react-native-community/clipboard';
+import { View, StyleSheet } from 'react-native';
 import { Button, Text } from 'native-base';
 import Modal from 'react-native-modal';
 import { AppContext } from '../provider/AppProvider'
-import Toast from 'react-native-simple-toast';
 
 
-const MessageModal = () => {
+
+const InvitationModal = () => {
 
     const state = useContext(AppContext);
 
     const toggleModal = () => {
-        state.setModal({ modalVisible: false, modalMessage: '' });
+        state.setModal({modalVisible:false,modalMessage:''});
     };
-    const copyToClipboard = (kod) => {
-        Clipboard.setString(kod);
-        Toast.showWithGravity('Davet kodu panoya kopyalandı.', Toast.LONG, Toast.TOP);
-      };
     return (
         <Modal
             isVisible={state.modal.modalVisible}
@@ -27,15 +22,12 @@ const MessageModal = () => {
                     <View style={styles.modalContainer}>
                         <View style={styles.modalBody}>
                             <Text style={styles.bodyText}>{state.modal.modalMessage}</Text>
-                            <TouchableOpacity onPress={() => copyToClipboard(state.modal.modalMessageDetail)}>
-                            <Text  style={styles.textDetail}>{state.modal.modalMessageDetail}</Text>
-                            </TouchableOpacity>
-                            <View style={{ marginTop: 10, padding: 10 }}>
+
+                            <View style={{ marginTop: 10, padding: 30 }}>
                                 <Button block onPress={toggleModal} >
                                     <Text>Tamam</Text>
                                 </Button>
                             </View>
-                            <Text></Text>
                         </View>
                     </View>
                 </View>
@@ -64,16 +56,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         borderRadius: 5
     },
-    bodyText: {
-        textAlign: 'center'
-    },
-    textDetail: {
-        textAlign: 'center',
-        color: 'gray',
-        marginTop: 10,
-        fontSize: 20,
-
-    }
 
 });
-export default MessageModal;
+export default InvitationModal;

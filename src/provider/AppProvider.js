@@ -12,7 +12,7 @@ const AppProvider = (props) => {
     const [loginState, changeLoginState] = useState(false);
     const [userId, setUserId] = useState('');
 
-    const [modal, setModal] = React.useState({ modalVisible: false, modalMessage: '' });
+    const [modal, setModal] = React.useState({ modalVisible: false, modalMessage: '' ,modalMessageDetail: '' });
     const [accountList, setAccountList] = React.useState([]);
     const [accountMembers, setAccountMembers] = React.useState([]);
 
@@ -76,7 +76,7 @@ const AppProvider = (props) => {
             })
             .catch(error =>
                 // console.log("hata", error)
-                setModal({ modalVisible: true, modalMessage: 'Kullanıcı adı veya Şifre yanlış!' })
+                setModal({ modalVisible: true, modalMessage: 'Kullanıcı adı veya Şifre yanlış!',modalMessageDetail: '' })
             );
     }
     const handleLogOut = async () => {
@@ -99,7 +99,7 @@ const AppProvider = (props) => {
             .then(data => {
                 if (data != null) { saveToken("token", data); }
             })
-            .catch(error => setModal({ modalVisible: true, modalMessage: 'Kayıt başarısız, tekrar deneyiniz!' }));
+            .catch(error => setModal({ modalVisible: true, modalMessage: 'Kayıt başarısız, tekrar deneyiniz!',modalMessageDetail: ''}));
     }
 
     const deleteUserAccount = async () => {
@@ -120,7 +120,7 @@ const AppProvider = (props) => {
             })
             .then(response => response.json())
             .then(data => { console.log("data", data); getAccounts() })
-            .catch(error =>{ setModal({ modalVisible: true, modalMessage: 'İşlem başarısız, tekrar deneyiniz!' });getAccounts()});
+            .catch(error =>{ setModal({ modalVisible: true, modalMessage: 'İşlem başarısız, tekrar deneyiniz!',modalMessageDetail: '' });getAccounts()});
 
         return true;
     }

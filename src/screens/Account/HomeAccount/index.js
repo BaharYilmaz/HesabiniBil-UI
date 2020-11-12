@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Container, Header, Content, Button, Form, Item, Input, Title, Picker, Left, Right, TabHeading, Body, List, ListItem, Badge, Tabs, Tab, Footer, FooterTab, Text, H1, H2, H3, H4 } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Dimensions, ScrollView, FlatList, View, SafeAreaView, StyleSheet } from 'react-native';
+import { Dimensions, ScrollView, FlatList, View, SafeAreaView, StyleSheet,Clipboard  } from 'react-native';
 import Menu, { MenuItem, MenuDivider } from 'react-native-material-menu';
 
 import { AppContext } from '../../../provider/AppProvider'
@@ -9,6 +9,7 @@ import { AppContext } from '../../../provider/AppProvider'
 import AppFooter from '../../../components/Footer'
 import Members from '../Members';
 import Bills from "../Bills";
+import Modal from '../../../components/MessageModal';
 
 
 const HomeAccount = (props) => {
@@ -40,18 +41,19 @@ const HomeAccount = (props) => {
                 <Left>
                     <H1 style={{ color: 'darkseagreen', marginBottom: 5 }}>{params.account.hesapAd}</H1>
                     <Badge warning>
-                        <Text>{params.account.hesapTurID== 1 ? 'Aile' : 'Ev Arkadaşları'}</Text>
+                        <Text>{params.account.hesapTurID == 1 ? 'Aile' : 'Ev Arkadaşları'}</Text>
                     </Badge>
                 </Left>
                 <Right >
-                    <Icon  name='cog' size={30} color="darkseagreen" onPress={() => toggleMenu()} />
+                    <Icon name='cog' size={30} color="darkseagreen" onPress={() => toggleMenu()} />
                     {showMenu ?
                         <List style={styles.menu}
                         >
-                            <ListItem onPress={() => toggleMenu()}><Text style={{color:'white'}} >Aylık Harcama</Text></ListItem>
-                            <ListItem onPress={() => toggleMenu()}><Text style={{color:'white'}}>Hesabı Düzenle</Text></ListItem>
-                            <ListItem onPress={() => toggleMenu()}><Text style={{color:'white'}} >Hesaptan Çık</Text></ListItem>
-                            <ListItem onPress={() => toggleMenu()}><Text style={{color:'white'}}>Hesabı Sil</Text></ListItem>
+                            <ListItem onPress={() => toggleMenu()}><Text style={{ color: 'white' }}>Aylık Harcama</Text></ListItem>
+                            <ListItem onPress={() => state.setModal({ modalVisible: true, modalMessage: 'GRUP DAVET KODU:',modalMessageDetail: 'blbla'})}><Text style={{ color: 'white' }}>Davet Kodu Al</Text></ListItem>
+                            <ListItem onPress={() => toggleMenu()}><Text style={{ color: 'white' }}>Hesabı Düzenle</Text></ListItem>
+                            <ListItem onPress={() => toggleMenu()}><Text style={{ color: 'white' }}>Hesaptan Çık</Text></ListItem>
+                            <ListItem onPress={() => toggleMenu()}><Text style={{ color: 'white' }}>Hesabı Sil</Text></ListItem>
 
                         </List>
                         : null}
@@ -82,9 +84,20 @@ const HomeAccount = (props) => {
                     {
                         screen === 1 ? <Bills /> : <Members />
                     }
-                </SafeAreaView >
+                    <Modal/>
 
+                </SafeAreaView >
             </Content>
+
+            <Footer style={{ marginHorizontal: 30, backgroundColor: 'transparent' }} >
+                <FooterTab style={{ backgroundColor: 'transparent' }} >
+                    <Body>
+                        <Button rounded >
+                            <Text>Fiş Yükle</Text>
+                        </Button>
+                    </Body>
+                </FooterTab>
+            </Footer>
 
             <AppFooter {...props} />
 
@@ -107,10 +120,10 @@ const styles = StyleSheet.create({
     },
     menu: {
         position: 'absolute',
-        zIndex: 2, 
+        zIndex: 2,
         backgroundColor: 'darkseagreen',
         borderRadius: 3,
-        color:'white'
+        color: 'white'
     }
 
 });
