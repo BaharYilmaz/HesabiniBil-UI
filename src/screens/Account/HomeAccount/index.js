@@ -9,7 +9,8 @@ import { AppContext } from '../../../provider/AppProvider'
 import AppFooter from '../../../components/Footer'
 import Members from '../Members';
 import Bills from "../Bills";
-import Modal from '../../../components/InvitationModal';
+import Modal from '../../../components/Modals/InvitationModal';
+import EditModal from '../../../components/Modals/EditAccountModal';
 
 
 const HomeAccount = (props) => {
@@ -50,10 +51,10 @@ const HomeAccount = (props) => {
                         <List style={styles.menu}
                         >
                             <ListItem onPress={() => toggleMenu()}><Text style={{ color: 'white' }}>Aylık Harcama</Text></ListItem>
-                            <ListItem onPress={() => state.setModalInvitation({ modalVisible: true, modalMessage: 'blbla'})}><Text style={{ color: 'white' }}>Davet Kodu Al</Text></ListItem>
-                            <ListItem onPress={() => toggleMenu()}><Text style={{ color: 'white' }}>Hesabı Düzenle</Text></ListItem>
+                            <ListItem onPress={() => state.setModalInvitation({ modalVisible: true, modalMessage: 'blbla' })}><Text style={{ color: 'white' }}>Davet Kodu Al</Text></ListItem>
+                            <ListItem onPress={() => state.setModalEditAccount({ modalVisible: true, modalValue: params.account.hesapAd })}><Text style={{ color: 'white' }}>Hesabı Düzenle</Text></ListItem>
                             <ListItem onPress={() => toggleMenu()}><Text style={{ color: 'white' }}>Hesaptan Çık</Text></ListItem>
-                            <ListItem onPress={() => toggleMenu()}><Text style={{ color: 'white' }}>Hesabı Sil</Text></ListItem>
+                            {/* <ListItem onPress={() => toggleMenu()}><Text style={{ color: 'white' }}>Hesabı Sil</Text></ListItem> */}
 
                         </List>
                         : null}
@@ -85,13 +86,14 @@ const HomeAccount = (props) => {
                         screen === 1 ? <Bills /> : <Members />
                     }
                     <Modal />
+                    <EditModal />
 
                 </SafeAreaView >
             </Content>
 
-            <View style={{alignSelf:'center',marginVertical:30}}>
-                <Button rounded style={{backgroundColor: 'crimson'}} >
-                    <Text style={{fontWeight: 'bold'}}>Fiş Yükle</Text>
+            <View style={{ alignSelf: 'center', marginVertical: 30 }}>
+                <Button rounded style={{ backgroundColor: 'crimson' }} >
+                    <Text style={{ fontWeight: 'bold' }}>Fiş Yükle</Text>
                 </Button>
             </View>
 

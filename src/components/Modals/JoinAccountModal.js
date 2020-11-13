@@ -5,7 +5,7 @@ import { useForm, Controller } from 'react-hook-form'
 import Clipboard from '@react-native-community/clipboard';
 import { Button, Text, Item,Left,Right } from 'native-base';
 import Modal from 'react-native-modal';
-import { AppContext } from '../provider/AppProvider'
+import { AppContext } from '../../provider/AppProvider'
 import Toast from 'react-native-simple-toast';
 
 

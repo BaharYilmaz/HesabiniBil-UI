@@ -15,7 +15,6 @@ import Profile from '../screens/Profile';
 import CommonAccounts from '../screens/Account/CommonAccounts';
 import CreateHomeAccount from '../screens/Account/CreateHomeAccount';
 import DebtTracking from '../screens/Debt/DebtTracking';
-import JoinAccount from '../screens/Account/JoinAccount';
 import HomeAccount from '../screens/Account/HomeAccount';
 
 
@@ -29,7 +28,7 @@ const Drawer = createDrawerNavigator();
 import Header from '../components/Header';
 import SideBar from './SideBar';
 
-import DeleteAccount from '../components/DeleteAccount'
+import DeleteAccount from '../components/Modals/DeleteAccount'
 import LogOut from '../components/LogOut'
 
 
@@ -47,7 +46,6 @@ const AppStackScreen = () => {
       <AppStack.Screen name="CreateHomeAccount" component={CreateHomeAccount} />
       <AppStack.Screen name="HomeAccount" component={HomeAccount} />
       <AppStack.Screen name="DebtTracking" component={DebtTracking} />
-      <AppStack.Screen name="JoinAccount" component={JoinAccount} />
     </AppStack.Navigator>
   );
 };

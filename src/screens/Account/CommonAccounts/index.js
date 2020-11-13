@@ -8,7 +8,7 @@ import { useForm, Controller } from 'react-hook-form'
 import { Container, Header, Content, Button, Form, Item, Input, Title, Left, Right, Body, List, ListItem, Badge, Tabs, Tab, Footer, FooterTab, Text, H1, H2, H3, H4 } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Col, Row, Grid } from 'react-native-easy-grid';
-import Modal from '../../../components/JoinAccountModal';
+import Modal from '../../../components/Modals/JoinAccountModal';
 
 
 import AppFooter from '../../../components/Footer'

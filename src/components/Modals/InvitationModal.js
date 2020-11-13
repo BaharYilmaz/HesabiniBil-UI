@@ -5,7 +5,7 @@ import { useForm, Controller } from 'react-hook-form'
 import Clipboard from '@react-native-community/clipboard';
 import { Button, Text, Item } from 'native-base';
 import Modal from 'react-native-modal';
-import { AppContext } from '../provider/AppProvider'
+import { AppContext } from '../../provider/AppProvider'
 import Toast from 'react-native-simple-toast';
 
 
@@ -53,7 +53,7 @@ const InvitationModal = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
+        alignItems: 'center',                   
         justifyContent: 'center',
     },
     modal: {

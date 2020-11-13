@@ -15,6 +15,7 @@ const AppProvider = (props) => {
 
     const [modalJoin, setModalJoin] = React.useState({ modalVisible: false});
     const [modalInvitation, setModalInvitation] = React.useState({ modalVisible: false,modalMessage:''});
+    const [modalEditAccount, setModalEditAccount] = React.useState({ modalVisible: false,modalValue:''});
 
     const [accountList, setAccountList] = React.useState([]);
     const [accountMembers, setAccountMembers] = React.useState([]);
@@ -206,6 +207,7 @@ const AppProvider = (props) => {
                 loginState, changeLoginState,
                 modalJoin, setModalJoin,
                 modalInvitation,setModalInvitation,
+                modalEditAccount,setModalEditAccount,
                 userId, setUserId,
                 handleLogin,
                 handleRegister,

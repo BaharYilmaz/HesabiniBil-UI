@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { Button, Text,Left,Right } from 'native-base';
 
 import Modal from 'react-native-modal';
-import { AppContext } from '../provider/AppProvider'
+import { AppContext } from '../../provider/AppProvider'
 
 const MessageModal = (props) => {
 
