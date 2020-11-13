@@ -147,7 +147,6 @@ const AppProvider = (props) => {
             .then(response => response.json())
             .then(data => { setAccountList(data) })
             .catch(error => { console.log("hata", error); })
-        console.log("hesap listesi alındı", accountList)
     }
     // const getAccounts = async () => {
     //     var result = await getToken();
@@ -195,10 +194,9 @@ const AppProvider = (props) => {
                 })
             })
             .then(response => response.json())
-            .then(data => { setAccountMembers(data); console.log(data) })
+            .then(data => { setAccountMembers(data)})
             .catch(error => { console.log("hata", error); })
 
-        console.log("member alındı", accountMembers)
     }
 
     return (

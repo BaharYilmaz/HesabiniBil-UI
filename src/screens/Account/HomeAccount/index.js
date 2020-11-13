@@ -11,6 +11,7 @@ import Members from '../Members';
 import Bills from "../Bills";
 import Modal from '../../../components/Modals/InvitationModal';
 import EditModal from '../../../components/Modals/EditAccountModal';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 const HomeAccount = (props) => {
@@ -21,7 +22,6 @@ const HomeAccount = (props) => {
     const [showMenu, setShow] = useState(false)
 
 
-    console.log(params.account)
     useEffect(() => {
         // state.getAccountsById(params.accountId);
         state.getAccountMembers(params.account.ortakHesapID)
@@ -34,7 +34,7 @@ const HomeAccount = (props) => {
         setShow(!showMenu)
     }
     return (
-        <Container >
+        <Container>
             <Header />
 
             <View style={{ flexDirection: "row", marginVertical: 20, marginHorizontal: 40, alignItems: 'center' }}>
@@ -46,14 +46,33 @@ const HomeAccount = (props) => {
                     </Badge>
                 </Left>
                 <Right >
-                    <Icon name='cog' size={30} color="darkseagreen" onPress={() => toggleMenu()} />
+                    <TouchableOpacity onPress={() => toggleMenu()} ><Text>
+
+                        <Icon name='cog' size={30} color="darkseagreen" />
+
+                    </Text>
+                    </TouchableOpacity>
                     {showMenu ?
                         <List style={styles.menu}
                         >
-                            <ListItem onPress={() => toggleMenu()}><Text style={{ color: 'white' }}>Aylık Harcama</Text></ListItem>
-                            <ListItem onPress={() => state.setModalInvitation({ modalVisible: true, modalMessage: 'blbla' })}><Text style={{ color: 'white' }}>Davet Kodu Al</Text></ListItem>
-                            <ListItem onPress={() => state.setModalEditAccount({ modalVisible: true, modalValue: params.account.hesapAd })}><Text style={{ color: 'white' }}>Hesabı Düzenle</Text></ListItem>
-                            <ListItem onPress={() => toggleMenu()}><Text style={{ color: 'white' }}>Hesaptan Çık</Text></ListItem>
+                            <ListItem  >
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Left />
+
+                                    <TouchableOpacity onPress={() => toggleMenu()} ><Text>
+
+                                        <Icon name='cog' size={30} color="white" />
+
+                                    </Text>
+                                    </TouchableOpacity>
+                                </View>
+
+
+                            </ListItem>
+                            <ListItem><TouchableOpacity onPress={() => toggleMenu()}><Text style={{ color: 'white' }}>Aylık Harcama</Text></TouchableOpacity></ListItem>
+                            <ListItem><TouchableOpacity transparent onPress={() => state.setModalInvitation({ modalVisible: true, modalMessage: 'blbla' })}><Text style={{ color: 'white' }}>Davet Kodu Al</Text></TouchableOpacity></ListItem>
+                            <ListItem><TouchableOpacity onPress={() => state.setModalEditAccount({ modalVisible: true, modalValue: params.account.hesapAd })}><Text style={{ color: 'white' }}>Hesabı Düzenle</Text></TouchableOpacity></ListItem>
+                            <ListItem><TouchableOpacity onPress={() => toggleMenu()}><Text style={{ color: 'white' }}>Hesaptan Çık</Text></TouchableOpacity></ListItem>
                             {/* <ListItem onPress={() => toggleMenu()}><Text style={{ color: 'white' }}>Hesabı Sil</Text></ListItem> */}
 
                         </List>
