@@ -36,10 +36,10 @@ const EditAccountModal = () => {
 
                                 <Item style={{ marginBottom: 15 }}>
                                     <Controller
-                                        control={control} name="value" defaultValue="" rules={{ required: true }}
+                                        control={control} name="value" defaultValue={data} rules={{ required: true }}
                                         render={({ onChange, value }) => (
                                             <View style={{ flexDirection: 'row' }}>
-                                                <TextInput style={styles.textDetail} onChangeText={value => onChange(value)} value={value} placeholder={data}/>
+                                                <TextInput style={styles.textDetail} onChangeText={value => onChange(value)} value={value} />
                                             </View>
                                         )}
                                     />

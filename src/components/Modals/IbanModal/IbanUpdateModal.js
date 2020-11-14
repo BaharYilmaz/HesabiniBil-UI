@@ -22,7 +22,6 @@ const IbanUpdateModal = () => {
         toggleModal()
         console.log(data)
     }
-
     return (
         <Modal
             isVisible={state.modalUpdateIban.modalVisible}
@@ -34,11 +33,12 @@ const IbanUpdateModal = () => {
                             <View>
                             <Text style={styles.bodyText}>Iban numarasını güncelle</Text>
                                 <Item style={{ marginBottom: 15 }}>
+                                <Text style={{marginTop:7,fontSize:19}}>TR</Text>
                                     <Controller
-                                        control={control} name="value" defaultValue="" rules={{ required: true }}
+                                        control={control} name="value" defaultValue={state.modalUpdateIban.ibanNo} rules={{ required: true }}
                                         render={({ onChange, value }) => (
                                             <View style={{ flexDirection: 'row' }}>
-                                                <TextInput style={styles.textDetail} onChangeText={value => onChange(value)} value={value} placeholder={state.modalUpdateIban.ibanNo}/>
+                                                <TextInput style={styles.textDetail} onChangeText={value => onChange(value)} value={value} />
                                             </View>
                                         )}
                                     />
@@ -86,7 +86,9 @@ const styles = StyleSheet.create({
         borderRadius: 5
     },
     bodyText: {
-        textAlign: 'center'
+        textAlign: 'center',
+        color:'dimgray',
+        fontSize:20
     },
     textDetail: {
         textAlign: 'center',

@@ -13,15 +13,17 @@ const AppProvider = (props) => {
     const [loginState, changeLoginState] = useState(false);
     const [userId, setUserId] = useState('');
 
-    const [modalJoin, setModalJoin] = React.useState({ modalVisible: false});
-    const [modalInvitation, setModalInvitation] = React.useState({ modalVisible: false,modalMessage:''});
-    const [modalEditAccount, setModalEditAccount] = React.useState({ modalVisible: false,modalValue:''});
-    const [modalAddIban, setModalAddIban] = React.useState({ modalVisible: false});
-    const [modalDeleteIban, setModalDeleteIban] = React.useState({ modalVisible: false,ibanNo:''});
-    const [modalUpdateIban, setModalUpdateIban] = React.useState({ modalVisible: false,ibanNo:''});
+    const [modalJoin, setModalJoin] = React.useState({ modalVisible: false });
+    const [modalInvitation, setModalInvitation] = React.useState({ modalVisible: false, modalMessage: '' });
+    const [modalEditAccount, setModalEditAccount] = React.useState({ modalVisible: false, modalValue: '' });
+    const [modalAddIban, setModalAddIban] = React.useState({ modalVisible: false });
+    const [modalDeleteIban, setModalDeleteIban] = React.useState({ modalVisible: false, ibanNo: '' });
+    const [modalUpdateIban, setModalUpdateIban] = React.useState({ modalVisible: false, ibanNo: '' });
 
     const [accountList, setAccountList] = React.useState([]);
     const [accountMembers, setAccountMembers] = React.useState([]);
+    const [iban, setIban] = React.useState([]);
+
 
     var tokenUserId = '';
 
@@ -130,8 +132,37 @@ const AppProvider = (props) => {
             .then(data => { console.log("data", data); getAccounts() })
             .catch(error => { Toast.show('İşlem başarısız, tekrar deneyiniz!', Toast.LONG); getAccounts() });
 
-        return true;
     }
+    const addIban = (data) => {
+
+        let model = {
+            kullaniciID: parseInt(userId),
+            ibanNo: data.value
+        }
+        console.log("giden model", model)
+        fetch(apiBaseUrl + '/Iban/AddIban',
+            {
+                method: 'POST',
+                headers: new Headers({ 'Content-Type': 'application/json' }),
+                body: JSON.stringify(model)
+            })
+            .then(response => response.json())
+            .then(data => { console.log("data", data); getIban() })
+            .catch(error => { Toast.show('İşlem başarısız, tekrar deneyiniz!', error, Toast.LONG) });
+
+    }
+    const getIban = () => {
+        fetch(apiBaseUrl + '/Iban/GetIban/' + userId,
+            {
+                method: 'GET',
+                headers: new Headers({ 'Content-Type': 'application/json' }),
+            })
+            .then(response => response.json())
+            .then(data => { setIban(data) })
+
+    }
+
+    ///api/Iban/AddIban
     const getAccounts = async () => {
         console.log("ıd", userId)
 
@@ -197,7 +228,7 @@ const AppProvider = (props) => {
                 })
             })
             .then(response => response.json())
-            .then(data => { setAccountMembers(data)})
+            .then(data => { setAccountMembers(data) })
             .catch(error => { console.log("hata", error); })
 
     }
@@ -205,21 +236,19 @@ const AppProvider = (props) => {
     return (
         <AppContext.Provider
             value={{
-                loginState, changeLoginState,
+                loginState, changeLoginState, userId,
                 modalJoin, setModalJoin,
-                modalInvitation,setModalInvitation,
-                modalEditAccount,setModalEditAccount,
+                modalInvitation, setModalInvitation,
+                modalEditAccount, setModalEditAccount,
                 modalDeleteIban, setModalDeleteIban,
                 modalAddIban, setModalAddIban,
                 modalUpdateIban, setModalUpdateIban,
-                userId, setUserId,
-                handleLogin,
-                handleRegister,
-                handleLogOut,
+                handleLogin, handleRegister, handleLogOut, deleteUserAccount,
                 createAccount,
-                deleteUserAccount,
                 getAccounts, accountList,
                 getAccountMembers, accountMembers,
+                addIban,
+                getIban,iban,
             }}>
             {props.children}
         </AppContext.Provider>

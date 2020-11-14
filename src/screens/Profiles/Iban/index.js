@@ -21,10 +21,8 @@ const Iban = (props) => {
 
 
     useEffect(() => {
-        // state.getAccountsById(params.accountId);
-        // state.getAccountMembers(params.account.ortakHesapID)
-    }, []);
-
+        state.getIban()
+    }, [state.iban]);
     const toggleScreen = (value) => {
 
         chageScreen(value)
@@ -35,48 +33,41 @@ const Iban = (props) => {
 
         <View style={{ margin: 40, padding: 20, alignItems: 'center', borderColor: 'lightgray', borderWidth: 2, borderRadius: 5 }}>
 
-            {ibanMenu == 0 ?
+            {state.iban == '' ?
 
-                <View style={{ flexDirection: "row" }}>
+                <View style={{ flexDirection: 'row' }} >
                     <Left>
                         <H3 style={{ color: 'gray', marginVertical: 10 }}>Iban Numarası</H3>
-                        <View style={{ backgroundColor: 'steelblue', padding: 10, borderRadius: 5 }}>
-                            <Text style={{ color: 'white', fontWeight: "bold" }}>TR546514846518</Text>
-                        </View>
-
-                    </Left>
-                    <TouchableOpacity onPress={() => state.setModalUpdateIban({ modalVisible: true, ibanNo: '455' })} style={{ marginTop: 40 }} ><Text>
-
-                        <Icon name='file-document-edit' size={35} color="steelblue" />
-
-                    </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => state.setModalDeleteIban({ modalVisible: true, ibanNo: '455' })} style={{ marginTop: 40 }}><Text>
-
-                        <Icon name='delete' size={35} color="steelblue" />
-
-                    </Text>
-                    </TouchableOpacity>
-                    <EditIban />
-                    <DeleteIban />
-                    
-                </View>
-
-                : <View style={{ flexDirection: 'row' }} >
-                    <Left>
-                        <H3 style={{ color: 'gray', marginVertical: 10 }}>Iban Numarası</H3>
-
                     </Left>
 
                     <TouchableOpacity onPress={() => state.setModalAddIban({ modalVisible: true })} style={{ marginTop: 5 }}><Text>
-
                         <Icon name='plus-circle' size={35} color="steelblue" />
-
                     </Text>
                     </TouchableOpacity>
                     <AddIban />
 
-                </View>}
+                </View>
+                :
+                <View style={{ flexDirection: "row" }}>
+                    <Left>
+                        <H3 style={{ color: 'gray', marginVertical: 10 }}>Iban Numarası</H3>
+                        <View style={{ backgroundColor: 'steelblue', padding: 10, borderRadius: 5 }}>
+                            <Text style={{ color: 'white', fontWeight: "bold" }}>TR {state.iban[0].ibanNo}</Text>
+                        </View>
+                    </Left>
+                    <TouchableOpacity onPress={() => state.setModalUpdateIban({ modalVisible: true, ibanNo:  state.iban[0].ibanNo })} style={{ marginTop: 45 }} ><Text>
+                        <Icon name='file-document-edit' size={35} color="steelblue" />
+                    </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => state.setModalDeleteIban({ modalVisible: true, ibanNo:'' })} style={{ marginTop: 45 }}><Text>
+                        <Icon name='delete' size={35} color="steelblue" />
+                    </Text>
+                    </TouchableOpacity>
+                    <EditIban />
+                    <DeleteIban />
+
+                </View>
+            }
             <AddIban />
         </View>
 
