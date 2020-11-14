@@ -17,7 +17,6 @@
     "@react-navigation/drawer": "^5.9.3",
     "@react-navigation/native": "^5.7.6",
     "@react-navigation/stack": "^5.9.3",
-    "antd-mobile": "^2.3.4",
     "jwt-decode": "^3.0.0",
     "moment": "^2.29.1",
     "native-base": "^2.13.14",

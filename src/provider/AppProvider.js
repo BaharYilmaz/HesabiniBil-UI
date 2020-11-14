@@ -16,6 +16,9 @@ const AppProvider = (props) => {
     const [modalJoin, setModalJoin] = React.useState({ modalVisible: false});
     const [modalInvitation, setModalInvitation] = React.useState({ modalVisible: false,modalMessage:''});
     const [modalEditAccount, setModalEditAccount] = React.useState({ modalVisible: false,modalValue:''});
+    const [modalAddIban, setModalAddIban] = React.useState({ modalVisible: false});
+    const [modalDeleteIban, setModalDeleteIban] = React.useState({ modalVisible: false,ibanNo:''});
+    const [modalUpdateIban, setModalUpdateIban] = React.useState({ modalVisible: false,ibanNo:''});
 
     const [accountList, setAccountList] = React.useState([]);
     const [accountMembers, setAccountMembers] = React.useState([]);
@@ -206,6 +209,9 @@ const AppProvider = (props) => {
                 modalJoin, setModalJoin,
                 modalInvitation,setModalInvitation,
                 modalEditAccount,setModalEditAccount,
+                modalDeleteIban, setModalDeleteIban,
+                modalAddIban, setModalAddIban,
+                modalUpdateIban, setModalUpdateIban,
                 userId, setUserId,
                 handleLogin,
                 handleRegister,

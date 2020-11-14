@@ -7,7 +7,7 @@ import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Container, Content, Header, ListItem, Left, Separator, Button, Right, Footer, FooterTab, Switch, Text, Body, Title, Subtitle } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import Profile from '../screens/Profile'
+import Profile from '../screens/Profiles/Profile'
 //import { StackNavigator } from  'react-navigation';
 import { createStackNavigator } from '@react-navigation/stack';
 

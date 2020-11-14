@@ -11,7 +11,7 @@ import RootStackScreen from './RootStackScreen';
 
 
 import Home from '../screens/Home';
-import Profile from '../screens/Profile';
+import Profile from '../screens/Profiles/Profile';
 import CommonAccounts from '../screens/Account/CommonAccounts';
 import CreateHomeAccount from '../screens/Account/CreateHomeAccount';
 import DebtTracking from '../screens/Debt/DebtTracking';
@@ -46,6 +46,8 @@ const AppStackScreen = () => {
       <AppStack.Screen name="CreateHomeAccount" component={CreateHomeAccount} />
       <AppStack.Screen name="HomeAccount" component={HomeAccount} />
       <AppStack.Screen name="DebtTracking" component={DebtTracking} />
+      <AppStack.Screen name="Profile" component={Profile} />
+
     </AppStack.Navigator>
   );
 };
