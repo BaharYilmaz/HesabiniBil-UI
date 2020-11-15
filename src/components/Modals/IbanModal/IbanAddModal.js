@@ -32,28 +32,28 @@ const IbanAddModal = () => {
                     <View style={styles.modalContainer}>
                         <View style={styles.modalBody}>
                             <View>
-                                <Text style={{color:'dimgray',fontSize:20}}>Iban numaranızı giriniz</Text>
+                                <Text style={{ color: 'dimgray', fontSize: 20 }}>Iban numaranızı giriniz</Text>
 
-                                <View style={{margin: 20 }}>
+                                <View style={{ margin: 20 }}>
 
 
 
                                     <Item>
-                                    <Text style={{marginTop:7,fontSize:19}}>TR</Text>
+                                        <Text style={{ marginTop: 7, fontSize: 19 }}>TR</Text>
 
                                         <Controller
-                                            control={control} name="value" defaultValue=""  rules={{ required: true }}
+                                            control={control} name="value" defaultValue="" rules={{ required: true, minLength: 24, maxLength: 24, pattern: { value: /^\d+$/ } }}
                                             render={({ onChange, value }) => (
-                                                <View style={{ flexDirection: 'row'}}>
+                                                <View style={{ flexDirection: 'row' }}>
 
 
-                                                    <TextInput style={styles.textDetail} onChangeText={value => onChange(value)} value={value}  />
+                                                    <TextInput style={styles.textDetail} onChangeText={value => onChange(value)} value={value} />
                                                 </View>
                                             )}
                                         />
                                     </Item>
                                 </View>
-                                {errors.value && <Text style={{ color: 'red', marginLeft: 5 }}>Bu alan boş bırakılamaz !</Text>}
+                                {errors.value && <Text style={{ color: 'red', marginLeft: 5 }}>Iban numarasını doğru ve eksiksiz giriniz !</Text>}
 
                             </View>
 

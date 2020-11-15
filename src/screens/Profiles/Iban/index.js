@@ -55,11 +55,11 @@ const Iban = (props) => {
                             <Text style={{ color: 'white', fontWeight: "bold" }}>TR {state.iban[0].ibanNo}</Text>
                         </View>
                     </Left>
-                    <TouchableOpacity onPress={() => state.setModalUpdateIban({ modalVisible: true, ibanNo:  state.iban[0].ibanNo })} style={{ marginTop: 45 }} ><Text>
+                    <TouchableOpacity onPress={() => state.setModalUpdateIban({ modalVisible: true, ibanNo:  state.iban[0].ibanNo ,ibanId:state.iban[0].ibanID})} style={{ marginTop: 45 }} ><Text>
                         <Icon name='file-document-edit' size={35} color="steelblue" />
                     </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => state.setModalDeleteIban({ modalVisible: true, ibanNo:'' })} style={{ marginTop: 45 }}><Text>
+                    <TouchableOpacity onPress={() => state.setModalDeleteIban({ modalVisible: true, ibanId:state.iban[0].ibanID })} style={{ marginTop: 45 }}><Text>
                         <Icon name='delete' size={35} color="steelblue" />
                     </Text>
                     </TouchableOpacity>

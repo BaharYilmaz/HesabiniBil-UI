@@ -17,8 +17,8 @@ const AppProvider = (props) => {
     const [modalInvitation, setModalInvitation] = React.useState({ modalVisible: false, modalMessage: '' });
     const [modalEditAccount, setModalEditAccount] = React.useState({ modalVisible: false, modalValue: '' });
     const [modalAddIban, setModalAddIban] = React.useState({ modalVisible: false });
-    const [modalDeleteIban, setModalDeleteIban] = React.useState({ modalVisible: false, ibanNo: '' });
-    const [modalUpdateIban, setModalUpdateIban] = React.useState({ modalVisible: false, ibanNo: '' });
+    const [modalDeleteIban, setModalDeleteIban] = React.useState({ modalVisible: false, ibanId: '' });
+    const [modalUpdateIban, setModalUpdateIban] = React.useState({ modalVisible: false, ibanNo: '' ,ibanId:''});
 
     const [accountList, setAccountList] = React.useState([]);
     const [accountMembers, setAccountMembers] = React.useState([]);
@@ -151,6 +151,24 @@ const AppProvider = (props) => {
             .catch(error => { Toast.show('İşlem başarısız, tekrar deneyiniz!', error, Toast.LONG) });
 
     }
+    const updateIban = (data) => {
+
+        let model = {
+            kullaniciID: parseInt(userId),
+            ibanNo: data.ibanNo,
+            ibanID:data.ibanId
+        }
+        fetch(apiBaseUrl + '/Iban/UpdateIban',
+            {
+                method: 'POST',
+                headers: new Headers({ 'Content-Type': 'application/json' }),
+                body: JSON.stringify(model)
+            })
+            .then(response => response.json())
+            .then(data => { console.log("data", data); getIban() })
+            .catch(error => { Toast.show('İşlem başarısız, tekrar deneyiniz!', error, Toast.LONG) });
+
+    }
     const getIban = () => {
         fetch(apiBaseUrl + '/Iban/GetIban/' + userId,
             {
@@ -158,7 +176,7 @@ const AppProvider = (props) => {
                 headers: new Headers({ 'Content-Type': 'application/json' }),
             })
             .then(response => response.json())
-            .then(data => { setIban(data) })
+            .then(data => { setIban(data)})
 
     }
 
@@ -247,7 +265,7 @@ const AppProvider = (props) => {
                 createAccount,
                 getAccounts, accountList,
                 getAccountMembers, accountMembers,
-                addIban,
+                addIban,updateIban,
                 getIban,iban,
             }}>
             {props.children}

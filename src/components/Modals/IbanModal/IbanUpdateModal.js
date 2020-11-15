@@ -17,10 +17,13 @@ const IbanUpdateModal = () => {
     const toggleModal = () => {
         state.setModalUpdateIban({ modalVisible: false });
     };
-
     const onSubmit = (data) => {
         toggleModal()
-        console.log(data)
+        let model = {
+            ibanNo: data.value,
+            ibanId: state.modalUpdateIban.ibanId
+        }
+        state.updateIban(model)
     }
     return (
         <Modal
@@ -31,11 +34,12 @@ const IbanUpdateModal = () => {
                     <View style={styles.modalContainer}>
                         <View style={styles.modalBody}>
                             <View>
-                            <Text style={styles.bodyText}>Iban numarasını güncelle</Text>
-                                <Item style={{ marginBottom: 15 }}>
-                                <Text style={{marginTop:7,fontSize:19}}>TR</Text>
+                                <Text style={styles.bodyText}>Iban numarasını güncelle</Text>
+                                <Item style={{ margin: 15 }} >
+                                    <Text style={{ marginTop: 7, fontSize: 19 }}>TR</Text>
                                     <Controller
-                                        control={control} name="value" defaultValue={state.modalUpdateIban.ibanNo} rules={{ required: true }}
+                                    
+                                        control={control} name="value" defaultValue={state.modalUpdateIban.ibanNo} rules={{ required: true,minLength:24,maxLength:24,  pattern:{value:/^\d+$/ }}}
                                         render={({ onChange, value }) => (
                                             <View style={{ flexDirection: 'row' }}>
                                                 <TextInput style={styles.textDetail} onChangeText={value => onChange(value)} value={value} />
@@ -43,7 +47,7 @@ const IbanUpdateModal = () => {
                                         )}
                                     />
                                 </Item>
-                                {errors.value && <Text style={{ color: 'red', marginLeft: 5 }}>Bu alan boş bırakılamaz !</Text>}
+                                {errors.value && <Text style={{ color: 'red', marginLeft: 5 }}>Iban numarasını doğru ve eksiksiz giriniz !</Text>}
 
                             </View>
 
@@ -87,8 +91,8 @@ const styles = StyleSheet.create({
     },
     bodyText: {
         textAlign: 'center',
-        color:'dimgray',
-        fontSize:20
+        color: 'dimgray',
+        fontSize: 20
     },
     textDetail: {
         textAlign: 'center',
