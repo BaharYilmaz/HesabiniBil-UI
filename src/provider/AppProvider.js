@@ -18,7 +18,7 @@ const AppProvider = (props) => {
     const [modalEditAccount, setModalEditAccount] = React.useState({ modalVisible: false, modalValue: '' });
     const [modalAddIban, setModalAddIban] = React.useState({ modalVisible: false });
     const [modalDeleteIban, setModalDeleteIban] = React.useState({ modalVisible: false, ibanId: '' });
-    const [modalUpdateIban, setModalUpdateIban] = React.useState({ modalVisible: false, ibanNo: '' ,ibanId:''});
+    const [modalUpdateIban, setModalUpdateIban] = React.useState({ modalVisible: false, ibanNo: '', ibanId: '' });
 
     const [accountList, setAccountList] = React.useState([]);
     const [accountMembers, setAccountMembers] = React.useState([]);
@@ -79,13 +79,13 @@ const AppProvider = (props) => {
             })
             .then(response => response.json())
             .then(data => {
-                if (data != null) {
-                    saveToken("token", data);
+                console.log(data)
+                if (data.token != undefined) {
+                    saveToken("token", data); Toast.show("Giriş Başarılı", Toast.LONG);
                 }
+                else { Toast.show(data.message, Toast.LONG); }
             })
             .catch(error =>
-                // console.log("hata", error)
-                //setModal({ modalVisible: true, modalMessage: 'Kullanıcı adı veya Şifre yanlış!',modalMessageDetail: '' })
                 Toast.show('Kullanıcı adı veya Şifre yanlış!', Toast.LONG));
     }
     const handleLogOut = async () => {
@@ -106,7 +106,11 @@ const AppProvider = (props) => {
             })
             .then(response => response.json())
             .then(data => {
-                if (data != null) { saveToken("token", data); }
+
+                if (data.token != undefined) {
+                    saveToken("token", data); Toast.show("Kayıt Başarılı", Toast.LONG)
+                }
+                else { Toast.show(data.message, Toast.LONG); }
             })
             .catch(error =>
                 Toast.show('Kayıt başarısız, tekrar deneyiniz!', Toast.LONG));
@@ -129,8 +133,8 @@ const AppProvider = (props) => {
                 body: JSON.stringify(data)
             })
             .then(response => response.json())
-            .then(data => { console.log("data", data); getAccounts() })
-            .catch(error => { Toast.show('İşlem başarısız, tekrar deneyiniz!', Toast.LONG); getAccounts() });
+            .then(data => { Toast.show(data.message, Toast.LONG); getAccounts(); getAccounts() })
+            .catch(error => { Toast.show('Hesap ekleme sırasında bir hata oluştu !', Toast.LONG) });
 
     }
     const addIban = (data) => {
@@ -147,8 +151,8 @@ const AppProvider = (props) => {
                 body: JSON.stringify(model)
             })
             .then(response => response.json())
-            .then(data => { console.log("data", data); getIban() })
-            .catch(error => { Toast.show('İşlem başarısız, tekrar deneyiniz!', error, Toast.LONG) });
+            .then(data => { Toast.show(data.message, Toast.LONG); getIban() })
+            .catch(error => { Toast.show("Iban ekleme sırasında bir hata oluştu", Toast.LONG); console.log(error.message) });
 
     }
     const updateIban = (data) => {
@@ -156,8 +160,10 @@ const AppProvider = (props) => {
         let model = {
             kullaniciID: parseInt(userId),
             ibanNo: data.ibanNo,
-            ibanID:data.ibanId
+            ibanID: data.ibanId
+
         }
+        console.log(model)
         fetch(apiBaseUrl + '/Iban/UpdateIban',
             {
                 method: 'POST',
@@ -165,8 +171,8 @@ const AppProvider = (props) => {
                 body: JSON.stringify(model)
             })
             .then(response => response.json())
-            .then(data => { console.log("data", data); getIban() })
-            .catch(error => { Toast.show('İşlem başarısız, tekrar deneyiniz!', error, Toast.LONG) });
+            .then(data => { Toast.show(data.message, Toast.LONG); getIban() })
+            .catch(error => { Toast.show("Güncelleme sırasında bir hata oluştu", Toast.LONG); console.log(error.message) });
 
     }
     const getIban = () => {
@@ -176,19 +182,12 @@ const AppProvider = (props) => {
                 headers: new Headers({ 'Content-Type': 'application/json' }),
             })
             .then(response => response.json())
-            .then(data => { setIban(data)})
+            .then(data => { setIban(data) })
 
     }
 
     ///api/Iban/AddIban
     const getAccounts = async () => {
-        console.log("ıd", userId)
-
-        // var result = await getToken();
-        // result = JSON.parse(result)
-        // var decoded = jwt_decode(result.token);
-        // var tokenId = decoded.nameIdentifier
-        // console.log("USER ıd", tokenId)
         fetch(apiBaseUrl + '/account/getAccountsByStatus/' + userId + '/true',
             {
                 method: 'GET',
@@ -198,7 +197,7 @@ const AppProvider = (props) => {
             })
             .then(response => response.json())
             .then(data => { setAccountList(data) })
-            .catch(error => { console.log("hata", error); })
+        //.catch(error => { console.log("hata", error); })
     }
     // const getAccounts = async () => {
     //     var result = await getToken();
@@ -247,7 +246,7 @@ const AppProvider = (props) => {
             })
             .then(response => response.json())
             .then(data => { setAccountMembers(data) })
-            .catch(error => { console.log("hata", error); })
+        // .catch(error => { console.log("hata", error); })
 
     }
 
@@ -265,8 +264,8 @@ const AppProvider = (props) => {
                 createAccount,
                 getAccounts, accountList,
                 getAccountMembers, accountMembers,
-                addIban,updateIban,
-                getIban,iban,
+                addIban, updateIban,
+                getIban, iban,
             }}>
             {props.children}
         </AppContext.Provider>
