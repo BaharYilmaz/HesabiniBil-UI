@@ -9,6 +9,7 @@ import { AppContext } from '../../../provider/AppProvider'
 import AppFooter from '../../../components/Footer'
 import Notifications from "../Notifications";
 import Iban from '../Iban'
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 
 const Profile = (props) => {
@@ -35,16 +36,16 @@ const Profile = (props) => {
 
            <Iban/>
           
-            <View style={{ marginHorizontal: 30, marginVertical: 10, alignItems: 'center' }}>
+            <View style={{ marginHorizontal:  hp('1%'), marginVertical:  hp('2%'), alignItems: 'center' }}>
                 <H3 style={{ color: 'darkorange', fontWeight: "bold" }}>Bildirimler</H3>
             </View>
 
 
             <View style={styles.divider} />
 
-            <Content style={{ marginHorizontal: 10 }}>
+            <Content style={{ marginHorizontal: hp('2%') }}>
 
-                <SafeAreaView style={{ margin: 20 }} >
+                <SafeAreaView style={{ margin:  hp('2%') }} >
                     <Notifications />
                 </SafeAreaView >
             </Content>
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
     divider: {
         height: 3,
         backgroundColor: 'darkorange',
-        marginHorizontal: 40,
+        marginHorizontal:  hp('2%'),
     },
     menu: {
         position: 'absolute',

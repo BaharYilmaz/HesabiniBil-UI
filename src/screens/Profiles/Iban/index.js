@@ -9,6 +9,7 @@ import { AppContext } from '../../../provider/AppProvider'
 import AddIban from '../../../components/Modals/IbanModal/IbanAddModal'
 import EditIban from '../../../components/Modals/IbanModal/IbanUpdateModal'
 import DeleteIban from '../../../components/Modals/IbanModal/IbanDeleteModal'
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 
 const Iban = (props) => {
@@ -29,17 +30,17 @@ const Iban = (props) => {
     }
     return (
 
-        <View style={{ margin: 40, padding: 20, alignItems: 'center', borderColor: 'lightgray', borderWidth: 2, borderRadius: 5 }}>
+        <View style={{ margin: hp('1%'), padding: hp('2%'), alignItems: 'center', borderColor: 'lightgray', borderWidth: 2, borderRadius: 5 }}>
 
             {state.iban == '' ?
 
                 <View style={{ flexDirection: 'row' }} >
                     <Left>
-                        <H3 style={{ color: 'gray', marginVertical: 10 }}>Iban Numarası</H3>
+                        <H3 style={{ color: 'gray', marginVertical: hp('2%') }}>Iban Numarası</H3>
                     </Left>
 
-                    <TouchableOpacity onPress={() => state.setModalAddIban({ modalVisible: true })} style={{ marginTop: 5 }}><Text>
-                        <Icon name='plus-circle' size={35} color="steelblue" />
+                    <TouchableOpacity onPress={() => state.setModalAddIban({ modalVisible: true })} style={{ marginTop: hp('2%')  }}><Text>
+                        <Icon name='plus-circle' size={hp('5%')} color="steelblue" />
                     </Text>
                     </TouchableOpacity>
                     <AddIban />
@@ -47,18 +48,18 @@ const Iban = (props) => {
                 </View>
                 :
                 <View style={{ flexDirection: "row" }}>
-                    <Left>
-                        <H3 style={{ color: 'gray', marginVertical: 10 }}>Iban Numarası</H3>
-                        <View style={{ backgroundColor: 'steelblue', padding: 10, borderRadius: 5 }}>
+                    <Left >
+                        <H3 style={{ color: 'gray', marginVertical:  hp('1%') }}>Iban Numarası</H3>
+                        <View style={{ backgroundColor: 'steelblue', padding: hp('1%'), borderRadius: 5 }}>
                             <Text style={{ color: 'white', fontWeight: "bold" }}>TR {state.iban[0].ibanNo}</Text>
                         </View>
                     </Left>
-                    <TouchableOpacity onPress={() => state.setModalUpdateIban({ modalVisible: true, ibanNo:  state.iban[0].ibanNo ,ibanId:state.iban[0].ibanID})} style={{ marginTop: 45 }} ><Text>
-                        <Icon name='file-document-edit' size={35} color="steelblue" />
+                    <TouchableOpacity onPress={() => state.setModalUpdateIban({ modalVisible: true, ibanNo:  state.iban[0].ibanNo ,ibanId:state.iban[0].ibanID})} style={{ marginTop: hp('6%') }} ><Text>
+                        <Icon name='file-document-edit' size={hp('5%')} color="steelblue" />
                     </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => state.setModalDeleteIban({ modalVisible: true, ibanId:state.iban[0].ibanID })} style={{ marginTop: 45 }}><Text>
-                        <Icon name='delete' size={35} color="steelblue" />
+                    <TouchableOpacity onPress={() => state.setModalDeleteIban({ modalVisible: true, ibanId:state.iban[0].ibanID })} style={{ marginTop:  hp('6%') }}><Text>
+                        <Icon name='delete' size={hp('5%')} color="steelblue" />
                     </Text>
                     </TouchableOpacity>
                     <EditIban />

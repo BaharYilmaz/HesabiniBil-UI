@@ -1,24 +1,18 @@
 import React, { useContext, useEffect } from 'react';
 import { AppContext } from '../../../provider/AppProvider'
 
-import { Dimensions, ScrollView, FlatList, View, SafeAreaView, StyleSheet } from 'react-native';
-import { useForm, Controller } from 'react-hook-form'
-
-
+import { Dimensions, ScrollView, FlatList, View, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native';
 import { Container, Header, Content, Button, Form, Item, Input, Title, Left, Right, Body, List, ListItem, Badge, Tabs, Tab, Footer, FooterTab, Text, H1, H2, H3, H4 } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import Modal from '../../../components/Modals/JoinAccountModal';
-
-
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import AppFooter from '../../../components/Footer'
 
 const CommonAccounts = (props) => {
 
     const state = useContext(AppContext);
     const accountList = state.accountList;
-    const { control, handleSubmit, errors } = useForm();
-
 
     useEffect(() => {
         console.log("This line will be run only after the first render ");
@@ -27,12 +21,12 @@ const CommonAccounts = (props) => {
     }, [state.userId]);
 
     return (
-        < Container >
+        < Container  >
             <Header />
-            <View style={{ backgroundColor: 'lightblue', margin: 30, padding: 10, borderRadius: 5, alignItems: 'center' }}>
-                <H3 style={{ color: 'white' }}>Ortak Hesaplar</H3>
+            <View style={styles.header}>
+                <H3 style={styles.headerText}>Ortak Hesaplar</H3>
             </View>
-            <Content style={{ marginHorizontal: 20 }} >
+            <Content style={styles.container} >
 
                 <SafeAreaView >
                     {accountList.length > 0 ?
@@ -44,15 +38,15 @@ const CommonAccounts = (props) => {
                                     accountList.map(list =>
                                         <ListItem thumbnail key={list.ortakHesapID} >
                                             <Body>
-                                                <Text style={{ marginBottom: 10 }}>{list.hesapAd}</Text>
+                                                <Text style={{ margin: hp('1%') }}>{list.hesapAd}</Text>
                                                 <Badge warning>
                                                     <Text style={{ color: 'white' }} note numberOfLines={1}>{list.hesapTurID == 1 ? 'Aile' : 'Ev Arkadaşları'}</Text>
                                                 </Badge>
                                             </Body>
                                             <Right>
-                                                <Button transparent onPress={() => props.navigation.navigate('HomeAccount', { account: list })}>
-                                                    <Text>Hesaba Git</Text>
-                                                </Button>
+                                                <TouchableOpacity style={styles.button} transparent onPress={() => props.navigation.navigate('HomeAccount', { account: list })}>
+                                                    <Text style={styles.buttonText}>Hesaba Git</Text>
+                                                </TouchableOpacity>
                                             </Right>
                                         </ListItem>
                                     )
@@ -64,19 +58,19 @@ const CommonAccounts = (props) => {
                 </SafeAreaView >
 
             </Content>
-            <Footer style={{ backgroundColor: 'transparent', margin: 30 }}>
-                <FooterTab style={{ backgroundColor: 'transparent', margin: 20 }}>
+            <Footer style={styles.footer}>
+                <FooterTab style={styles.footer}>
                     <Left>
                         <Button rounded style={{ backgroundColor: 'darkseagreen' }} onPress={() => props.navigation.navigate('CreateHomeAccount')}>
-                            <Text>Hesap Oluştur</Text>
+                            <Text style={styles.text}>Hesap Oluştur</Text>
                         </Button>
                     </Left>
                     <Right>
                         <Button rounded style={{ backgroundColor: 'palevioletred' }}
-                            onPress={() => state.setModalJoin({ modalVisible: true})}>
-                            <Text>Hesaba Üye Ol</Text>
+                            onPress={() => state.setModalJoin({ modalVisible: true })}>
+                            <Text style={styles.text}>Hesaba Üye Ol</Text>
                         </Button>
-                        <Modal/>
+                        <Modal />
                     </Right>
                 </FooterTab>
             </Footer>
@@ -86,6 +80,31 @@ const CommonAccounts = (props) => {
         </Container >
     );
 }
-//                                <Col style={{ backgroundColor: '#00CE9F', height: 200 }}></Col>
 
 export default CommonAccounts;
+
+
+const styles = StyleSheet.create({
+    header: {
+        backgroundColor: 'lightblue', margin: hp('2%'), padding: wp('2%'), borderRadius: 5, alignItems: 'center'
+    },
+    headerText: {
+        color: 'white', fontSize: hp('3%')
+    },
+    text: {
+        fontSize: hp('2%')
+    },
+    container: {
+        marginRight: hp('1.5%')
+    },
+    footer: {
+        backgroundColor: 'transparent', margin: hp('1.5%')
+    },
+    button: {
+        marginTop: hp('4%')
+    },
+    buttonText: {
+        color: 'steelblue'
+    }
+
+})

@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import Camera from 'react-native-camera';
 import { RNCamera } from 'react-native-camera';
-var pic = ''
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 class AddBill extends Component {
 

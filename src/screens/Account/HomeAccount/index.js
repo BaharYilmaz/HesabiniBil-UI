@@ -2,10 +2,9 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Container, Header, Content, Button, Form, Item, Input, Title, Picker, Left, Right, TabHeading, Body, List, ListItem, Badge, Tabs, Tab, Footer, FooterTab, Text, H1, H2, H3, H4 } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Dimensions, ScrollView, FlatList, View, SafeAreaView, StyleSheet, Clipboard,TouchableOpacity } from 'react-native';
-import Menu, { MenuItem, MenuDivider } from 'react-native-material-menu';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 import { AppContext } from '../../../provider/AppProvider'
-
 import AppFooter from '../../../components/Footer'
 import Members from '../Members';
 import Bills from "../Bills";
@@ -36,7 +35,7 @@ const HomeAccount = (props) => {
         <Container>
             <Header />
 
-            <View style={{ flexDirection: "row", marginVertical: 20, marginHorizontal: 40, alignItems: 'center' }}>
+            <View style={{ flexDirection: "row", margin:wp('5%'), alignItems: 'center' }}>
 
                 <Left>
                     <H1 style={{ color: 'darkseagreen', marginBottom: 5 }}>{params.account.hesapAd}</H1>
@@ -47,7 +46,7 @@ const HomeAccount = (props) => {
                 <Right >
                     <TouchableOpacity onPress={() => toggleMenu()} ><Text>
 
-                        <Icon name='cog' size={30} color="darkseagreen" />
+                        <Icon name='cog' size={hp('5%')} color="darkseagreen" />
 
                     </Text>
                     </TouchableOpacity>
@@ -60,7 +59,7 @@ const HomeAccount = (props) => {
 
                                     <TouchableOpacity onPress={() => toggleMenu()} ><Text>
 
-                                        <Icon name='cog' size={30} color="white" />
+                                        <Icon name='cog' size={hp('5%')} color="white" />
 
                                     </Text>
                                     </TouchableOpacity>
@@ -81,7 +80,7 @@ const HomeAccount = (props) => {
 
 
             </View>
-            <Footer style={{ marginHorizontal: 30, backgroundColor: 'transparent' }} >
+            <Footer style={{ marginHorizontal: wp('5%'), backgroundColor: 'transparent' }} >
                 <FooterTab style={{ backgroundColor: 'transparent' }} >
                     <Left>
                         <Button block onPress={() => toggleScreen(1)} style={screen == 1 ? styles.active : styles.passive}>
@@ -97,9 +96,9 @@ const HomeAccount = (props) => {
             </Footer>
             <View style={styles.divider} />
 
-            <Content style={{ marginHorizontal: 10 }}>
+            <Content style={{ marginHorizontal: wp('0.5%') }}>
 
-                <SafeAreaView style={{ margin: 20 }} >
+                <SafeAreaView style={{ margin: wp('0.5%') }} >
                     {
                         screen === 1 ? <Bills /> : <Members />
                     }
@@ -109,7 +108,7 @@ const HomeAccount = (props) => {
                 </SafeAreaView >
             </Content>
 
-            <View style={{ alignSelf: 'center', marginVertical: 30 }}>
+            <View style={{ alignSelf: 'center', marginVertical: wp('3%') }}>
                 <Button rounded style={{ backgroundColor: 'crimson' }} onPress={() => props.navigation.navigate('AddBill')}>
                     <Text style={{ fontWeight: 'bold' }}>Fiş Yükle</Text>
                 </Button>
@@ -133,8 +132,8 @@ const styles = StyleSheet.create({
     divider: {
         height: 4,
         backgroundColor: 'steelblue',
-        marginHorizontal: 30,
-        marginVertical: 10
+        marginHorizontal: wp('5%'),
+        marginVertical: wp('1%')
     },
     menu: {
         position: 'absolute',

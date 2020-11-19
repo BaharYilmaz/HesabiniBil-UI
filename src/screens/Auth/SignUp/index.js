@@ -2,14 +2,10 @@ import React, { useContext, useState } from 'react';
 import { AppContext } from '../../../provider/AppProvider'
 import { useForm, Controller } from 'react-hook-form'
 
-import {
-    Dimensions,
-    View,
-    Alert, TextInput
-} from 'react-native';
-
+import { Dimensions, View, Alert, TextInput, StyleSheet } from 'react-native';
 import { Container, Header, Content, Button, Form, Item, Input, Title, H2, Left, Text, Body, Right } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
 //this.props.navigation.goBack();
@@ -52,45 +48,41 @@ const SignUp = (props) => {
 
     return (
 
-        <Container >
+        <Container style={{ flex: 1, height: screenHeight, justifyContent: 'center' }}>
             <Header>
                 <Left>
                     <Button transparent onPress={() => props.navigation.navigate('Login')}>
-                        <Icon name='arrow-left-thick' size={30} color="white" />
+                        <Icon name='arrow-left-thick' size={hp('5%')} color="white" />
                     </Button>
                 </Left>
                 <Body>
                     <Title>Kayıt Ekranı</Title>
                 </Body>
             </Header>
-            <Content >
-                <View style={{ flex: 1, height: screenHeight, justifyContent: 'center' }}>
-                    <View style={{ alignItems: 'center' }}>
-                        <H2 style={{ color: 'gray', marginBottom: 50 }}>Aramıza Katıl  :) </H2>
-                    </View>
-
-                    <View style={{ margin: 30 }}>
-                        <Item style={{ margin: 20, padding: 5 }}>
+            <Content>
+                <View style={{ flex: 1,justifyContent: 'center'}}>
+                    <View style={{ marginVertical: hp('3%'), marginHorizontal: hp('5%') }}>
+                        <Item style={styles.item}>
                             <Controller
                                 control={control} name="firstName" rules={{ required: true }} defaultValue=""
                                 render={({ onChange, onBlur, value }) => (
-                                    <TextInput onChangeText={value => onChange(value)} value={value} placeholder='İsim' style={{ fontSize: 20 }} />
+                                    <TextInput onChangeText={value => onChange(value)} value={value} placeholder='İsim' style={ styles.text} />
                                 )}
                             />
                         </Item >
-                        {errors.firstName && <Text style={{ color: 'red', marginLeft: 10 }}>Lütfen adınızı giriniz !</Text>}
+                        {errors.firstName && <Text style={styles.errorText}>Lütfen adınızı giriniz !</Text>}
 
-                        <Item style={{ margin: 20, padding: 5 }}>
+                        <Item style={styles.item}>
                             <Controller
                                 control={control} name="lastName" defaultValue="" rules={{ required: true }}
                                 render={({ onChange, onBlur, value }) => (
-                                    <TextInput onChangeText={value => onChange(value)} value={value} placeholder='Soyisim' style={{ fontSize: 20 }} />
+                                    <TextInput onChangeText={value => onChange(value)} value={value} placeholder='Soyisim' style={ styles.text} />
                                 )}
                             />
                         </Item>
-                        {errors.lastName && <Text style={{ color: 'red', marginLeft: 10 }}>Lütfen soyadınızı giriniz !</Text>}
+                        {errors.lastName && <Text style={styles.errorText}>Lütfen soyadınızı giriniz !</Text>}
 
-                        <Item style={{ margin: 20, padding: 5 }}>
+                        <Item style={styles.item}>
                             <Controller
                                 control={control} name="email" defaultValue="" rules={{
                                     required: true, pattern: {
@@ -98,33 +90,33 @@ const SignUp = (props) => {
                                     }
                                 }}
                                 render={({ onChange, onBlur, value }) => (
-                                    <TextInput onChangeText={value => onChange(value)} value={value} placeholder='E-posta' style={{ fontSize: 20 }} />
+                                    <TextInput onChangeText={value => onChange(value)} value={value} placeholder='E-posta' style={ styles.text} />
                                 )}
                             />
                         </Item>
-                        {errors.email && <Text style={{ color: 'red', marginLeft: 10 }}>Lütfen uygun bir mail adresi giriniz !</Text>}
+                        {errors.email && <Text style={styles.errorText}>Lütfen uygun bir mail adresi giriniz !</Text>}
 
-                        <Item style={{ margin: 20, padding: 5 }}>
+                        <Item style={styles.item}>
                             <Controller
                                 control={control} name="password" defaultValue="" rules={{ required: true }}
                                 render={({ onChange, onBlur, value }) => (
-                                    <TextInput onChangeText={value => onChange(value)} value={value} placeholder='Şifre' secureTextEntry={true} style={{ fontSize: 20 }} />
+                                    <TextInput onChangeText={value => onChange(value)} value={value} placeholder='Şifre' secureTextEntry={true}style={ styles.text} />
                                 )}
                             />
                         </Item>
-                        {errors.password && <Text style={{ color: 'red', marginLeft: 10 }}>Lütfen şifrenizi giriniz !</Text>}
-                        <Item style={{ margin: 20, padding: 5 }}>
+                        {errors.password && <Text style={styles.errorText}>Lütfen şifrenizi giriniz !</Text>}
+                        <Item style={styles.item}>
                             <Controller
                                 control={control} name="passwordAgain" defaultValue="" rules={{ required: true }}
                                 render={({ onChange, onBlur, value }) => (
-                                    <TextInput onChangeText={value => onChange(value)} value={value} placeholder='Şifre(Tekrar)' secureTextEntry={true} style={{ fontSize: 20 }} />
+                                    <TextInput onChangeText={value => onChange(value)} value={value} placeholder='Şifre(Tekrar)' secureTextEntry={true} style={ styles.text} />
                                 )}
                             />
                         </Item>
-                        {errors.passwordAgain && <Text style={{ color: 'red', marginLeft: 10 }}>Lütfen şifrenizi tekrar giriniz !</Text>}
+                        {errors.passwordAgain && <Text style={styles.errorText}>Lütfen şifrenizi tekrar giriniz !</Text>}
 
-                        {password ? null : <Text style={{ color: 'red', marginLeft: 10 }}>Şifre eşleşmedi !</Text>}
-                        <Button block rounded style={{ margin: 20, padding: 5 }} onPress={handleSubmit(onSubmit)} ><Text>Kayıt Ol</Text></Button>
+                        {password ? null : <Text style={styles.errorText}>Şifre eşleşmedi !</Text>}
+                        <Button block rounded style={{ marginTop: hp('3%')}} onPress={handleSubmit(onSubmit)} ><Text>Kayıt Ol</Text></Button>
                     </View>
                 </View>
             </Content>
@@ -132,6 +124,18 @@ const SignUp = (props) => {
     );
 }
 
-//                                <Col style={{ backgroundColor: '#00CE9F', height: 200 }}></Col>
 
 export default SignUp;
+
+const styles = StyleSheet.create({
+
+    item: {
+        marginTop: hp('2%')
+    },
+    text: {
+        fontSize: hp('3%')
+    },
+    errorText:{
+        color: 'red', marginLeft: 10 
+    }
+})

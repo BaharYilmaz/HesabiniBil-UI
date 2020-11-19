@@ -2,11 +2,12 @@ import React, { useContext } from 'react';
 import { AppContext } from '../../../provider/AppProvider'
 import { useForm, Controller } from 'react-hook-form'
 
-import { Dimensions, View, TextInput } from 'react-native';
+import { Dimensions, View, TextInput,TouchableOpacity } from 'react-native';
 
 
 import { Container, Header, Content, Button, Form, Item, Input, Title, H2, H3, Text, Body, Badge, Right } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 
 const Login = (props) => {
@@ -28,15 +29,15 @@ const Login = (props) => {
 
     return (
 
-        <Container >
+        <Container style={{ flex: 1, height: screenHeight, justifyContent: 'center' }} >
             <Header />
-            <Content >
-                <View style={{ flex: 1, height: screenHeight, justifyContent: 'center' }}>
+            <Content style={{ margin: hp('5%') }}>
+                <View >
                     <View style={{ alignItems: 'center' }}>
-                        <H2 style={{ color: 'gray', marginBottom: 50 }}>HESABINI BİL</H2>
+                        <H2 style={{ color: 'gray', margin: hp('5%') }}>HESABINI BİL</H2>
                     </View>
-                    <View style={{ margin: 30 }}>
-                        <Item style={{ margin: 20, padding: 5 }}>
+                    <View >
+                        <Item style={{ padding: hp('1%') ,marginTop:hp('3%')}}>
                             <Controller
                                 control={control} name="email" defaultValue="" rules={{
                                     required: true, pattern: {
@@ -47,7 +48,7 @@ const Login = (props) => {
                                     <View style={{ flexDirection: 'row' }}>
                                         <TextInput onChangeText={value => onChange(value)} value={value} placeholder='E-posta' style={{ fontSize: 20 }} />
                                         <Right>
-                                            <Icon name='email-outline' size={30} color="gray" />
+                                            <Icon name='email-outline' size={hp('5%')} color="gray" />
                                         </Right>
                                     </View>
                                 )}
@@ -55,14 +56,14 @@ const Login = (props) => {
                         </Item>
                         {errors.email && <Text style={{ color: 'red', marginLeft: 10 }}>Lütfen uygun bir mail adresi giriniz !</Text>}
 
-                        <Item style={{ margin: 20, padding: 5 }}>
+                        <Item style={{ padding: hp('1%') ,marginTop:hp('3%') }}>
                             <Controller
                                 control={control} name="password" defaultValue="" rules={{ required: true }}
                                 render={({ onChange, onBlur, value }) => (
                                     <View style={{ flexDirection: 'row' }}>
                                         <TextInput onChangeText={value => onChange(value)} value={value} placeholder='Şifre' secureTextEntry={true} style={{ fontSize: 20 }} />
                                         <Right>
-                                            <Icon name='lock-outline' size={30} color="gray" />
+                                            <Icon name='lock-outline' size={hp('5%')} color="gray" />
                                         </Right>
                                     </View>
                                 )}
@@ -70,15 +71,15 @@ const Login = (props) => {
                         </Item>
                         {errors.password && <Text style={{ color: 'red', marginLeft: 10 }}>Lütfen şifrenizi giriniz !</Text>}
 
-                        <Button block rounded style={{ margin: 5, padding: 5 }} onPress={handleSubmit(onSubmit)} ><Text>Giriş Yap</Text></Button>
-                        <Button transparent block onPress={() => props.navigation.navigate('SignUp')} >
-                            <Text style={{ textDecorationLine: 'underline', color: 'green' }}>Şifremi unuttum</Text>
-                        </Button>
-                        <View style={{ alignItems: 'center' }}>
+                        <Button block rounded style={{ marginTop: hp('5%')}} onPress={handleSubmit(onSubmit)} ><Text>Giriş Yap</Text></Button>
+                        <TouchableOpacity style={{ alignItems: 'center', marginTop: hp('2%') }}  onPress={() => props.navigation.navigate('SignUp')} >
+                            <Text style={{ textDecorationLine: 'underline', color: 'green' }}>Şifremi Unuttum</Text>
+                        </TouchableOpacity>
+                        <View style={{ alignItems: 'center' ,marginTop: hp('2%') }}>
                             <Text> Hesabın yok mu ?</Text>
-                            <Button transparent block onPress={() => props.navigation.navigate('SignUp')} >
-                                <Text style={{ textDecorationLine: 'underline' }}>Kayıt Ol</Text>
-                            </Button>
+                            <TouchableOpacity onPress={() => props.navigation.navigate('SignUp')} >
+                                <Text style={{ textDecorationLine: 'underline' , color: 'slateblue'}}>Kayıt Ol</Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
 
