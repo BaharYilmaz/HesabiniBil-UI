@@ -12,6 +12,8 @@ target 'tez' do
 
   pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
 
+  pod 'react-native-camera', :path => '../node_modules/react-native-camera'
+
   target 'tezTests' do
     inherit! :complete
     # Pods for testing

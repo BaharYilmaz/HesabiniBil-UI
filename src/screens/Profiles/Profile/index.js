@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Container, Header, Content, Button, Form, Item, Input, Title, Picker, Left, Right, TabHeading, Body, List, ListItem, Badge, Tabs, Tab, Footer, FooterTab, Text, H1, H2, H3, H4 } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Dimensions, ScrollView, FlatList, View, SafeAreaView, StyleSheet, Clipboard } from 'react-native';
+import { Dimensions, ScrollView, FlatList, View, SafeAreaView, StyleSheet, Clipboard,TouchableOpacity } from 'react-native';
 import Menu, { MenuItem, MenuDivider } from 'react-native-material-menu';
 
 import { AppContext } from '../../../provider/AppProvider'
@@ -9,7 +9,6 @@ import { AppContext } from '../../../provider/AppProvider'
 import AppFooter from '../../../components/Footer'
 import Notifications from "../Notifications";
 import Iban from '../Iban'
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 const Profile = (props) => {

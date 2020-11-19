@@ -8,7 +8,8 @@ import jwt_decode from "jwt-decode";
 
 const AppProvider = (props) => {
 
-    const apiBaseUrl = 'http://10.0.3.2:5001/api';
+    //  const apiBaseUrl = 'http://10.0.3.2:5001/api';
+    const apiBaseUrl = 'https://hesabinibiltezapi.azurewebsites.net/api';
 
     const [loginState, changeLoginState] = useState(false);
     const [userId, setUserId] = useState('');
@@ -121,16 +122,20 @@ const AppProvider = (props) => {
     }
     const createAccount = async (data) => {
         var result = JSON.parse(await getToken());
-
-        console.log("giden token", result.token)
+        model = {
+            "olusturanKullaniciID": parseInt(userId),
+            "hesapAd": data.hesapAd,
+            "hesapTurID": data.hesapTurID,
+            "hesapAktifDurum": data.hesapAktifDurum
+        }
+        console.log("giden token", data)
         fetch(apiBaseUrl + '/account/AddAccount',
             {
                 method: 'POST',
                 headers: new Headers({
-                    'Authorization': "Bearer " + result.token,
                     'Content-Type': 'application/json'
                 }),
-                body: JSON.stringify(data)
+                body: JSON.stringify(model)
             })
             .then(response => response.json())
             .then(data => { Toast.show(data.message, Toast.LONG); getAccounts(); getAccounts() })
