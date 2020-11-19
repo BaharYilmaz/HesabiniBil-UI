@@ -30,7 +30,7 @@ const Iban = (props) => {
     }
     return (
 
-        <View style={{ margin: hp('1%'), padding: hp('2%'), alignItems: 'center', borderColor: 'lightgray', borderWidth: 2, borderRadius: 5 }}>
+        <View style={{ margin: wp('2%'), padding: wp('2%'), alignItems: 'center', borderColor: 'lightgray', borderWidth: 2, borderRadius: 5 }}>
 
             {state.iban == '' ?
 
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     divider: {
         height: 3,
         backgroundColor: 'darkorange',
-        marginHorizontal: 40,
+        marginHorizontal: 0,
     },
     menu: {
         position: 'absolute',

@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     divider: {
         height: 3,
         backgroundColor: 'darkorange',
-        marginHorizontal:  hp('2%'),
+        marginHorizontal:  wp('2%'),
     },
     menu: {
         position: 'absolute',

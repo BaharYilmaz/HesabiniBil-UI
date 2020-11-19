@@ -30,7 +30,7 @@ export default AppFooter;
 
 const styles = StyleSheet.create({
     text: {
-        fontSize: hp('2%')
+        fontSize: wp('3%')
     },
     container: {
         marginHorizontal: hp('1%')

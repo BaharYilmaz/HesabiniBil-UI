@@ -43,7 +43,7 @@ const CreateHomeAccount = (props) => {
         <Container style={styles.container}>
             <Header />
             <Content  >
-                <View >
+                <View style={{ flex: 1, height: screenHeight*0.8, justifyContent: 'center' }}>
                     <View style={{ alignItems: 'center', margin: hp('3%') }}>
                         <H2 style={{ color: 'darkseagreen' }}>Yeni Ortak Hesap Oluştur</H2>
                     </View>

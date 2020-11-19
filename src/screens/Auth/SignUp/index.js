@@ -48,7 +48,7 @@ const SignUp = (props) => {
 
     return (
 
-        <Container style={{ flex: 1, height: screenHeight, justifyContent: 'center' }}>
+        <Container style={{ height: screenHeight }}>
             <Header>
                 <Left>
                     <Button transparent onPress={() => props.navigation.navigate('Login')}>
@@ -60,7 +60,7 @@ const SignUp = (props) => {
                 </Body>
             </Header>
             <Content>
-                <View style={{ flex: 1,justifyContent: 'center'}}>
+                <View style={{ flex: 1,justifyContent: 'center',height: screenHeight*0.9,marginBottom: wp('10%')}}>
                     <View style={{ marginVertical: hp('3%'), marginHorizontal: hp('5%') }}>
                         <Item style={styles.item}>
                             <Controller
@@ -130,10 +130,10 @@ export default SignUp;
 const styles = StyleSheet.create({
 
     item: {
-        marginTop: hp('2%')
+        marginTop: hp('5%')
     },
     text: {
-        fontSize: hp('3%')
+        fontSize: 20
     },
     errorText:{
         color: 'red', marginLeft: 10 

@@ -89,10 +89,10 @@ const styles = StyleSheet.create({
         backgroundColor: 'lightblue', margin: hp('2%'), padding: wp('2%'), borderRadius: 5, alignItems: 'center'
     },
     headerText: {
-        color: 'white', fontSize: hp('3%')
+        color: 'white', fontSize: wp('5%')
     },
     text: {
-        fontSize: hp('2%')
+        fontSize: wp('3%')
     },
     container: {
         marginRight: hp('1.5%')

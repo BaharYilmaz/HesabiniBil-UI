@@ -31,8 +31,7 @@ const Login = (props) => {
 
         <Container style={{ flex: 1, height: screenHeight, justifyContent: 'center' }} >
             <Header />
-            <Content style={{ margin: hp('5%') }}>
-                <View >
+                <View style={{ flex: 1, height: screenHeight*0.8, justifyContent: 'center', margin: hp('5%')  }}>
                     <View style={{ alignItems: 'center' }}>
                         <H2 style={{ color: 'gray', margin: hp('5%') }}>HESABINI BİL</H2>
                     </View>
@@ -86,7 +85,6 @@ const Login = (props) => {
 
                 </View>
 
-            </Content>
         </Container>
     );
 }
