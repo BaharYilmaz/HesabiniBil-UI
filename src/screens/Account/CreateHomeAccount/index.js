@@ -53,7 +53,7 @@ const CreateHomeAccount = (props) => {
                             <Controller
                                 control={control} name="accountName" rules={{ required: true }} defaultValue=""
                                 render={({ onChange, onBlur, value }) => (
-                                    <TextInput onChangeText={value => onChange(value)} value={value} placeholder='Hesap Adı' style={{ fontSize: hp('3%') }} />
+                                    <TextInput onChangeText={value => onChange(value)} value={value} placeholder='Hesap Adı' style={{ fontSize: wp('4%') }} />
                                 )}
                             />
                         </Item >

@@ -47,7 +47,7 @@ const Login = (props) => {
                                     <View style={{ flexDirection: 'row' }}>
                                         <TextInput onChangeText={value => onChange(value)} value={value} placeholder='E-posta' style={{ fontSize: 20 }} />
                                         <Right>
-                                            <Icon name='email-outline' size={hp('5%')} color="gray" />
+                                            <Icon name='email-outline' size={wp('6%')} color="gray" />
                                         </Right>
                                     </View>
                                 )}
@@ -62,7 +62,7 @@ const Login = (props) => {
                                     <View style={{ flexDirection: 'row' }}>
                                         <TextInput onChangeText={value => onChange(value)} value={value} placeholder='Şifre' secureTextEntry={true} style={{ fontSize: 20 }} />
                                         <Right>
-                                            <Icon name='lock-outline' size={hp('5%')} color="gray" />
+                                            <Icon name='lock-outline' size={wp('6%')} color="gray" />
                                         </Right>
                                     </View>
                                 )}

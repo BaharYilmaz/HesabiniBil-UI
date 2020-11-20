@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "305068522069",
+    "firebase_url": "https://hesabini-bil-2dff2.firebaseio.com",
+    "project_id": "hesabini-bil-2dff2",
+    "storage_bucket": "hesabini-bil-2dff2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:305068522069:android:9a101fe4fe845b9142f2dc",
+        "android_client_info": {
+          "package_name": "com.tez"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "305068522069-efpmh4ljt31e66h0agshdijak4pcs4rg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVCCMcuF-vykMuos2Pmt7eO9iJC2gZRL0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "305068522069-efpmh4ljt31e66h0agshdijak4pcs4rg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

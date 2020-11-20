@@ -3,29 +3,74 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
   Dimensions,
-  StyleSheet,
-  Text,
-  TouchableHighlight,
+  StyleSheet,Alert,
+  Text,Progress,
+  TouchableHighlight,TouchableOpacity,
   View, Image, ImageBackground
 } from 'react-native';
 import Camera from 'react-native-camera';
 import { RNCamera } from 'react-native-camera';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import storage from '@react-native-firebase/storage';
+import auth from '@react-native-firebase/auth';
 class AddBill extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      data: null
+      image: null,
+      uploading: false,
+      transferred: 0
     }
   }
+
+  componentDidMount() {
+    auth().signInAnonymously()
+  }
+  
+  uploadImage = async () => {
+
+    const  {image} = this.state;
+    console.log("--------------------",image)
+    const filename = image.substring(image.lastIndexOf('/') + 1);
+    console.log("------////-------",filename)
+
+    const uploadUri = Platform.OS === 'ios' ? image.replace('file://', '') : image;
+    console.log("******************",uploadUri)
+
+    this.setState({ uploading: true, transferred: 0 });
+
+    const task = storage()
+      .ref(filename)
+      .putFile(uploadUri);
+    // set progress state
+    task.on('state_changed', snapshot => {
+      this.setState({
+        transferred: Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 10000
+      });
+
+
+    });
+    try {
+      await task;
+    } catch (e) {
+      console.error(e);
+    }
+    this.setState({ uploading: false });
+
+    Alert.alert(
+      'Photo uploaded!',
+      'Your photo has been uploaded to Firebase Cloud Storage!'
+    );
+    this.setState({ image: null });
+  };
 
   takePicture = async () => {
     try {
       const options = { quality: 0.5, pauseAfterCapture: true };
       const { uri } = await this.camera.takePictureAsync();
-      this.setState({ data: uri });
+      this.setState({ image: uri });
+
       // CameraRoll.saveToCameraRoll(data.uri, "photo")
     } catch (err) {
       console.log('err: ', err);
@@ -33,18 +78,26 @@ class AddBill extends Component {
   };
 
   renderImage() {
-    const { data } = this.state;
-    console.log(data)
-    const image = { uri: "https://reactjs.org/logo-og.png" };
+    const { image } = this.state;
 
     return (
 
       <View style={{ marginTop: 70 }}>
         <ImageBackground
-          source={{ uri: data}} imageStyle={{ resizeMode: 'stretch' }}
-          style={{width: '50%', height: '50%'}}        />
+          source={{ uri: image }} imageStyle={{ resizeMode: 'stretch' }}
+          style={{ width: '50%', height: '50%' }} />
 
-        <Text onPress={() => this.setState({ data: null })}>Cancel</Text>
+        <Text onPress={() => this.setState({ image: null })}>Cancel</Text>
+
+        {this.state.uploading ? (
+          <View >
+            {/* <Progress.Bar progress={this.state.transferred} width={300} /> */}
+          </View>
+        ) : (
+            <TouchableOpacity onPress={this.uploadImage}>
+              <Text >Upload image</Text>
+            </TouchableOpacity>
+          )}
       </View>
     );
   }
@@ -76,7 +129,7 @@ class AddBill extends Component {
 
     return (
 
-      this.state.data ? this.renderImage() : this.renderCamera()
+      this.state.image ? this.renderImage() : this.renderCamera()
 
 
 
