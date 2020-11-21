@@ -1,18 +1,13 @@
 'use strict';
 import React, { Component } from 'react';
-import {
-  AppRegistry,
-  Dimensions,
-  StyleSheet,Alert,
-  Text,Progress,
-  TouchableHighlight,TouchableOpacity,
-  View, Image, ImageBackground
-} from 'react-native';
-import Camera from 'react-native-camera';
+import { AppRegistry, Dimensions, StyleSheet, Alert, Text, TouchableOpacity, View, Image, ImageBackground } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import storage from '@react-native-firebase/storage';
 import auth from '@react-native-firebase/auth';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Container, Header, Left, Right,Button } from 'native-base';
+
 class AddBill extends Component {
 
   constructor(props) {
@@ -24,38 +19,29 @@ class AddBill extends Component {
     }
   }
 
+
   componentDidMount() {
     auth().signInAnonymously()
   }
-  
+
   uploadImage = async () => {
 
-    const  {image} = this.state;
-    console.log("--------------------",image)
+    const { image } = this.state;
     const filename = image.substring(image.lastIndexOf('/') + 1);
-    console.log("------////-------",filename)
-
     const uploadUri = Platform.OS === 'ios' ? image.replace('file://', '') : image;
-    console.log("******************",uploadUri)
 
     this.setState({ uploading: true, transferred: 0 });
 
-    const task = storage()
-      .ref(filename)
-      .putFile(uploadUri);
-    // set progress state
-    task.on('state_changed', snapshot => {
-      this.setState({
-        transferred: Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 10000
-      });
-
-
+    const imageRef = storage().ref().child(filename)
+    imageRef.putFile(uploadUri, { contentType: 'image/jpeg' }).then(function () {
+      return imageRef.getDownloadURL();
+    }).then(function (url) {
+      console.log("Image url", { url: url });
+    }).catch(function (error) {
+      console.log("Error while saving the image.. ", error);
     });
-    try {
-      await task;
-    } catch (e) {
-      console.error(e);
-    }
+
+
     this.setState({ uploading: false });
 
     Alert.alert(
@@ -65,13 +51,13 @@ class AddBill extends Component {
     this.setState({ image: null });
   };
 
+
   takePicture = async () => {
     try {
-      const options = { quality: 0.5, pauseAfterCapture: true };
+      // const options = { quality: 0.5, pauseAfterCapture: true };
       const { uri } = await this.camera.takePictureAsync();
       this.setState({ image: uri });
 
-      // CameraRoll.saveToCameraRoll(data.uri, "photo")
     } catch (err) {
       console.log('err: ', err);
     }
@@ -79,25 +65,31 @@ class AddBill extends Component {
 
   renderImage() {
     const { image } = this.state;
+    const { height: screenHeight } = Dimensions.get('window');
+
 
     return (
 
-      <View style={{ marginTop: 70 }}>
-        <ImageBackground
-          source={{ uri: image }} imageStyle={{ resizeMode: 'stretch' }}
-          style={{ width: '50%', height: '50%' }} />
+      <View >
+        <View >
+          <ImageBackground
+            source={{ uri: image }} imageStyle={{ resizeMode: 'contain' }}
+            style={{ width: '100%', height: screenHeight * 0.7, transform: [{ rotate: '90deg' }] }} />
+        </View>
+        <View style={{ flexDirection: 'row',marginHorizontal:wp('15%') }}>
+           
+           <Left style={{margin:wp('2%') }}>
+           <Button block rounded danger onPress={() => this.setState({ image: null })}>
+              <Text style={{color:'white' }} >İptal</Text>
+            </Button>
+           </Left>
+                     <Right style={{margin:wp('2%') }}>
+            <Button block rounded info onPress={this.uploadImage}>
+              <Text style={{color:'white' }} >Fotoğrafı Tara</Text>
+            </Button>
 
-        <Text onPress={() => this.setState({ image: null })}>Cancel</Text>
-
-        {this.state.uploading ? (
-          <View >
-            {/* <Progress.Bar progress={this.state.transferred} width={300} /> */}
-          </View>
-        ) : (
-            <TouchableOpacity onPress={this.uploadImage}>
-              <Text >Upload image</Text>
-            </TouchableOpacity>
-          )}
+          </Right>
+        </View>
       </View>
     );
   }
@@ -120,7 +112,10 @@ class AddBill extends Component {
             buttonNegative: 'Cancel',
           }}
         >
-          <Text style={styles.capture} onPress={this.takePicture.bind(this)}>[CAPTURE]</Text>
+           
+          <TouchableOpacity onPress={this.takePicture.bind(this)}>
+            <Text style={styles.capture}>[ ÇEK ]</Text>
+          </TouchableOpacity>
         </RNCamera>
       </View>
     )
@@ -129,9 +124,11 @@ class AddBill extends Component {
 
     return (
 
-      this.state.image ? this.renderImage() : this.renderCamera()
+      <Container>
+        <Header />
+        {this.state.image ? this.renderImage() : this.renderCamera()}
 
-
+      </Container>
 
     );
   }
