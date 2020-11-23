@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Container, Header, Content, Button, Form, Item, Input, Title, Picker, Left, Right, TabHeading, Body, List, ListItem, Badge, Tabs, Tab, Footer, FooterTab, Text, H1, H2, H3, H4 } from 'native-base';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Icon } from 'react-native-elements';
 import { Dimensions, ScrollView, FlatList, View, SafeAreaView, StyleSheet, Clipboard,TouchableOpacity } from 'react-native';
 import Menu, { MenuItem, MenuDivider } from 'react-native-material-menu';
 
@@ -40,7 +40,7 @@ const Iban = (props) => {
                     </Left>
 
                     <TouchableOpacity onPress={() => state.setModalAddIban({ modalVisible: true })} style={{ marginTop: hp('2%')  }}><Text>
-                        <Icon name='plus-circle' size={hp('5%')} color="steelblue" />
+                        <Icon name='plus-circle' type='font-awesome' size={hp('5%')} color="steelblue" />
                     </Text>
                     </TouchableOpacity>
                     <AddIban />
@@ -55,11 +55,11 @@ const Iban = (props) => {
                         </View>
                     </Left>
                     <TouchableOpacity onPress={() => state.setModalUpdateIban({ modalVisible: true, ibanNo:  state.iban[0].ibanNo ,ibanId:state.iban[0].ibanID})} style={{ marginTop: hp('6%') }} ><Text>
-                        <Icon name='file-document-edit' size={hp('5%')} color="steelblue" />
+                        <Icon name='pencil-square' type='font-awesome'size={hp('5%')} color="steelblue" />
                     </Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => state.setModalDeleteIban({ modalVisible: true, ibanId:state.iban[0].ibanID })} style={{ marginTop:  hp('6%') }}><Text>
-                        <Icon name='delete' size={hp('5%')} color="steelblue" />
+                        <Icon name='trash'type='font-awesome' size={hp('5%')} color="steelblue" />
                     </Text>
                     </TouchableOpacity>
                     <EditIban />

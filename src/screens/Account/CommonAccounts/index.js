@@ -3,7 +3,7 @@ import { AppContext } from '../../../provider/AppProvider'
 
 import { Dimensions, ScrollView, FlatList, View, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native';
 import { Container, Header, Content, Button, Form, Item, Input, Title, Left, Right, Body, List, ListItem, Badge, Tabs, Tab, Footer, FooterTab, Text, H1, H2, H3, H4 } from 'native-base';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Icon } from 'react-native-elements';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import Modal from '../../../components/Modals/JoinAccountModal';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';

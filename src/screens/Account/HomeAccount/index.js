@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Container, Header, Content, Button, Form, Item, Input, Title, Picker, Left, Right, TabHeading, Body, List, ListItem, Badge, Tabs, Tab, Footer, FooterTab, Text, H1, H2, H3, H4 } from 'native-base';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Icon } from 'react-native-elements';
 import { Dimensions, ScrollView, FlatList, View, SafeAreaView, StyleSheet, Clipboard,TouchableOpacity } from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
@@ -46,7 +46,7 @@ const HomeAccount = (props) => {
                 <Right >
                     <TouchableOpacity onPress={() => toggleMenu()} ><Text>
 
-                        <Icon name='cog' size={hp('5%')} color="darkseagreen" />
+                        <Icon name='cog' type='font-awesome' size={hp('5%')} color="darkseagreen" />
 
                     </Text>
                     </TouchableOpacity>
@@ -59,7 +59,7 @@ const HomeAccount = (props) => {
 
                                     <TouchableOpacity onPress={() => toggleMenu()} ><Text>
 
-                                        <Icon name='cog' size={hp('5%')} color="white" />
+                                        <Icon name='cog' type='font-awesome' size={hp('5%')} color="white" />
 
                                     </Text>
                                     </TouchableOpacity>

@@ -5,7 +5,7 @@ import { RNCamera } from 'react-native-camera';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import storage from '@react-native-firebase/storage';
 import auth from '@react-native-firebase/auth';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Icon } from 'react-native-elements';
 import { Container, Header, Left, Right,Button } from 'native-base';
 
 class AddBill extends Component {

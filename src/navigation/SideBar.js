@@ -5,7 +5,7 @@ import { AsyncStorage } from 'react-native';
 
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Container, Content, Header, ListItem, Left, Separator, Button, Right, Footer, FooterTab, Switch, Text, Body, Title, Subtitle } from 'native-base';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Icon } from 'react-native-elements';
 
 import Profile from '../screens/Profiles/Profile'
 //import { StackNavigator } from  'react-navigation';
@@ -36,7 +36,7 @@ class Sidebar extends Component {
       <Container >
         <Header span>
           <Body>
-            <Icon name='account-circle' size={50} color="white"></Icon>
+            <Icon name='user-circle-o' type='font-awesome' size={50} color="white"></Icon>
             <Title>{this.state.name}</Title>
           </Body>
         </Header>
@@ -47,30 +47,30 @@ class Sidebar extends Component {
           <View style={{ paddingHorizontal: 30, marginTop: 20 }}>
 
             <TouchableOpacity style={[styles.menu, { backgroundColor: 'rgba(255,255,255,0.3)', borderRadius: 5 }]} onPress={() => this.navigation.navigate('Home')}>
-              <Icon name='home' size={24} />
+              <Icon name='home' type='font-awesome' size={24} />
               <Text style={styles.menuText} type='h5White'>Ana Sayfa</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.menu} onPress={() => this.navigation.navigate('Profile')}>
-              <Icon name='account' size={24} />
+              <Icon name='user' type='font-awesome' size={24} />
               <Text style={styles.menuText} type='h5White'>Hesabım</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.menu2}>
-                  <Icon name='logout' size={24} />
-                  <Text style={styles.menuText} type='h5White' onPress={() => this.navigation.navigate('LogOut')}>Çıkış Yap</Text>
-                </TouchableOpacity>
+            <TouchableOpacity style={styles.menu}>
+              <Icon name='sign-out' type='font-awesome' size={24} />
+              <Text style={styles.menuText} type='h5White' onPress={() => this.navigation.navigate('LogOut')}>Çıkış Yap</Text>
+            </TouchableOpacity>
 
           </View>
 
         </Content>
-        <View style={styles.divider}/>
+        <View style={styles.divider} />
 
         <View style={{ paddingHorizontal: 30, marginVertical: 10 }}>
-        
-                <TouchableOpacity style={styles.menu2}>
-                  <Icon name='delete' size={24} />
-                  <Text style={styles.menuText} type='h5White' onPress={() => this.navigation.navigate('DeleteAccount')}>Hesabı Sil</Text>
-                </TouchableOpacity>
-                </View>
+
+          <TouchableOpacity style={styles.menu}>
+            <Icon name='trash'type='font-awesome' size={24} />
+            <Text style={styles.menuText} type='h5White' onPress={() => this.navigation.navigate('DeleteAccount')}>Hesabı Sil</Text>
+          </TouchableOpacity>
+        </View>
 
       </Container>
     );
@@ -92,9 +92,9 @@ const styles = StyleSheet.create({
   divider: {
     height: 4,
     backgroundColor: 'lightgray',
-    marginBottom:10
-    
-},
+    marginBottom: 10
+
+  },
   sideMenuTitle: {
     //marginBottom: 30
   },

@@ -16,7 +16,7 @@ import {
 
 
 import { Container, Content, Button, Form, Item, Input, Title, H2, H3, Text, Tab, Tabs } from 'native-base';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Icon } from 'react-native-elements';
 import Header from '../../components/Header'
 import CommonAccounts from '../Account/CommonAccounts'
 import DebtTracking from '../Debt/DebtTracking'

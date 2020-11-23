@@ -8,7 +8,7 @@ import {
 
 
 import { Container, Header, Content, Button, Form, Footer,FooterTab,Item, Input, Title, Left, Right, Body, List, ListItem, Thumbnail, Separator, Text, H1, H2, H3, H4 } from 'native-base';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Icon } from 'react-native-elements';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import AppFooter from '../../../components/Footer'
 import Creditor from '../Creditor'

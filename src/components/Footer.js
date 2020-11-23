@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 
 import { StyleSheet } from 'react-native'
 import { Container, Content, Button, Form, Right, Left, Title, Footer, FooterTab, Text, Tab, Tabs, Body } from 'native-base';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+//import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Icon } from 'react-native-elements'
 
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
@@ -15,7 +16,7 @@ const AppFooter = (props) => {
                     <Text style={styles.text}>Gruplar</Text>
                 </Button>
                 <Button vertical onPress={() => props.navigation.navigate('Profile')} >
-                    <Icon name='account' size={hp('5%')} color='white' />
+                    <Icon name='user' type='font-awesome' color='white' />
                 </Button>
                 <Button onPress={() => props.navigation.navigate('DebtTracking')} >
                     <Text style={styles.text}>Borç Takibi</Text>

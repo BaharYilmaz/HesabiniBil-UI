@@ -4,7 +4,7 @@ import { useForm, Controller } from 'react-hook-form'
 
 import { Dimensions, View, Alert, TextInput, StyleSheet } from 'react-native';
 import { Container, Header, Content, Button, Form, Item, Input, Title, H2, Left, Text, Body, Right } from 'native-base';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Icon } from 'react-native-elements';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
@@ -52,7 +52,7 @@ const SignUp = (props) => {
             <Header>
                 <Left>
                     <Button transparent onPress={() => props.navigation.navigate('Login')}>
-                        <Icon name='arrow-left-thick' size={hp('5%')} color="white" />
+                        <Icon name='angle-left' type='font-awesome' size={hp('5%')} color="white" />
                     </Button>
                 </Left>
                 <Body>

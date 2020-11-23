@@ -6,7 +6,7 @@ import { Dimensions, View, TextInput,TouchableOpacity } from 'react-native';
 
 
 import { Container, Header, Content, Button, Form, Item, Input, Title, H2, H3, Text, Body, Badge, Right } from 'native-base';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Icon } from 'react-native-elements';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 
@@ -47,7 +47,7 @@ const Login = (props) => {
                                     <View style={{ flexDirection: 'row' }}>
                                         <TextInput onChangeText={value => onChange(value)} value={value} placeholder='E-posta' style={{ fontSize: 20 }} />
                                         <Right>
-                                            <Icon name='email-outline' size={wp('6%')} color="gray" />
+                                            <Icon name='envelope' type='font-awesome'color="gray" />
                                         </Right>
                                     </View>
                                 )}
@@ -62,7 +62,7 @@ const Login = (props) => {
                                     <View style={{ flexDirection: 'row' }}>
                                         <TextInput onChangeText={value => onChange(value)} value={value} placeholder='Şifre' secureTextEntry={true} style={{ fontSize: 20 }} />
                                         <Right>
-                                            <Icon name='lock-outline' size={wp('6%')} color="gray" />
+                                            <Icon name='lock' type='font-awesome'  color="gray" />
                                         </Right>
                                     </View>
                                 )}
