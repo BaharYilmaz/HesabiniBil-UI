@@ -1,17 +1,20 @@
-import React,{useContext, useEffect} from 'react';
+import React, { useContext, useEffect } from 'react';
 import { AppContext } from '../../../provider/AppProvider';
-
-import { Dimensions, View, ScrollView } from 'react-native';
-
+import Clipboard from '@react-native-community/clipboard';
+import { Dimensions, View, ScrollView,TouchableOpacity } from 'react-native';
 import { Container, Header, Content, Button, Form, Item, Input, Title, Left, Right, Body, List, ListItem, Thumbnail, Separator, Text, H1, H2, H3, H4 } from 'native-base';
 import { Icon } from 'react-native-elements';
-import { Col, Row, Grid } from 'react-native-easy-grid';
+import Toast from 'react-native-simple-toast';
 
 const Members = () => {
     const state = useContext(AppContext);
 
     const member = state.accountMembers;
-
+    console.log(member);
+    const copyToClipboard = (kod) => {
+        Clipboard.setString(kod);
+        Toast.showWithGravity('Iban numarası panoya kopyalandı.', Toast.LONG, Toast.TOP);
+    };
     return (
         <Container >
             <Content >
@@ -23,12 +26,16 @@ const Members = () => {
                                 <ListItem thumbnail key={list.kullaniciID} >
 
                                     <Body>
-                                        <Text>{list.firstName}</Text>
-                                        <Text note numberOfLines={2}>{list.lastName}</Text>
-
+                                        <Text>{list.firstName} {list.lastName}</Text>
+                                        {list.iban.map(iban =>
+                                            <TouchableOpacity key={iban.ibanId} onPress={() => copyToClipboard(iban.ibanNo)}>
+                                                <Text  note numberOfLines={2}>TR {iban.ibanNo}</Text>
+                                            </TouchableOpacity>
+                                        )
+                                        }
                                     </Body>
                                     <Right>
-                                    <Icon  name='user' type='font-awesome' size={30} color="steelblue" />
+                                        <Icon name='user' type='font-awesome' size={30} color="steelblue" />
                                     </Right>
 
                                 </ListItem>

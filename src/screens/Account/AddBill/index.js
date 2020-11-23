@@ -6,7 +6,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import storage from '@react-native-firebase/storage';
 import auth from '@react-native-firebase/auth';
 import { Icon } from 'react-native-elements';
-import { Container, Header, Left, Right,Button } from 'native-base';
+import { Container, Header, Left, Right, Button } from 'native-base';
 
 class AddBill extends Component {
 
@@ -76,16 +76,16 @@ class AddBill extends Component {
             source={{ uri: image }} imageStyle={{ resizeMode: 'contain' }}
             style={{ width: '100%', height: screenHeight * 0.7, transform: [{ rotate: '90deg' }] }} />
         </View>
-        <View style={{ flexDirection: 'row',marginHorizontal:wp('15%') }}>
-           
-           <Left style={{margin:wp('2%') }}>
-           <Button block rounded danger onPress={() => this.setState({ image: null })}>
-              <Text style={{color:'white' }} >İptal</Text>
+        <View style={{ flexDirection: 'row', marginHorizontal: wp('15%') }}>
+
+          <Left style={{ margin: wp('2%') }}>
+            <Button block rounded danger onPress={() => this.setState({ image: null })}>
+              <Text style={{ color: 'white' }} >İptal</Text>
             </Button>
-           </Left>
-                     <Right style={{margin:wp('2%') }}>
+          </Left>
+          <Right style={{ margin: wp('2%') }}>
             <Button block rounded info onPress={this.uploadImage}>
-              <Text style={{color:'white' }} >Fotoğrafı Tara</Text>
+              <Text style={{ color: 'white' }} >Fotoğrafı Tara</Text>
             </Button>
 
           </Right>
@@ -112,10 +112,12 @@ class AddBill extends Component {
             buttonNegative: 'Cancel',
           }}
         >
-           
-          <TouchableOpacity onPress={this.takePicture.bind(this)}>
-            <Text style={styles.capture}>[ ÇEK ]</Text>
-          </TouchableOpacity>
+          <View style={{ backgroundColor: 'dimgray', opacity: 0.5, width: wp('100%'),alignItems:'center' }}>
+            <TouchableOpacity onPress={this.takePicture.bind(this)}  style={{ width: wp('15')}} >
+              <Icon name='camera' type='font-awesome' style={{ padding: wp('2'),width: wp('15')}} size={hp('5%')} color="white" />
+            </TouchableOpacity>
+          </View>
+
         </RNCamera>
       </View>
     )

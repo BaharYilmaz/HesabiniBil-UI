@@ -46,7 +46,7 @@ const HomeAccount = (props) => {
                 <Right >
                     <TouchableOpacity onPress={() => toggleMenu()} ><Text>
 
-                        <Icon name='cog' type='font-awesome' size={hp('5%')} color="darkseagreen" />
+                        <Icon name='cog' type='font-awesome' size={wp('7%')} color="darkseagreen" />
 
                     </Text>
                     </TouchableOpacity>
@@ -59,7 +59,7 @@ const HomeAccount = (props) => {
 
                                     <TouchableOpacity onPress={() => toggleMenu()} ><Text>
 
-                                        <Icon name='cog' type='font-awesome' size={hp('5%')} color="white" />
+                                        <Icon name='cog' type='font-awesome' size={wp('7%')} color="white" />
 
                                     </Text>
                                     </TouchableOpacity>
