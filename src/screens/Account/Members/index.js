@@ -1,16 +1,21 @@
 import React, { useContext, useEffect } from 'react';
 import { AppContext } from '../../../provider/AppProvider';
 import Clipboard from '@react-native-community/clipboard';
-import { Dimensions, View, ScrollView,TouchableOpacity } from 'react-native';
+import { Dimensions, View, ScrollView, TouchableOpacity } from 'react-native';
 import { Container, Header, Content, Button, Form, Item, Input, Title, Left, Right, Body, List, ListItem, Thumbnail, Separator, Text, H1, H2, H3, H4 } from 'native-base';
 import { Icon } from 'react-native-elements';
 import Toast from 'react-native-simple-toast';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
-const Members = () => {
+const Members = (props) => {
     const state = useContext(AppContext);
 
+    useEffect(() => {
+        state.getAccountMembers(props.accountId)
+    }, []);
     const member = state.accountMembers;
-    console.log(member);
+
+
     const copyToClipboard = (kod) => {
         Clipboard.setString(kod);
         Toast.showWithGravity('Iban numarası panoya kopyalandı.', Toast.LONG, Toast.TOP);
@@ -28,15 +33,13 @@ const Members = () => {
                                     <Body>
                                         <Text>{list.firstName} {list.lastName}</Text>
                                         {list.iban.map(iban =>
-                                            <TouchableOpacity key={iban.ibanId} onPress={() => copyToClipboard(iban.ibanNo)}>
-                                                <Text  note numberOfLines={2}>TR {iban.ibanNo}</Text>
+                                            <TouchableOpacity key={iban.ibanID} onPress={() => copyToClipboard(iban.ibanNo)}>
+                                                <Text note numberOfLines={2}>TR {iban.ibanNo}</Text>
                                             </TouchableOpacity>
                                         )
                                         }
                                     </Body>
-                                    <Right>
-                                        <Icon name='user' type='font-awesome' size={30} color="steelblue" />
-                                    </Right>
+
 
                                 </ListItem>
                             )

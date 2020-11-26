@@ -1,5 +1,7 @@
 'use strict';
-import React, { Component } from 'react';
+import React, { Component, useContext } from 'react';
+import { AppContext } from '../../../provider/AppProvider';
+
 import { AppRegistry, Dimensions, StyleSheet, Alert, Text, TouchableOpacity, View, Image, ImageBackground } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
@@ -8,63 +10,59 @@ import auth from '@react-native-firebase/auth';
 import { Icon } from 'react-native-elements';
 import { Container, Header, Left, Right, Button } from 'native-base';
 
-class AddBill extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      image: null,
-      uploading: false,
-      transferred: 0
-    }
-  }
+const AddBill = (props) => {
+
+  const state = useContext(AppContext);
+
+  const [image, setImage] = React.useState('');
+  const params = props.route.params;
+
+  auth().signInAnonymously()
 
 
-  componentDidMount() {
-    auth().signInAnonymously()
-  }
-
-  uploadImage = async () => {
-
-    const { image } = this.state;
+  const uploadImage = async () => {
     const filename = image.substring(image.lastIndexOf('/') + 1);
     const uploadUri = Platform.OS === 'ios' ? image.replace('file://', '') : image;
 
-    this.setState({ uploading: true, transferred: 0 });
 
     const imageRef = storage().ref().child(filename)
     imageRef.putFile(uploadUri, { contentType: 'image/jpeg' }).then(function () {
       return imageRef.getDownloadURL();
     }).then(function (url) {
       console.log("Image url", { url: url });
+      let model={
+        ortakHesapID:params.account,
+        alisverisFoto:url
+      }
+      state.addBill(model)
+      Alert.alert(
+        'Photo uploaded!',
+        'Your photo has been uploaded to Firebase Cloud Storage!'
+      );
     }).catch(function (error) {
       console.log("Error while saving the image.. ", error);
     });
 
 
-    this.setState({ uploading: false });
 
-    Alert.alert(
-      'Photo uploaded!',
-      'Your photo has been uploaded to Firebase Cloud Storage!'
-    );
-    this.setState({ image: null });
+   
+    setImage('');
   };
 
 
-  takePicture = async () => {
+  const takePicture = async (camera) => {
     try {
       // const options = { quality: 0.5, pauseAfterCapture: true };
-      const { uri } = await this.camera.takePictureAsync();
-      this.setState({ image: uri });
+      const { uri } = await camera.takePictureAsync();
+      setImage(uri);
 
     } catch (err) {
       console.log('err: ', err);
     }
   };
 
-  renderImage() {
-    const { image } = this.state;
+  const renderImage = () => {
     const { height: screenHeight } = Dimensions.get('window');
 
 
@@ -79,12 +77,12 @@ class AddBill extends Component {
         <View style={{ flexDirection: 'row', marginHorizontal: wp('15%') }}>
 
           <Left style={{ margin: wp('2%') }}>
-            <Button block rounded danger onPress={() => this.setState({ image: null })}>
+            <Button block rounded danger onPress={() => setImage('')}>
               <Text style={{ color: 'white' }} >İptal</Text>
             </Button>
           </Left>
           <Right style={{ margin: wp('2%') }}>
-            <Button block rounded info onPress={this.uploadImage}>
+            <Button block rounded info onPress={uploadImage}>
               <Text style={{ color: 'white' }} >Fotoğrafı Tara</Text>
             </Button>
 
@@ -93,15 +91,12 @@ class AddBill extends Component {
       </View>
     );
   }
-
-  renderCamera() {
+  const renderCamera = () => {
 
     return (
       <View style={styles.container}>
         <RNCamera
-          ref={(cam) => {
-            this.camera = cam;
-          }}
+
           style={styles.preview}
           captureAudio={false}
           type={RNCamera.Constants.Type.back}
@@ -112,28 +107,38 @@ class AddBill extends Component {
             buttonNegative: 'Cancel',
           }}
         >
-          <View style={{ backgroundColor: 'dimgray', opacity: 0.5, width: wp('100%'),alignItems:'center' }}>
-            <TouchableOpacity onPress={this.takePicture.bind(this)}  style={{ width: wp('15')}} >
-              <Icon name='camera' type='font-awesome' style={{ padding: wp('2'),width: wp('15')}} size={hp('5%')} color="white" />
+          {/* <View style={{ backgroundColor: 'dimgray', opacity: 0.5, width: wp('100%'), alignItems: 'center' }}>
+            <TouchableOpacity onPress={this.takePicture(camera)} style={{ width: wp('15') }} >
+              <Icon name='camera' type='font-awesome' style={{ padding: wp('2'), width: wp('15') }} size={hp('5%')} color="white" />
             </TouchableOpacity>
-          </View>
-
+          </View> */}
+          {({ camera, status, recordAudioPermissionStatus }) => {
+            return (
+              <View style={{ backgroundColor: 'dimgray', opacity: 0.5, width: wp('100%'), alignItems: 'center' }}>
+                <TouchableOpacity onPress={() => takePicture(camera)} style={{ width: wp('15') }}>
+                  <Icon name='camera' type='font-awesome' style={{ padding: wp('2'), width: wp('15') }} size={hp('5%')} color="white" />
+                </TouchableOpacity>
+              </View>
+            );
+          }}
         </RNCamera>
       </View>
     )
   }
-  render() {
 
-    return (
 
-      <Container>
-        <Header />
-        {this.state.image ? this.renderImage() : this.renderCamera()}
 
-      </Container>
 
-    );
-  }
+  return (
+
+    <Container>
+      <Header />
+      { image ? renderImage() : renderCamera()}
+
+    </Container >
+
+  );
+
 };
 const styles = StyleSheet.create({
   container: {

@@ -20,10 +20,10 @@ const HomeAccount = (props) => {
     const [showMenu, setShow] = useState(false)
 
 
-    useEffect(() => {
-        // state.getAccountsById(params.accountId);
-        state.getAccountMembers(params.account.ortakHesapID)
-    }, []);
+    // useEffect(() => {
+    //     // state.getAccountsById(params.accountId);
+    //     state.getAccountMembers(params.account.ortakHesapID)
+    // }, []);
 
     const toggleScreen = (value) => {
         chageScreen(value)
@@ -100,7 +100,7 @@ const HomeAccount = (props) => {
 
                 <SafeAreaView style={{ margin: wp('0.5%') }} >
                     {
-                        screen === 1 ? <Bills /> : <Members />
+                        screen === 1 ? <Bills accountId={params.account.ortakHesapID} props={props} /> : <Members accountId={params.account.ortakHesapID} />
                     }
                     <Modal />
                     <EditModal />
@@ -109,7 +109,7 @@ const HomeAccount = (props) => {
             </Content>
 
             <View style={{ alignSelf: 'center', marginVertical: wp('3%') }}>
-                <Button rounded style={{ backgroundColor: 'crimson' }} onPress={() => props.navigation.navigate('AddBill')}>
+                <Button rounded style={{ backgroundColor: 'crimson' }} onPress={() => props.navigation.navigate('AddBill',{ account: params.account.ortakHesapID })}>
                     <Text style={{ fontWeight: 'bold' }}>Fiş Yükle</Text>
                 </Button>
             </View>
