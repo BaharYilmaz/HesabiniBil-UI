@@ -23,7 +23,7 @@ const Bills = (props) => {
                     <ScrollView>
                         {
                             bill.map(list =>
-                                <ListItem onPress={() => props.props.navigation.navigate('BillDetay')} thumbnail key={list.alisverisFisID} style={{ marginHorizontal: wp('2%') }}>
+                                <ListItem onPress={() => props.props.navigation.navigate('BillDetay',{list:list})} thumbnail key={list.alisverisFisID} style={{ marginHorizontal: wp('2%') }}>
                                     <Body>
                                         <Text>{list.toplamTutar} TL</Text>
                                         <Text note numberOfLines={1}>Yükleyen: {list.kullaniciAd} {list.kullaniciSoyad}</Text>

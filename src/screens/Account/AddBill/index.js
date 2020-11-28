@@ -53,8 +53,8 @@ const AddBill = (props) => {
 
   const takePicture = async (camera) => {
     try {
-      // const options = { quality: 0.5, pauseAfterCapture: true };
-      const { uri } = await camera.takePictureAsync();
+       const options = { fixOrientation  :true };
+      const { uri } = await camera.takePictureAsync(options);
       setImage(uri);
 
     } catch (err) {
@@ -100,6 +100,7 @@ const AddBill = (props) => {
           style={styles.preview}
           captureAudio={false}
           type={RNCamera.Constants.Type.back}
+          
           androidCameraPermissionOptions={{
             title: 'Permission to use camera',
             message: 'We need your permission to use your camera',

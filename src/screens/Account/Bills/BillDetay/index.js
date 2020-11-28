@@ -9,6 +9,9 @@ import AppFooter from '../../../../components/Footer'
 
 const BillDetay = (props) => {
     const [screen, chageScreen] = useState(1)
+    const bill = props.route.params.list;
+
+    console.log(bill.alisverisFisDetay)
     const toggleScreen = (value) => {
         chageScreen(value)
     }
@@ -36,7 +39,7 @@ const BillDetay = (props) => {
                 <Content style={{ marginHorizontal: wp('0.5%') }}>
                 <View style={{ margin: wp('5%') }} >
                     {
-                        screen === 0 ? <BillList /> : <BillFoto />
+                        screen === 0 ? <BillList {...props} /> : <BillFoto{...props} />
                     }
                 </View >
             </Content>

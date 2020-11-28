@@ -226,9 +226,19 @@ const AppProvider = (props) => {
         let model = {
             kullaniciID: parseInt(userId),
             ortakHesapID: data.ortakHesapID,
-            alisverisFoto: data.alisverisFoto
+            alisverisFoto: data.alisverisFoto,
+            alisverisFisDetay:
+            [{
+                urunAd: "elma",
+                urunFiyat: 10
+            },
+            {
+                urunAd: "armut",
+                urunFiyat: 5
+            },
+            ]
+
         }
-        console.log(model)
         fetch(apiBaseUrl + '/Shopping/AddShopping',
             {
                 method: 'POST',
@@ -242,14 +252,14 @@ const AppProvider = (props) => {
     }
     const getBill = (ortakHesapId) => {
         fetch(apiBaseUrl + '/Shopping/getShopping/' + ortakHesapId,
-        {
-            method: 'GET',
-            headers: new Headers({
-                'Content-Type': 'application/json'
+            {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json'
+                })
             })
-        })
-        .then(response => response.json())
-        .then(data => { setBills(data.data) })
+            .then(response => response.json())
+            .then(data => { setBills(data.data) })
     }
 
     return (
@@ -268,8 +278,8 @@ const AppProvider = (props) => {
                 getAccountMembers, accountMembers,
                 addIban, updateIban,
                 getIban, iban,
-                addBill,getBill,bills
-                
+                addBill, getBill, bills
+
             }}>
             {props.children}
         </AppContext.Provider>
