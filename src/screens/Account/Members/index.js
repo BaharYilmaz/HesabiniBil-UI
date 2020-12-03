@@ -10,9 +10,9 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 const Members = (props) => {
     const state = useContext(AppContext);
 
-    useEffect(() => {
-        state.getAccountMembers(props.accountId)
-    }, []);
+    // useEffect(() => {
+    //     state.getAccountMembers(props.accountId)
+    // }, []);
     const member = state.accountMembers;
 
 

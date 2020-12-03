@@ -5,12 +5,12 @@ import moment from "moment";
 import Toast from 'react-native-simple-toast';
 const AppContext = React.createContext();
 import jwt_decode from "jwt-decode";
-
+import { useNavigation } from '@react-navigation/native';
 const AppProvider = (props) => {
 
     const apiBaseUrl = 'http://10.0.3.2:5001/api';
     // const apiBaseUrl = 'https://hesabinibiltezapi.azurewebsites.net/api';
-
+    //const navigation = useNavigation();
     const [loginState, changeLoginState] = useState(false);
     const [userId, setUserId] = useState('');
     const [accountList, setAccountList] = React.useState([]);
@@ -25,7 +25,6 @@ const AppProvider = (props) => {
     const [modalAddIban, setModalAddIban] = React.useState({ modalVisible: false });
     const [modalDeleteIban, setModalDeleteIban] = React.useState({ modalVisible: false, ibanId: '' });
     const [modalUpdateIban, setModalUpdateIban] = React.useState({ modalVisible: false, ibanNo: '', ibanId: '' });
-
 
 
     var tokenUserId = '';
@@ -44,13 +43,11 @@ const AppProvider = (props) => {
             var date = moment().format('YYYY-MM-DD HH:mm:ss')
             var decoded = jwt_decode(result.token);
 
-            console.log("decoded", decoded.nameIdentifier);
             if (moment(tokenDate).isAfter(date)) {
                 console.log("token geçerli")
                 changeLoginState(true)
                 setUserId(decoded.nameIdentifier)
                 tokenUserId = decoded.nameIdentifier;
-                console.log("decoded user ıd", tokenUserId)
                 //  changeLoginState(result.token)
 
             }
@@ -124,13 +121,12 @@ const AppProvider = (props) => {
     }
     const createAccount = async (data) => {
         var result = JSON.parse(await getToken());
-        model = {
+        let model = {
             "olusturanKullaniciID": parseInt(userId),
             "hesapAd": data.hesapAd,
             "hesapTurID": data.hesapTurID,
             "hesapAktifDurum": data.hesapAktifDurum
         }
-        console.log("giden token", data)
         fetch(apiBaseUrl + '/account/AddAccount',
             {
                 method: 'POST',
@@ -140,7 +136,7 @@ const AppProvider = (props) => {
                 body: JSON.stringify(model)
             })
             .then(response => response.json())
-            .then(data => { Toast.show(data.message, Toast.LONG); getAccounts(); getAccounts() })
+            .then(data => { Toast.show(data.message, Toast.LONG); getAccounts();  })
             .catch(error => { Toast.show('Hesap ekleme sırasında bir hata oluştu !', Toast.LONG) });
 
     }
@@ -227,18 +223,9 @@ const AppProvider = (props) => {
             kullaniciID: parseInt(userId),
             ortakHesapID: data.ortakHesapID,
             alisverisFoto: data.alisverisFoto,
-            alisverisFisDetay:
-            [{
-                urunAd: "elma",
-                urunFiyat: 10
-            },
-            {
-                urunAd: "armut",
-                urunFiyat: 5
-            },
-            ]
-
+            alisverisFisDetay: data.alisverisFisDetay
         }
+        var id=data.ortakHesapID
         fetch(apiBaseUrl + '/Shopping/AddShopping',
             {
                 method: 'POST',
@@ -246,11 +233,13 @@ const AppProvider = (props) => {
                 body: JSON.stringify(model)
             })
             .then(response => response.json())
-            .then(data => { Toast.show(data.message, Toast.LONG); console.log(data) })
+            .then(data => { Toast.show(data.message, Toast.LONG); getBill(id) })
             .catch(error => { Toast.show("Bir hata oluştu", Toast.LONG); console.log(error.message) });
 
     }
     const getBill = (ortakHesapId) => {
+
+        console.log('hk',ortakHesapId)
         fetch(apiBaseUrl + '/Shopping/getShopping/' + ortakHesapId,
             {
                 method: 'GET',

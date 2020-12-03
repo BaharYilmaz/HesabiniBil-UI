@@ -17,9 +17,11 @@ import CreateHomeAccount from '../screens/Account/CreateHomeAccount';
 import DebtTracking from '../screens/Debt/DebtTracking';
 import HomeAccount from '../screens/Account/HomeAccount';
 import AddBill from '../screens/Account/AddBill';
+import AddBillManuel from '../screens/Account/AddBillManuel';
+
 import BillDetay from '../screens/Account/Bills/BillDetay';
 import Bills from '../screens/Account/Bills';
-
+import AppProvider from '../provider/AppProvider'
 
 const Tab = createBottomTabNavigator();
 const AppStack = createStackNavigator();
@@ -49,6 +51,7 @@ const AppStackScreen = () => {
       <AppStack.Screen name="CreateHomeAccount" component={CreateHomeAccount} />
       <AppStack.Screen name="HomeAccount" component={HomeAccount} />
       <AppStack.Screen name="AddBill" component={AddBill} />
+      <AppStack.Screen name="AddBillManuel" component={AddBillManuel} />
       <AppStack.Screen name="DebtTracking" component={DebtTracking} />
       <AppStack.Screen name="Profile" component={Profile} />
       <AppStack.Screen name="BillDetay" component={BillDetay} />

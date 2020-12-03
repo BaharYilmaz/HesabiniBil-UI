@@ -3,8 +3,8 @@ import { Container, Header, Content, Button, Form, Item, Input, Title, Picker, L
 import { Dimensions, ScrollView, FlatList, View, SafeAreaView, StyleSheet, Clipboard, TouchableOpacity } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
-import  BillFoto  from "../BillFoto";
-import  BillList  from "../BillList";
+import BillFoto from "../BillFoto";
+import BillList from "../BillList";
 import AppFooter from '../../../../components/Footer'
 
 const BillDetay = (props) => {
@@ -19,24 +19,25 @@ const BillDetay = (props) => {
         <Container>
             <Header />
 
-                <Footer style={{marginHorizontal: wp('5%'),marginTop: wp('5%'),alignSelf:'center', backgroundColor: 'transparent' }} >
-                    <FooterTab style={{ backgroundColor: 'transparent' }} >
-                        <Left>
-                            <Button block onPress={() => toggleScreen(1)} style={screen == 1 ? styles.active : styles.passive}>
-                                <Text>Fiş Fotoğrafı</Text>
-                            </Button>
-                        </Left>
-                        <Right>
-                            <Button block onPress={() => toggleScreen(0)} style={screen == 0 ? styles.active : styles.passive}>
-                                <Text >Fiş İçeriği</Text>
-                            </Button>
-                        </Right>
-                    </FooterTab>
+            <Footer style={{ marginHorizontal: wp('5%'), marginTop: wp('5%'), alignSelf: 'center', backgroundColor: 'transparent' }} >
+                <FooterTab style={{ backgroundColor: 'transparent' }} >
+                    <Left>
+                        <Button block onPress={() => toggleScreen(0)} style={screen == 0 ? styles.active : styles.passive}>
+                            <Text >Fiş İçeriği</Text>
+                        </Button>
+                    </Left>
+                    <Right>
 
-                </Footer>
+                        <Button block onPress={() => toggleScreen(1)} style={screen == 1 ? styles.active : styles.passive}>
+                            <Text>Fiş Fotoğrafı</Text>
+                        </Button>
+                    </Right>
+                </FooterTab>
 
-                <View style={styles.divider} />
-                <Content style={{ marginHorizontal: wp('0.5%') }}>
+            </Footer>
+
+            <View style={styles.divider} />
+            <Content style={{ marginHorizontal: wp('0.5%') }}>
                 <View style={{ margin: wp('5%') }} >
                     {
                         screen === 0 ? <BillList {...props} /> : <BillFoto{...props} />

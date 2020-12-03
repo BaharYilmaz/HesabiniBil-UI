@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Container, Header, Content, Button, Form, Item, Input, Title, Picker, Left, Right, TabHeading, Body, List, ListItem, Badge, Tabs, Tab, Footer, FooterTab, Text, H1, H2, H3, H4 } from 'native-base';
 import { Icon } from 'react-native-elements';
-import { Dimensions, ScrollView, FlatList, View, SafeAreaView, StyleSheet, Clipboard,TouchableOpacity } from 'react-native';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { Dimensions, ScrollView, FlatList, View, SafeAreaView, StyleSheet, Clipboard, TouchableOpacity } from 'react-native';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 import { AppContext } from '../../../provider/AppProvider'
 import AppFooter from '../../../components/Footer'
@@ -18,12 +18,12 @@ const HomeAccount = (props) => {
     const params = props.route.params;
     const [screen, chageScreen] = useState(1)
     const [showMenu, setShow] = useState(false)
+    const id = params.account.ortakHesapID
 
-
-    // useEffect(() => {
-    //     // state.getAccountsById(params.accountId);
-    //     state.getAccountMembers(params.account.ortakHesapID)
-    // }, []);
+    useEffect(() => {
+        state.getBill(id)
+        state.getAccountMembers(id)
+    }, []);
 
     const toggleScreen = (value) => {
         chageScreen(value)
@@ -35,7 +35,7 @@ const HomeAccount = (props) => {
         <Container>
             <Header />
 
-            <View style={{ flexDirection: "row", margin:wp('5%'), alignItems: 'center' }}>
+            <View style={{ flexDirection: "row", margin: wp('5%'), alignItems: 'center' }}>
 
                 <Left>
                     <H1 style={{ color: 'darkseagreen', marginBottom: 5 }}>{params.account.hesapAd}</H1>
@@ -101,6 +101,8 @@ const HomeAccount = (props) => {
                 <SafeAreaView style={{ margin: wp('0.5%') }} >
                     {
                         screen === 1 ? <Bills accountId={params.account.ortakHesapID} props={props} /> : <Members accountId={params.account.ortakHesapID} />
+                        //screen === 1 ? <Bills accountId={params.account.ortakHesapID} props={props} /> : <Members accountId={params.account.ortakHesapID} />
+
                     }
                     <Modal />
                     <EditModal />
@@ -109,7 +111,7 @@ const HomeAccount = (props) => {
             </Content>
 
             <View style={{ alignSelf: 'center', marginVertical: wp('3%') }}>
-                <Button rounded style={{ backgroundColor: 'crimson' }} onPress={() => props.navigation.navigate('AddBill',{ account: params.account.ortakHesapID })}>
+                <Button rounded style={{ backgroundColor: 'crimson' }} onPress={() => props.navigation.navigate('AddBill', { account: params.account.ortakHesapID })}>
                     <Text style={{ fontWeight: 'bold' }}>Fiş Yükle</Text>
                 </Button>
             </View>

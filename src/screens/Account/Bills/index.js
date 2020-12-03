@@ -11,35 +11,41 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 const Bills = (props) => {
 
     const state = useContext(AppContext);
-    useEffect(() => {
-        state.getBill(props.accountId)
-    }, []);
-    const bill = state.bills;
+    // useEffect(() => {
+    //     state.getBill(props.accountId)
+    // }, []);
+    const bills = state.bills;
+    console.log(bills)
 
     return (
         <Container >
             <Content >
-                <List >
-                    <ScrollView>
-                        {
-                            bill.map(list =>
-                                <ListItem onPress={() => props.props.navigation.navigate('BillDetay',{list:list})} thumbnail key={list.alisverisFisID} style={{ marginHorizontal: wp('2%') }}>
-                                    <Body>
-                                        <Text>{list.toplamTutar} TL</Text>
-                                        <Text note numberOfLines={1}>Yükleyen: {list.kullaniciAd} {list.kullaniciSoyad}</Text>
-                                    </Body>
-                                    <Right>
-                                        <Text note numberOfLines={1}>{list.tarih}</Text>
-                                    </Right>
-                                </ListItem>
-                            )
-                        }
-                    </ScrollView>
-                </List>
+                {bills ?
+
+                    <List >
+                        <ScrollView>
+                            {
+                                bills.map(list =>
+                                    <ListItem onPress={() => props.props.navigation.navigate('BillDetay', { list: list })} thumbnail key={list.alisverisFisID} style={{ marginHorizontal: wp('2%') }}>
+                                        <Body>
+                                            <Text>{list.toplamTutar} TL</Text>
+                                            <Text note numberOfLines={1}>Yükleyen: {list.kullaniciAd} {list.kullaniciSoyad}</Text>
+                                        </Body>
+                                        <Right>
+                                            <Text note numberOfLines={1}>{list.tarih}</Text>
+                                        </Right>
+                                    </ListItem>
+                                )
+                            }
+                        </ScrollView>
+                    </List>
+                    : <Text style={{ color: 'lightgray', textAlign: 'center' }}>Gösterilecek fiş yok... </Text>
+                }
             </Content>
         </Container>
     );
 };
+
 
 export default Bills;
 

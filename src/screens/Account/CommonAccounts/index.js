@@ -15,9 +15,7 @@ const CommonAccounts = (props) => {
     const accountList = state.accountList;
 
     useEffect(() => {
-        console.log("This line will be run only after the first render ");
         state.getAccounts()
-        console.log("sayı", accountList.length)
     }, [state.userId]);
 
     return (

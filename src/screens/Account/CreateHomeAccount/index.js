@@ -14,6 +14,7 @@ const CreateHomeAccount = (props) => {
     const [accountType, setAccountType] = React.useState(2);
     const { control, handleSubmit, errors } = useForm();
 
+   
     const radioItem = [
         { label: 'Aile', value: 1 },
         { label: 'Ev Arkadaşları', value: 2 }
@@ -27,11 +28,12 @@ const CreateHomeAccount = (props) => {
             hesapAktifDurum: true
         }
         if (accountModel != null) {
-            var result = state.createAccount(accountModel)
-            console.log(result)
-            if (result) {
-                props.navigation.navigate('CommonAccounts')
-            }
+            state.createAccount(accountModel)
+            props.navigation.navigate('CommonAccounts')
+            // console.log("res",result)
+            // if (result) {
+            //     props.navigation.navigate('CommonAccounts')
+            // }
         }
         else {
             console.log("hata account");
@@ -43,7 +45,7 @@ const CreateHomeAccount = (props) => {
         <Container style={styles.container}>
             <Header />
             <Content  >
-                <View style={{ flex: 1, height: screenHeight*0.8, justifyContent: 'center' }}>
+                <View style={{ flex: 1, height: screenHeight * 0.8, justifyContent: 'center' }}>
                     <View style={{ alignItems: 'center', margin: hp('3%') }}>
                         <H2 style={{ color: 'darkseagreen' }}>Yeni Ortak Hesap Oluştur</H2>
                     </View>

@@ -8,7 +8,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import storage from '@react-native-firebase/storage';
 import auth from '@react-native-firebase/auth';
 import { Icon } from 'react-native-elements';
-import { Container, Header, Left, Right, Button } from 'native-base';
+import { Container, Header, Left, Right, Button} from 'native-base';
 
 
 const AddBill = (props) => {
@@ -118,6 +118,9 @@ const AddBill = (props) => {
               <View style={{ backgroundColor: 'dimgray', opacity: 0.5, width: wp('100%'), alignItems: 'center' }}>
                 <TouchableOpacity onPress={() => takePicture(camera)} style={{ width: wp('15') }}>
                   <Icon name='camera' type='font-awesome' style={{ padding: wp('2'), width: wp('15') }} size={hp('5%')} color="white" />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => props.navigation.navigate('AddBillManuel',{ account: params.account})} style={{ width: wp('15') }}>
+                <Text>Manuel Ekle</Text>
                 </TouchableOpacity>
               </View>
             );

@@ -36,8 +36,6 @@ const IbanAddModal = () => {
 
                                 <View style={{ margin: 20 }}>
 
-
-
                                     <Item>
                                         <Text style={{ marginTop: 7, fontSize: 19 }}>TR</Text>
 
@@ -65,7 +63,6 @@ const IbanAddModal = () => {
                                 <Button transparent block onPress={toggleModal} >
                                     <Text style={{ textDecorationLine: 'underline', color: 'steelblue' }}>İptal</Text>
                                 </Button>
-
                             </View>
                         </View>
                     </View>
