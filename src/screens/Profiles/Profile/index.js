@@ -5,6 +5,7 @@ import { Dimensions, ScrollView, FlatList, View, SafeAreaView, StyleSheet, Clipb
 import Menu, { MenuItem, MenuDivider } from 'react-native-material-menu';
 
 import { AppContext } from '../../../provider/AppProvider'
+import AppHeader from '../../../components/Header'
 
 import AppFooter from '../../../components/Footer'
 import Notifications from "../Notifications";
@@ -32,7 +33,7 @@ const Profile = (props) => {
     }
     return (
         <Container>
-            <Header />
+      <AppHeader screenName={'CommonAccounts'} />
 
            <Iban/>
           

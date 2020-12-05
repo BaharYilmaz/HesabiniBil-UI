@@ -6,18 +6,18 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import BillFoto from "../BillFoto";
 import BillList from "../BillList";
 import AppFooter from '../../../../components/Footer'
+import AppHeader from '../../../../components/Header'
 
 const BillDetay = (props) => {
-    const [screen, chageScreen] = useState(1)
+    const [screen, chageScreen] = useState(0)
     const bill = props.route.params.list;
 
-    console.log(bill.alisverisFisDetay)
     const toggleScreen = (value) => {
         chageScreen(value)
     }
     return (
         <Container>
-            <Header />
+            <Header screen={'HomeAccount'} />
 
             <Footer style={{ marginHorizontal: wp('5%'), marginTop: wp('5%'), alignSelf: 'center', backgroundColor: 'transparent' }} >
                 <FooterTab style={{ backgroundColor: 'transparent' }} >

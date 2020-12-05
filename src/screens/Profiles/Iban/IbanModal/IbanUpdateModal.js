@@ -5,38 +5,40 @@ import { useForm, Controller } from 'react-hook-form'
 import Clipboard from '@react-native-community/clipboard';
 import { Button, Text, Item, Left, Right } from 'native-base';
 import Modal from 'react-native-modal';
-import { AppContext } from '../../provider/AppProvider'
+import { AppContext } from '../../../../provider/AppProvider'
 import Toast from 'react-native-simple-toast';
+import { Overlay } from 'react-native-elements';
 
 
-const EditAccountModal = () => {
+const IbanUpdateModal = () => {
 
     const state = useContext(AppContext);
     const { control, handleSubmit, errors } = useForm();
 
     const toggleModal = () => {
-        state.setModalEditAccount({ modalVisible: false });
+        state.setModalUpdateIban({ modalVisible: false });
     };
-
     const onSubmit = (data) => {
         toggleModal()
-        console.log(data)
+        let model = {
+            ibanNo: data.value,
+            ibanId: state.modalUpdateIban.ibanId
+        }
+        state.updateIban(model)
     }
-    const data = state.modalEditAccount.modalValue
     return (
-        <Modal
-            isVisible={state.modalEditAccount.modalVisible}
+        <Overlay
+            isVisible={state.modalUpdateIban.modalVisible} onBackdropPress={toggleModal}
         >
-            <View style={styles.container}>
-                <View style={styles.modal}>
-                    <View style={styles.modalContainer}>
+            
                         <View style={styles.modalBody}>
                             <View>
-                            <Text style={styles.bodyText}>Hesap adını değiştir</Text>
-
-                                <Item style={{ marginBottom: 15 }}>
+                                <Text style={styles.bodyText}>Iban numarasını güncelle</Text>
+                                <Item style={{ margin: 15 }} >
+                                    <Text style={{ marginTop: 7, fontSize: 19 }}>TR</Text>
                                     <Controller
-                                        control={control} name="value" defaultValue={data} rules={{ required: true }}
+                                    
+                                        control={control} name="value" defaultValue={state.modalUpdateIban.ibanNo} rules={{ required: true,minLength:24,maxLength:24,  pattern:{value:/^\d+$/ }}}
                                         render={({ onChange, value }) => (
                                             <View style={{ flexDirection: 'row' }}>
                                                 <TextInput style={styles.textDetail} onChangeText={value => onChange(value)} value={value} />
@@ -44,43 +46,26 @@ const EditAccountModal = () => {
                                         )}
                                     />
                                 </Item>
-                                {errors.value && <Text style={{ color: 'red', marginLeft: 5 }}>Bu alan boş bırakılamaz !</Text>}
+                                {errors.value && <Text style={{ color: 'red', marginLeft: 5 }}>Iban numarasını doğru ve eksiksiz giriniz !</Text>}
 
                             </View>
 
-
                             <View style={{ marginTop: 10 }}>
-                                <Button block onPress={handleSubmit(onSubmit)} style={{ backgroundColor: 'darkseagreen' }} >
-                                    <Text>Kaydet</Text>
+                                <Button block onPress={handleSubmit(onSubmit)} style={{ backgroundColor: 'steelblue' }} >
+                                    <Text>Güncelle</Text>
                                 </Button>
 
                                 <Button transparent block onPress={toggleModal} >
-                                    <Text style={{ textDecorationLine: 'underline', color: 'darkseagreen' }}>İptal</Text>
+                                    <Text style={{ textDecorationLine: 'underline', color: 'steelblue' }}>İptal</Text>
                                 </Button>
 
                             </View>
                         </View>
-                    </View>
-                </View>
-            </View>
-        </Modal>
+                       </Overlay>
     );
 };
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    modal: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    modalContainer: {
-        backgroundColor: "#fff",
-        borderRadius: 5,
-    },
+
     modalBody: {
         backgroundColor: "#fff",
         paddingVertical: 30,
@@ -89,10 +74,8 @@ const styles = StyleSheet.create({
     },
     bodyText: {
         textAlign: 'center',
-        fontSize: 20,
-        marginBottom:10
-        
-
+        color: 'dimgray',
+        fontSize: 20
     },
     textDetail: {
         textAlign: 'center',
@@ -101,4 +84,4 @@ const styles = StyleSheet.create({
         fontSize: 20,
     }
 });
-export default EditAccountModal;
+export default IbanUpdateModal;

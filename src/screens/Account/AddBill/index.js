@@ -8,7 +8,8 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import storage from '@react-native-firebase/storage';
 import auth from '@react-native-firebase/auth';
 import { Icon } from 'react-native-elements';
-import { Container, Header, Left, Right, Button} from 'native-base';
+import { Container, Header, Left, Right, Button, Body } from 'native-base';
+import AppHeader from '../../../components/Header'
 
 
 const AddBill = (props) => {
@@ -31,9 +32,9 @@ const AddBill = (props) => {
       return imageRef.getDownloadURL();
     }).then(function (url) {
       console.log("Image url", { url: url });
-      let model={
-        ortakHesapID:params.account,
-        alisverisFoto:url
+      let model = {
+        ortakHesapID: params.account,
+        alisverisFoto: url
       }
       state.addBill(model)
       Alert.alert(
@@ -46,14 +47,14 @@ const AddBill = (props) => {
 
 
 
-   
+
     setImage('');
   };
 
 
   const takePicture = async (camera) => {
     try {
-       const options = { fixOrientation  :true };
+      const options = { fixOrientation: true };
       const { uri } = await camera.takePictureAsync(options);
       setImage(uri);
 
@@ -100,7 +101,7 @@ const AddBill = (props) => {
           style={styles.preview}
           captureAudio={false}
           type={RNCamera.Constants.Type.back}
-          
+
           androidCameraPermissionOptions={{
             title: 'Permission to use camera',
             message: 'We need your permission to use your camera',
@@ -108,20 +109,27 @@ const AddBill = (props) => {
             buttonNegative: 'Cancel',
           }}
         >
-          {/* <View style={{ backgroundColor: 'dimgray', opacity: 0.5, width: wp('100%'), alignItems: 'center' }}>
-            <TouchableOpacity onPress={this.takePicture(camera)} style={{ width: wp('15') }} >
-              <Icon name='camera' type='font-awesome' style={{ padding: wp('2'), width: wp('15') }} size={hp('5%')} color="white" />
-            </TouchableOpacity>
-          </View> */}
+
           {({ camera, status, recordAudioPermissionStatus }) => {
             return (
-              <View style={{ backgroundColor: 'dimgray', opacity: 0.5, width: wp('100%'), alignItems: 'center' }}>
-                <TouchableOpacity onPress={() => takePicture(camera)} style={{ width: wp('15') }}>
-                  <Icon name='camera' type='font-awesome' style={{ padding: wp('2'), width: wp('15') }} size={hp('5%')} color="white" />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => props.navigation.navigate('AddBillManuel',{ account: params.account})} style={{ width: wp('15') }}>
-                <Text>Manuel Ekle</Text>
-                </TouchableOpacity>
+              <View style={{ backgroundColor: 'dimgray', opacity: 0.5, paddingHorizontal: wp('10'), flexDirection: 'row' }}>
+                <Left>
+                  <TouchableOpacity onPress={() => props.navigation.navigate('AddBillManuel', { account: params.account })} >
+                    <Text style={{ color: 'white' }}>Manuel Fiş Ekle</Text>
+                  </TouchableOpacity>
+                </Left>
+                <Body>
+                  <TouchableOpacity onPress={() => takePicture(camera)} style={{ width: wp('15') }}>
+                    <Icon name='camera' type='font-awesome' style={{ padding: wp('2'), width: wp('15') }} size={hp('5%')} color="white" />
+                  </TouchableOpacity>
+                </Body>
+                <Right>
+                  <TouchableOpacity onPress={() => props.navigation.navigate('AddBillManuel', { account: params.account })} >
+                    <Text style={{ color: 'white' }}>Manuel Fiş Ekle</Text>
+                  </TouchableOpacity>
+                </Right>
+
+
               </View>
             );
           }}
@@ -136,7 +144,8 @@ const AddBill = (props) => {
   return (
 
     <Container>
-      <Header />
+      <AppHeader screenName={'HomeAccount'} />
+
       { image ? renderImage() : renderCamera()}
 
     </Container >

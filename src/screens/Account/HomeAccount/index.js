@@ -8,8 +8,9 @@ import { AppContext } from '../../../provider/AppProvider'
 import AppFooter from '../../../components/Footer'
 import Members from '../Members';
 import Bills from "../Bills";
-import Modal from '../../../components/Modals/InvitationModal';
-import EditModal from '../../../components/Modals/EditAccountModal';
+import Modal from './HomeModal/InvitationModal';
+import EditModal from './HomeModal/EditAccountModal';
+import AppHeader from '../../../components/Header'
 
 
 const HomeAccount = (props) => {
@@ -18,11 +19,12 @@ const HomeAccount = (props) => {
     const params = props.route.params;
     const [screen, chageScreen] = useState(1)
     const [showMenu, setShow] = useState(false)
-    const id = params.account.ortakHesapID
+    const hesap = params.account
 
     useEffect(() => {
-        state.getBill(id)
-        state.getAccountMembers(id)
+        state.getAccountByID(hesap.ortakHesapID)
+        state.getBill(hesap.ortakHesapID)
+        state.getAccountMembers(hesap.ortakHesapID)
     }, []);
 
     const toggleScreen = (value) => {
@@ -33,21 +35,18 @@ const HomeAccount = (props) => {
     }
     return (
         <Container>
-            <Header />
+            <AppHeader screenName={'CommonAccounts'} />
 
             <View style={{ flexDirection: "row", margin: wp('5%'), alignItems: 'center' }}>
-
                 <Left>
-                    <H1 style={{ color: 'darkseagreen', marginBottom: 5 }}>{params.account.hesapAd}</H1>
+                    <H1 style={{ color: 'darkseagreen', marginBottom: 5 }}>{state.account[0].hesapAd}</H1>
                     <Badge warning>
-                        <Text>{params.account.hesapTurID == 1 ? 'Aile' : 'Ev Arkadaşları'}</Text>
+                        <Text>{hesap.hesapTurID == 1 ? 'Aile' : 'Ev Arkadaşları'}</Text>
                     </Badge>
                 </Left>
                 <Right >
                     <TouchableOpacity onPress={() => toggleMenu()} ><Text>
-
                         <Icon name='cog' type='font-awesome' size={wp('7%')} color="darkseagreen" />
-
                     </Text>
                     </TouchableOpacity>
                     {showMenu ?
@@ -56,20 +55,15 @@ const HomeAccount = (props) => {
                             <ListItem  >
                                 <View style={{ flexDirection: 'row' }}>
                                     <Left />
-
                                     <TouchableOpacity onPress={() => toggleMenu()} ><Text>
-
                                         <Icon name='cog' type='font-awesome' size={wp('7%')} color="white" />
-
                                     </Text>
                                     </TouchableOpacity>
                                 </View>
-
-
                             </ListItem>
                             <ListItem><TouchableOpacity onPress={() => toggleMenu()}><Text style={{ color: 'white' }}>Aylık Harcama</Text></TouchableOpacity></ListItem>
-                            <ListItem><TouchableOpacity transparent onPress={() => state.setModalInvitation({ modalVisible: true, modalMessage: 'blbla' })}><Text style={{ color: 'white' }}>Davet Kodu Al</Text></TouchableOpacity></ListItem>
-                            <ListItem><TouchableOpacity onPress={() => state.setModalEditAccount({ modalVisible: true, modalValue: params.account.hesapAd })}><Text style={{ color: 'white' }}>Hesabı Düzenle</Text></TouchableOpacity></ListItem>
+                            <ListItem><TouchableOpacity onPress={() => state.setModalInvitation({ modalVisible: true, modalMessage: 'blbla' })}><Text style={{ color: 'white' }}>Davet Kodu Al</Text></TouchableOpacity></ListItem>
+                            <ListItem><TouchableOpacity onPress={() => state.setModalEditAccount({ modalVisible: true, hesap: state.account[0] })}><Text style={{ color: 'white' }}>Hesabı Düzenle</Text></TouchableOpacity></ListItem>
                             <ListItem><TouchableOpacity onPress={() => toggleMenu()}><Text style={{ color: 'white' }}>Hesaptan Çık</Text></TouchableOpacity></ListItem>
                             {/* <ListItem onPress={() => toggleMenu()}><Text style={{ color: 'white' }}>Hesabı Sil</Text></ListItem> */}
 
@@ -77,9 +71,8 @@ const HomeAccount = (props) => {
                         : null}
 
                 </Right>
-
-
             </View>
+
             <Footer style={{ marginHorizontal: wp('5%'), backgroundColor: 'transparent' }} >
                 <FooterTab style={{ backgroundColor: 'transparent' }} >
                     <Left>
@@ -100,9 +93,8 @@ const HomeAccount = (props) => {
 
                 <SafeAreaView style={{ margin: wp('0.5%') }} >
                     {
-                        screen === 1 ? <Bills accountId={params.account.ortakHesapID} props={props} /> : <Members accountId={params.account.ortakHesapID} />
+                        screen === 1 ? <Bills accountId={hesap.ortakHesapID} props={props} /> : <Members accountId={hesap.ortakHesapID} />
                         //screen === 1 ? <Bills accountId={params.account.ortakHesapID} props={props} /> : <Members accountId={params.account.ortakHesapID} />
-
                     }
                     <Modal />
                     <EditModal />
@@ -115,8 +107,6 @@ const HomeAccount = (props) => {
                     <Text style={{ fontWeight: 'bold' }}>Fiş Yükle</Text>
                 </Button>
             </View>
-
-
 
             <AppFooter {...props} />
 

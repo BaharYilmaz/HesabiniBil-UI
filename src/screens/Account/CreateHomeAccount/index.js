@@ -5,7 +5,8 @@ import { Dimensions, View, TextInput, StyleSheet } from 'react-native';
 import { Container, Header, Content, Button, Form, Item, Input, Title, H2, ListItem, Text, Radio, Left, Right } from 'native-base';
 import AppFooter from '../../../components/Footer'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-
+import AppHeader from '../../../components/Header'
+import { CheckBox } from 'react-native-elements'
 const { height: screenHeight } = Dimensions.get('window');
 
 const CreateHomeAccount = (props) => {
@@ -14,7 +15,7 @@ const CreateHomeAccount = (props) => {
     const [accountType, setAccountType] = React.useState(2);
     const { control, handleSubmit, errors } = useForm();
 
-   
+
     const radioItem = [
         { label: 'Aile', value: 1 },
         { label: 'Ev Arkadaşları', value: 2 }
@@ -43,7 +44,7 @@ const CreateHomeAccount = (props) => {
     return (
 
         <Container style={styles.container}>
-            <Header />
+            <AppHeader screenName={'CommonAccounts'} />
             <Content  >
                 <View style={{ flex: 1, height: screenHeight * 0.8, justifyContent: 'center' }}>
                     <View style={{ alignItems: 'center', margin: hp('3%') }}>
@@ -55,7 +56,7 @@ const CreateHomeAccount = (props) => {
                             <Controller
                                 control={control} name="accountName" rules={{ required: true }} defaultValue=""
                                 render={({ onChange, onBlur, value }) => (
-                                    <TextInput onChangeText={value => onChange(value)} value={value} placeholder='Hesap Adı' style={{ fontSize: wp('4%') }} />
+                                    <TextInput onChangeText={value => onChange(value)} value={value} placeholder='Hesap adını giriniz' style={{ fontSize: wp('4%') }} />
                                 )}
                             />
                         </Item >
@@ -73,12 +74,22 @@ const CreateHomeAccount = (props) => {
                                                 <Text style={{ color: 'dimgray' }}>{data.label}</Text>
                                             </Left>
                                             <Right>
-                                                <Radio
+                                                {/* <Radio
                                                     onPress={() => setAccountType(data.value)}
                                                     color={"gray"}
                                                     selectedColor={"darkseagreen"}
                                                     selected={data.value === accountType}
+                                                /> */}
+
+                                                <CheckBox
+                                                    onPress={() => setAccountType(data.value)}
+                                                    checkedIcon='dot-circle-o'
+                                                    uncheckedIcon='circle-o'
+                                                    checkedColor='darkseagreen'
+                                                    checked={data.value === accountType}
                                                 />
+
+
                                             </Right>
                                         </ListItem>
                                     )

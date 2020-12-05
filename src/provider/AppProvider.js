@@ -14,6 +14,7 @@ const AppProvider = (props) => {
     const [loginState, changeLoginState] = useState(false);
     const [userId, setUserId] = useState('');
     const [accountList, setAccountList] = React.useState([]);
+    const [account, setAccount] = React.useState([]);
     const [accountMembers, setAccountMembers] = React.useState([]);
     const [iban, setIban] = React.useState([]);
     const [bills, setBills] = React.useState([]);
@@ -21,7 +22,7 @@ const AppProvider = (props) => {
     //modallar gidebilir
     const [modalJoin, setModalJoin] = React.useState({ modalVisible: false });
     const [modalInvitation, setModalInvitation] = React.useState({ modalVisible: false, modalMessage: '' });
-    const [modalEditAccount, setModalEditAccount] = React.useState({ modalVisible: false, modalValue: '' });
+    const [modalEditAccount, setModalEditAccount] = React.useState({ modalVisible: false, hesap:[] });
     const [modalAddIban, setModalAddIban] = React.useState({ modalVisible: false });
     const [modalDeleteIban, setModalDeleteIban] = React.useState({ modalVisible: false, ibanId: '' });
     const [modalUpdateIban, setModalUpdateIban] = React.useState({ modalVisible: false, ibanNo: '', ibanId: '' });
@@ -79,7 +80,6 @@ const AppProvider = (props) => {
             })
             .then(response => response.json())
             .then(data => {
-                console.log(data)
                 if (data.token != undefined) {
                     saveToken("token", data); Toast.show("Giriş Başarılı", Toast.LONG);
                 }
@@ -120,7 +120,6 @@ const AppProvider = (props) => {
         console.log("delete account")
     }
     const createAccount = async (data) => {
-        var result = JSON.parse(await getToken());
         let model = {
             "olusturanKullaniciID": parseInt(userId),
             "hesapAd": data.hesapAd,
@@ -136,8 +135,23 @@ const AppProvider = (props) => {
                 body: JSON.stringify(model)
             })
             .then(response => response.json())
-            .then(data => { Toast.show(data.message, Toast.LONG); getAccounts();  })
+            .then(data => { Toast.show(data.message, Toast.LONG); getAccounts(); })
             .catch(error => { Toast.show('Hesap ekleme sırasında bir hata oluştu !', Toast.LONG) });
+
+    }
+    const updateAccount = (model) => {
+        var id = model.ortakHesapID;
+        fetch(apiBaseUrl + '/account/UpdateAccount',
+            {
+                method: 'POST',
+                headers: new Headers({
+                    'Content-Type': 'application/json'
+                }),
+                body: JSON.stringify(model)
+            })
+            .then(response => response.json())
+            .then(data => { Toast.show(data.message, Toast.LONG); getAccountByID(id); getAccounts(); })
+            .catch(error => { Toast.show('Hesap adı değiştirme sırasında bir hata oluştu !', Toast.LONG) });
 
     }
     const addIban = (data) => {
@@ -164,9 +178,7 @@ const AppProvider = (props) => {
             kullaniciID: parseInt(userId),
             ibanNo: data.ibanNo,
             ibanID: data.ibanId
-
         }
-        console.log(model)
         fetch(apiBaseUrl + '/Iban/UpdateIban',
             {
                 method: 'POST',
@@ -189,6 +201,23 @@ const AppProvider = (props) => {
 
     }
 
+    const deleteIban = (id) => {
+        let model = {
+            kullaniciID: parseInt(userId),
+            ibanID: id
+        }
+        console.log(model)
+        fetch(apiBaseUrl + '/Iban/DeleteIban',
+            {
+                method: 'POST',
+                headers: new Headers({ 'Content-Type': 'application/json' }),
+                body: JSON.stringify(model)
+            })
+            .then(response => response.json())
+            .then(data => { Toast.show(data.message, Toast.LONG); getIban() })
+            .catch(error => { Toast.show("Silme sırasında bir hata oluştu", Toast.LONG); console.log(error.message) });
+
+    }
     ///api/Iban/AddIban
     const getAccounts = async () => {
         fetch(apiBaseUrl + '/account/getAccountsByStatus/' + userId + '/true',
@@ -214,9 +243,19 @@ const AppProvider = (props) => {
             })
             .then(response => response.json())
             .then(data => { setAccountMembers(data) })
-        // .catch(error => { console.log("hata", error); })
-
     }
+    const getAccountByID = (ortakHesapId) => {
+        fetch(apiBaseUrl + '/account/getAccountByID/' + ortakHesapId,
+            {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json'
+                })
+            })
+            .then(response => response.json())
+            .then(data => { setAccount(data) })
+    }
+
 
     const addBill = (data) => {
         let model = {
@@ -225,7 +264,7 @@ const AppProvider = (props) => {
             alisverisFoto: data.alisverisFoto,
             alisverisFisDetay: data.alisverisFisDetay
         }
-        var id=data.ortakHesapID
+        var id = data.ortakHesapID
         fetch(apiBaseUrl + '/Shopping/AddShopping',
             {
                 method: 'POST',
@@ -239,7 +278,6 @@ const AppProvider = (props) => {
     }
     const getBill = (ortakHesapId) => {
 
-        console.log('hk',ortakHesapId)
         fetch(apiBaseUrl + '/Shopping/getShopping/' + ortakHesapId,
             {
                 method: 'GET',
@@ -262,11 +300,11 @@ const AppProvider = (props) => {
                 modalAddIban, setModalAddIban,
                 modalUpdateIban, setModalUpdateIban,
                 handleLogin, handleRegister, handleLogOut, deleteUserAccount,
-                createAccount,
+                createAccount, updateAccount,
                 getAccounts, accountList,
+                getAccountByID, account,
                 getAccountMembers, accountMembers,
-                addIban, updateIban,
-                getIban, iban,
+                addIban, updateIban, deleteIban, getIban, iban,
                 addBill, getBill, bills
 
             }}>

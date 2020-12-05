@@ -15,7 +15,6 @@ const Bills = (props) => {
     //     state.getBill(props.accountId)
     // }, []);
     const bills = state.bills;
-    console.log(bills)
 
     return (
         <Container >

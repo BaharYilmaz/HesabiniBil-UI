@@ -4,7 +4,8 @@ import { View, StyleSheet } from 'react-native';
 import { Button, Text, Left, Right } from 'native-base';
 
 import Modal from 'react-native-modal';
-import { AppContext } from '../../../provider/AppProvider'
+import { AppContext } from '../../../../provider/AppProvider'
+import { Overlay } from 'react-native-elements';
 
 const IbanDeleteModal = (props) => {
 
@@ -13,6 +14,7 @@ const IbanDeleteModal = (props) => {
     const deleteIban = () => {
         console.log("delete")
         state.setModalDeleteIban({ modalVisible: false });
+        state.deleteIban(state.modalDeleteIban.ibanId)
 
     }
     const toggleModal = () => {
@@ -21,12 +23,10 @@ const IbanDeleteModal = (props) => {
 
     return (
 
-        <Modal
-            isVisible={state.modalDeleteIban.modalVisible}
+        <Overlay
+            isVisible={state.modalDeleteIban.modalVisible} onBackdropPress={toggleModal}
         >
-            <View style={styles.container}>
-                <View style={styles.modal}>
-                    <View style={styles.modalContainer}>
+            
                         <View style={styles.modalBody}>
                             <Text style={styles.bodyText}>Iban numarasını silmek üzeresiniz !</Text>
 
@@ -45,28 +45,13 @@ const IbanDeleteModal = (props) => {
                                 </Right>
 
                             </View>
-                        </View>
-                    </View>
-                </View>
+                   
             </View>
-        </Modal>
+        </Overlay>
     );
 };
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    modal: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    modalContainer: {
-        backgroundColor: "#fff",
-        borderRadius: 5,
-    },
+  
     modalBody: {
         backgroundColor: "#fff",
         paddingVertical: 30,

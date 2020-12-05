@@ -6,6 +6,7 @@ import { Container, Header, Content, Button, Form, Item, Input, Title, H2, Left,
 import { Icon } from 'react-native-elements';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import AppFooter from '../../../components/Footer'
+import AppHeader from '../../../components/Header'
 
 
 //this.props.navigation.goBack();
@@ -28,9 +29,9 @@ const AddBillManuel = (props) => {
             urunFiyat: data.productCost,
             urunId: ++productId
         }
-        let apiModel={
+        let apiModel = {
             urunAd: data.productName,
-            urunFiyat: parseFloat(data.productCost), 
+            urunFiyat: parseFloat(data.productCost),
         }
         setProduct(prevArray => [...prevArray, model])
         setList(prevArray => [...prevArray, apiModel])
@@ -44,10 +45,10 @@ const AddBillManuel = (props) => {
         setProduct(product.filter((item) => (item.productId !== id)));
     }
     const saveBill = () => {
-        let model={
-            ortakHesapID:params.account,
-            alisverisFoto:'',
-            alisverisFisDetay:productList,
+        let model = {
+            ortakHesapID: params.account,
+            alisverisFoto: '',
+            alisverisFisDetay: productList,
         }
         state.addBill(model)
         props.navigation.navigate('HomeAccount')
@@ -59,15 +60,9 @@ const AddBillManuel = (props) => {
     return (
 
         <Container style={{ height: screenHeight }}>
-            <Header>
-                <Left>
-                    <Button transparent onPress={() => props.navigation.navigate('HomeAccount')}>
-                        <Icon name='angle-left' type='font-awesome' size={hp('5%')} color="white" />
-                    </Button>
-                </Left>
-                <Body />
 
-            </Header>
+            <AppHeader screenName={'AddBill'} />
+
             <View style={{ margin: wp('3%'), padding: wp('3%'), borderColor: 'lightgray', borderWidth: 2, borderRadius: 5 }}>
                 <Item style={styles.item}>
                     <Controller

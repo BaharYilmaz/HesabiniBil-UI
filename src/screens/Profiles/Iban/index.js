@@ -6,9 +6,9 @@ import Menu, { MenuItem, MenuDivider } from 'react-native-material-menu';
 
 import { AppContext } from '../../../provider/AppProvider'
 
-import AddIban from '../../../components/Modals/IbanModal/IbanAddModal'
-import EditIban from '../../../components/Modals/IbanModal/IbanUpdateModal'
-import DeleteIban from '../../../components/Modals/IbanModal/IbanDeleteModal'
+import AddIban from './IbanModal/IbanAddModal'
+import EditIban from './IbanModal/IbanUpdateModal'
+import DeleteIban from './IbanModal/IbanDeleteModal'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 
@@ -40,7 +40,7 @@ const Iban = (props) => {
                     </Left>
 
                     <TouchableOpacity onPress={() => state.setModalAddIban({ modalVisible: true })} style={{ marginTop: hp('2%')  }}><Text>
-                        <Icon name='plus-circle' type='font-awesome' size={hp('5%')} color="steelblue" />
+                        <Icon name='plus-circle' type='font-awesome' size={wp('5%')} color="steelblue" />
                     </Text>
                     </TouchableOpacity>
                     <AddIban />
@@ -54,12 +54,12 @@ const Iban = (props) => {
                             <Text style={{ color: 'white', fontWeight: "bold" }}>TR {state.iban[0].ibanNo}</Text>
                         </View>
                     </Left>
-                    <TouchableOpacity onPress={() => state.setModalUpdateIban({ modalVisible: true, ibanNo:  state.iban[0].ibanNo ,ibanId:state.iban[0].ibanID})} style={{ marginTop: hp('6%') }} ><Text>
-                        <Icon name='pencil-square' type='font-awesome'size={hp('5%')} color="steelblue" />
+                    <TouchableOpacity onPress={() => state.setModalUpdateIban({ modalVisible: true, ibanNo:  state.iban[0].ibanNo ,ibanId:state.iban[0].ibanID})} style={{ marginTop: hp('6%'), marginRight: wp('3%')  }} ><Text>
+                        <Icon name='pencil-square' type='font-awesome'size={wp('7%')} color="steelblue" />
                     </Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => state.setModalDeleteIban({ modalVisible: true, ibanId:state.iban[0].ibanID })} style={{ marginTop:  hp('6%') }}><Text>
-                        <Icon name='trash'type='font-awesome' size={hp('5%')} color="steelblue" />
+                        <Icon name='trash'type='font-awesome' size={wp('7%')} color="steelblue" />
                     </Text>
                     </TouchableOpacity>
                     <EditIban />

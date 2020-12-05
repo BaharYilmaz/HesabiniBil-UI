@@ -13,6 +13,7 @@ import { Col, Row, Grid } from 'react-native-easy-grid';
 import AppFooter from '../../../components/Footer'
 import Creditor from '../Creditor'
 import Debtor from '../Debtor'
+import AppHeader from '../../../components/Header'
 
 
 
@@ -32,7 +33,7 @@ const DebtTracking = (props) => {
     return (
 
         <Container >
-            <Header />
+      <AppHeader screenName={'CommonAccounts'} />
 
             <Footer style={{ margin: 20, backgroundColor: 'transparent' }} >
                 <FooterTab style={{ backgroundColor: 'transparent' }} >
