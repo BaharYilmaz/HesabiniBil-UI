@@ -11,6 +11,7 @@ import Bills from "../Bills";
 import Modal from './HomeModal/InvitationModal';
 import EditModal from './HomeModal/EditAccountModal';
 import AppHeader from '../../../components/Header'
+import { set } from 'react-native-reanimated';
 
 
 const HomeAccount = (props) => {
@@ -19,12 +20,16 @@ const HomeAccount = (props) => {
     const params = props.route.params;
     const [screen, chageScreen] = useState(1)
     const [showMenu, setShow] = useState(false)
+
     const hesap = params.account
 
     useEffect(() => {
+
         state.getAccountByID(hesap.ortakHesapID)
         state.getBill(hesap.ortakHesapID)
         state.getAccountMembers(hesap.ortakHesapID)
+        
+
     }, []);
 
     const toggleScreen = (value) => {
@@ -39,7 +44,12 @@ const HomeAccount = (props) => {
 
             <View style={{ flexDirection: "row", margin: wp('5%'), alignItems: 'center' }}>
                 <Left>
-                    <H1 style={{ color: 'darkseagreen', marginBottom: 5 }}>{state.account[0].hesapAd}</H1>
+                    {
+                        state.account[0] ?
+                            <H1 style={{ color: 'darkseagreen', marginBottom: 5 }}>{state.account[0].hesapAd}</H1>
+
+                            : <H1 style={{ color: 'darkseagreen', marginBottom: 5 }}>{hesap.hesapAd}</H1>
+                    }
                     <Badge warning>
                         <Text>{hesap.hesapTurID == 1 ? 'Aile' : 'Ev Arkadaşları'}</Text>
                     </Badge>
@@ -63,7 +73,7 @@ const HomeAccount = (props) => {
                             </ListItem>
                             <ListItem><TouchableOpacity onPress={() => toggleMenu()}><Text style={{ color: 'white' }}>Aylık Harcama</Text></TouchableOpacity></ListItem>
                             <ListItem><TouchableOpacity onPress={() => state.setModalInvitation({ modalVisible: true, modalMessage: 'blbla' })}><Text style={{ color: 'white' }}>Davet Kodu Al</Text></TouchableOpacity></ListItem>
-                            <ListItem><TouchableOpacity onPress={() => state.setModalEditAccount({ modalVisible: true, hesap: state.account[0] })}><Text style={{ color: 'white' }}>Hesabı Düzenle</Text></TouchableOpacity></ListItem>
+                            <ListItem><TouchableOpacity onPress={() => state.setModalEditAccount({ modalVisible: true, hesap: state.account[0] })}><Text style={{ color: 'white' }}>Hesabı Adı Düzenle</Text></TouchableOpacity></ListItem>
                             <ListItem><TouchableOpacity onPress={() => toggleMenu()}><Text style={{ color: 'white' }}>Hesaptan Çık</Text></TouchableOpacity></ListItem>
                             {/* <ListItem onPress={() => toggleMenu()}><Text style={{ color: 'white' }}>Hesabı Sil</Text></ListItem> */}
 

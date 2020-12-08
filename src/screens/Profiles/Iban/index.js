@@ -40,7 +40,7 @@ const Iban = (props) => {
                     </Left>
 
                     <TouchableOpacity onPress={() => state.setModalAddIban({ modalVisible: true })} style={{ marginTop: hp('2%')  }}><Text>
-                        <Icon name='plus-circle' type='font-awesome' size={wp('5%')} color="steelblue" />
+                        <Icon name='plus-circle' type='font-awesome' size={wp('7%')} color="steelblue" />
                     </Text>
                     </TouchableOpacity>
                     <AddIban />

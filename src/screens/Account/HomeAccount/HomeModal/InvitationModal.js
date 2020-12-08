@@ -7,7 +7,10 @@ import { Button, Text, Item } from 'native-base';
 import Modal from 'react-native-modal';
 import { AppContext } from '../../../../provider/AppProvider'
 import Toast from 'react-native-simple-toast';
+import { RNToasty } from 'react-native-toasty'
+
 import { Overlay } from 'react-native-elements';
+import { duration } from 'moment';
 
 const InvitationModal = (props) => {
 
@@ -20,7 +23,7 @@ const InvitationModal = (props) => {
 
     const copyToClipboard = (kod) => {
         Clipboard.setString(kod);
-        Toast.showWithGravity('Davet kodu panoya kopyalandı.', Toast.LONG, Toast.TOP);
+        RNToasty.Info({ title: 'Davet kodu panoya kopyalandı.', duration: 1,position:'top' });
     };
     //onbackdrop press
     console.log(props)

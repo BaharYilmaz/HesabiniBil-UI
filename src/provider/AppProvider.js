@@ -1,15 +1,34 @@
 import React, { useState, Component, useEffect } from 'react';
 import { View, StyleSheet, Button, Alert } from "react-native";
 import { AsyncStorage } from 'react-native';
-import moment from "moment";
+import moment, { duration } from "moment";
 import Toast from 'react-native-simple-toast';
 const AppContext = React.createContext();
 import jwt_decode from "jwt-decode";
-import { useNavigation } from '@react-navigation/native';
+import messaging from '@react-native-firebase/messaging';
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+import { RNToasty } from 'react-native-toasty'
+
+async function saveTokenToDatabase(token) {
+    // Assume user is already signed in
+    const userId = auth().currentUser.uid;
+
+    //Add the token to the users datastore
+    await firestore()
+        .collection('users')
+        .doc(userId)
+        .update({
+            tokens: firestore.FieldValue.arrayUnion(token),
+        });
+}
+
+
 const AppProvider = (props) => {
 
+
     const apiBaseUrl = 'http://10.0.3.2:5001/api';
-    // const apiBaseUrl = 'https://hesabinibiltezapi.azurewebsites.net/api';
+    //const apiBaseUrl = 'https://hesabinibiltezapi.azurewebsites.net/api';
     //const navigation = useNavigation();
     const [loginState, changeLoginState] = useState(false);
     const [userId, setUserId] = useState('');
@@ -22,7 +41,7 @@ const AppProvider = (props) => {
     //modallar gidebilir
     const [modalJoin, setModalJoin] = React.useState({ modalVisible: false });
     const [modalInvitation, setModalInvitation] = React.useState({ modalVisible: false, modalMessage: '' });
-    const [modalEditAccount, setModalEditAccount] = React.useState({ modalVisible: false, hesap:[] });
+    const [modalEditAccount, setModalEditAccount] = React.useState({ modalVisible: false, hesap: [] });
     const [modalAddIban, setModalAddIban] = React.useState({ modalVisible: false });
     const [modalDeleteIban, setModalDeleteIban] = React.useState({ modalVisible: false, ibanId: '' });
     const [modalUpdateIban, setModalUpdateIban] = React.useState({ modalVisible: false, ibanNo: '', ibanId: '' });
@@ -30,8 +49,38 @@ const AppProvider = (props) => {
 
     var tokenUserId = '';
 
-    useEffect(() => { loggedIn() }, [])
+    useEffect(() => {
+        loggedIn()
 
+        // Get the device token
+        messaging()
+            .getToken()
+            .then(token => {
+                console.log("----", token)
+                return saveTokenToDatabase(token);
+            });
+
+        // If using other push notification providers (ie Amazon SNS, etc)
+        // you may need to get the APNs token instead for iOS:
+        // if(Platform.OS == 'ios') { messaging().getAPNSToken().then(token => { return saveTokenToDatabase(token); }); }
+
+        // Listen to whether the token changes
+        return messaging().onTokenRefresh(token => {
+            saveTokenToDatabase(token);
+        });
+
+    }, [])
+    useEffect(() => {
+        const unsubscribe = messaging().onMessage(async remoteMessage => {
+            const owner = JSON.parse(remoteMessage.data.owner);
+            const user = JSON.parse(remoteMessage.data.user);
+            const picture = JSON.parse(remoteMessage.data.picture);
+
+            console.log(`The user "${user.name}" liked your picture "${picture.name}"`);
+        });
+
+        return unsubscribe;
+    }, []);
     const loggedIn = async () => {
         var result = await getToken();
         result = JSON.parse(result)
@@ -81,12 +130,13 @@ const AppProvider = (props) => {
             .then(response => response.json())
             .then(data => {
                 if (data.token != undefined) {
-                    saveToken("token", data); Toast.show("Giriş Başarılı", Toast.LONG);
+                    saveToken("token", data);
+                    RNToasty.Success({ title: "Giriş Başarılı", duration: 1 });
                 }
-                else { Toast.show(data.message, Toast.LONG); }
+                else { RNToasty.Error({ title: data.error, duration: 1 }); }
             })
             .catch(error =>
-                Toast.show('Kullanıcı adı veya Şifre yanlış!', Toast.LONG));
+                RNToasty.Error({title:'Bir hata oluştu, tekrar deneyiniz!', duration}));
     }
     const handleLogOut = async () => {
         try {
@@ -108,12 +158,12 @@ const AppProvider = (props) => {
             .then(data => {
 
                 if (data.token != undefined) {
-                    saveToken("token", data); Toast.show("Kayıt Başarılı", Toast.LONG)
+                    saveToken("token", data); RNToasty.Success({ title: "Kayıt Başarılı", duration: 1 })
                 }
-                else { Toast.show(data.message, Toast.LONG); }
+                else { RNToasty.Error({ title: data.error, duration: 1 }); }
             })
             .catch(error =>
-                Toast.show('Kayıt başarısız, tekrar deneyiniz!', Toast.LONG));
+                RNToasty.Error({title:'Kayıt başarısız, tekrar deneyiniz!', duration:1}));
     }
 
     const deleteUserAccount = async () => {
@@ -150,8 +200,10 @@ const AppProvider = (props) => {
                 body: JSON.stringify(model)
             })
             .then(response => response.json())
-            .then(data => { Toast.show(data.message, Toast.LONG); getAccountByID(id); getAccounts(); })
-            .catch(error => { Toast.show('Hesap adı değiştirme sırasında bir hata oluştu !', Toast.LONG) });
+            .then(data => {
+                RNToasty.Success({ title: data.message, duration: 1 }); getAccountByID(id); getAccounts();
+            })
+            .catch(error => {  RNToasty.Error({title:'Hesap adı değiştirme sırasında bir hata oluştu !', duration:1}) });
 
     }
     const addIban = (data) => {
@@ -168,8 +220,8 @@ const AppProvider = (props) => {
                 body: JSON.stringify(model)
             })
             .then(response => response.json())
-            .then(data => { Toast.show(data.message, Toast.LONG); getIban() })
-            .catch(error => { Toast.show("Iban ekleme sırasında bir hata oluştu", Toast.LONG); console.log(error.message) });
+            .then(data => { RNToasty.Success({ title:data.message, duration: 1 }); getIban() })
+            .catch(error => { RNToasty.Error({title:"Iban ekleme sırasında bir hata oluştu", duration:1}); console.log(error.message) });
 
     }
     const updateIban = (data) => {
@@ -186,8 +238,8 @@ const AppProvider = (props) => {
                 body: JSON.stringify(model)
             })
             .then(response => response.json())
-            .then(data => { Toast.show(data.message, Toast.LONG); getIban() })
-            .catch(error => { Toast.show("Güncelleme sırasında bir hata oluştu", Toast.LONG); console.log(error.message) });
+            .then(data => { RNToasty.Success({ title:data.message, duration: 1 }); getIban() })
+            .catch(error => {  RNToasty.Error({title:"Güncelleme sırasında bir hata oluştu", duration:1}); console.log(error.message) });
 
     }
     const getIban = () => {
@@ -214,8 +266,8 @@ const AppProvider = (props) => {
                 body: JSON.stringify(model)
             })
             .then(response => response.json())
-            .then(data => { Toast.show(data.message, Toast.LONG); getIban() })
-            .catch(error => { Toast.show("Silme sırasında bir hata oluştu", Toast.LONG); console.log(error.message) });
+            .then(data => { RNToasty.Success({ title:data.message, duration: 1 }); getIban() })
+            .catch(error => {  RNToasty.Error({title:"Silme sırasında bir hata oluştu", duration:1}); console.log(error.message) });
 
     }
     ///api/Iban/AddIban
@@ -231,7 +283,6 @@ const AppProvider = (props) => {
             .then(data => { setAccountList(data) })
         //.catch(error => { console.log("hata", error); })
     }
-
 
     const getAccountMembers = (ortakHesapId) => {
         fetch(apiBaseUrl + '/account/getAccountMembers/' + ortakHesapId,
@@ -255,8 +306,6 @@ const AppProvider = (props) => {
             .then(response => response.json())
             .then(data => { setAccount(data) })
     }
-
-
     const addBill = (data) => {
         let model = {
             kullaniciID: parseInt(userId),
@@ -272,8 +321,8 @@ const AppProvider = (props) => {
                 body: JSON.stringify(model)
             })
             .then(response => response.json())
-            .then(data => { Toast.show(data.message, Toast.LONG); getBill(id) })
-            .catch(error => { Toast.show("Bir hata oluştu", Toast.LONG); console.log(error.message) });
+            .then(data => { RNToasty.Success({ title:data.message, duration: 1 }); getBill(id) })
+            .catch(error => { RNToasty.Error({title:"Fiş kaydetme sırasında bir hata oluştu", duration: 1}); console.log(error.message) });
 
     }
     const getBill = (ortakHesapId) => {
@@ -302,7 +351,7 @@ const AppProvider = (props) => {
                 handleLogin, handleRegister, handleLogOut, deleteUserAccount,
                 createAccount, updateAccount,
                 getAccounts, accountList,
-                getAccountByID, account,
+                getAccountByID, account,setAccount,
                 getAccountMembers, accountMembers,
                 addIban, updateIban, deleteIban, getIban, iban,
                 addBill, getBill, bills
