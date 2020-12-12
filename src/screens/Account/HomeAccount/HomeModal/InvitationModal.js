@@ -23,7 +23,7 @@ const InvitationModal = (props) => {
 
     const copyToClipboard = (kod) => {
         Clipboard.setString(kod);
-        RNToasty.Info({ title: 'Davet kodu panoya kopyalandı.', duration: 1,position:'top' });
+        RNToasty.Info({ title: 'Davet kodu panoya kopyalandı.', duration: 1, position: 'top' });
     };
     //onbackdrop press
     console.log(props)
@@ -39,10 +39,10 @@ const InvitationModal = (props) => {
 
                 <View style={styles.modalBody}>
                     <Text style={styles.bodyText}>GRUP DAVET KODU:</Text>
-
+                    <Text selectable style={styles.textDetail}>{state.modalInvitation.modalMessage}</Text>
+                    {/* 
                     <TouchableOpacity onPress={() => copyToClipboard(state.modalInvitation.modalMessage)}>
-                        <Text style={styles.textDetail}>{state.modalInvitation.modalMessage}</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
 
                     <View style={{ marginTop: 15, padding: 10 }}>
                         <Button block onPress={toggleModal} style={{ backgroundColor: 'darkseagreen' }} >

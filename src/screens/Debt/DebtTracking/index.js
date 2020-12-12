@@ -1,4 +1,4 @@
-import React, { useContext,useState } from 'react';
+import React, { useContext,useState,useEffect } from 'react';
 import { AppContext } from '../../../provider/AppProvider'
 
 import {
@@ -14,14 +14,19 @@ import AppFooter from '../../../components/Footer'
 import Creditor from '../Creditor'
 import Debtor from '../Debtor'
 import AppHeader from '../../../components/Header'
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
 
 const DebtTracking = (props) => {
 
-    const login = useContext(AppContext);
+    const state = useContext(AppContext);
     const { height: screenHeight } = Dimensions.get('window');
     const [screen, chageScreen] = useState(1)
+
+    useEffect(() => {
+        state.getAllDebt()
+    }, []);
 
 
     const [loginForm, setValid] = React.useState({ emailValid: true, passwordValid: true });
@@ -32,10 +37,10 @@ const DebtTracking = (props) => {
 
     return (
 
-        <Container >
+        <Container  >
       <AppHeader screenName={'CommonAccounts'} />
 
-            <Footer style={{ margin: 20, backgroundColor: 'transparent' }} >
+            <Footer style={{ marginHorizontal: wp('3%'),marginTop:wp('3%'), backgroundColor: 'transparent' }} >
                 <FooterTab style={{ backgroundColor: 'transparent' }} >
                     <Left>
                         <Button block onPress={() => toggleScreen(1)} style={screen == 1 ? styles.creditor:styles.passive}>
@@ -53,7 +58,7 @@ const DebtTracking = (props) => {
 
             <Content style={{ marginHorizontal: 10 }}>
 
-                <SafeAreaView style={{ margin: 20 }} >
+                <SafeAreaView  >
                     {
                         screen === 1 ? <Creditor /> : <Debtor />
                     }
@@ -79,12 +84,11 @@ const styles = StyleSheet.create({
     dividerCreditor:{
         height:4,
         backgroundColor:'limegreen',
-        marginHorizontal:20,
+        marginHorizontal:wp('3%'),
     },
     dividerDebtor:{
         height:4,
         backgroundColor:'lightsalmon',
-        marginHorizontal:20,
-    }
+        marginHorizontal: wp('3%')    }
 });
 export default DebtTracking;

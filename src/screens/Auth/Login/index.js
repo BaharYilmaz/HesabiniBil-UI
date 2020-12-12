@@ -21,10 +21,7 @@ const Login = (props) => {
         if (data != null) {
             state.handleLogin(data);
         }
-        else {
-            console.log("hata login");
-            //register.setModalVisible(true);
-        }
+      
     }
 
     return (

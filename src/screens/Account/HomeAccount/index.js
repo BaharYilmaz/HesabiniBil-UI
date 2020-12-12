@@ -28,10 +28,19 @@ const HomeAccount = (props) => {
         state.getAccountByID(hesap.ortakHesapID)
         state.getBill(hesap.ortakHesapID)
         state.getAccountMembers(hesap.ortakHesapID)
-        
+
 
     }, []);
 
+    const leaveAccount = () => {
+        let model = {
+            kullaniciId: hesap.kullaniciID,
+            hesapId: hesap.ortakHesapID
+        }
+        state.leaveAccount(model)
+        props.navigation.navigate('CommonAccounts')
+
+    }
     const toggleScreen = (value) => {
         chageScreen(value)
     }
@@ -72,9 +81,9 @@ const HomeAccount = (props) => {
                                 </View>
                             </ListItem>
                             <ListItem><TouchableOpacity onPress={() => toggleMenu()}><Text style={{ color: 'white' }}>Aylık Harcama</Text></TouchableOpacity></ListItem>
-                            <ListItem><TouchableOpacity onPress={() => state.setModalInvitation({ modalVisible: true, modalMessage: 'blbla' })}><Text style={{ color: 'white' }}>Davet Kodu Al</Text></TouchableOpacity></ListItem>
+                            <ListItem><TouchableOpacity onPress={() => state.setModalInvitation({ modalVisible: true, modalMessage:hesap.hesapKodu  })}><Text style={{ color: 'white' }}>Davet Kodu Al</Text></TouchableOpacity></ListItem>
                             <ListItem><TouchableOpacity onPress={() => state.setModalEditAccount({ modalVisible: true, hesap: state.account[0] })}><Text style={{ color: 'white' }}>Hesabı Adı Düzenle</Text></TouchableOpacity></ListItem>
-                            <ListItem><TouchableOpacity onPress={() => toggleMenu()}><Text style={{ color: 'white' }}>Hesaptan Çık</Text></TouchableOpacity></ListItem>
+                            <ListItem><TouchableOpacity onPress={() => leaveAccount()}><Text style={{ color: 'white' }}>Hesaptan Ayrıl</Text></TouchableOpacity></ListItem>
                             {/* <ListItem onPress={() => toggleMenu()}><Text style={{ color: 'white' }}>Hesabı Sil</Text></ListItem> */}
 
                         </List>

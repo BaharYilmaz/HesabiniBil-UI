@@ -14,10 +14,9 @@ const CommonAccounts = (props) => {
     const state = useContext(AppContext);
     const accountList = state.accountList;
 
-    state.account
     useEffect(() => {
         state.getAccounts()
-        
+
     }, [state.userId]);
 
     return (

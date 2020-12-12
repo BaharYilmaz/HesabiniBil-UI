@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-import { useForm, Controller } from 'react-hook-form'
+import { useForm, Controller, get } from 'react-hook-form'
 
 import Clipboard from '@react-native-community/clipboard';
 import { Button, Text, Item, Left, Right } from 'native-base';
@@ -14,6 +14,7 @@ const JoinAccount = () => {
 
     const state = useContext(AppContext);
     const { control, handleSubmit, errors } = useForm();
+    const [copiedText, setCopiedText] = useState('');
 
     const toggleModal = () => {
         state.setModalJoin({ modalVisible: false });
@@ -22,6 +23,11 @@ const JoinAccount = () => {
     const onSubmit = (data) => {
         toggleModal()
         console.log(data)
+        state.signInToAccount(data.value)
+    }
+    const getTextFromClipboard = async () => {
+        var data = await Clipboard.getString()
+        setCopiedText(data)
     }
 
     return (
@@ -31,12 +37,13 @@ const JoinAccount = () => {
 
             <View style={styles.modalBody}>
                 <View>
+                    
                     <Item style={{ marginBottom: 15 }}>
                         <Controller
                             control={control} name="value" defaultValue="" rules={{ required: true }}
                             render={({ onChange, value }) => (
                                 <View style={{ flexDirection: 'row' }}>
-                                    <TextInput style={styles.textDetail} onChangeText={value => onChange(value)} value={value} placeholder='Davet kodu giriniz' />
+                                    <TextInput style={styles.textDetail} selectTextOnFocus onChangeText={value => onChange(value)} value={value} placeholder='Davet kodu giriniz' />
                                 </View>
                             )}
                         />
@@ -62,7 +69,7 @@ const JoinAccount = () => {
     );
 };
 const styles = StyleSheet.create({
-  
+
     modalBody: {
         backgroundColor: "#fff",
         paddingVertical: 30,

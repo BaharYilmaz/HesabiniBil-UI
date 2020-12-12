@@ -44,9 +44,9 @@ const Profile = (props) => {
 
             <View style={styles.divider} />
 
-            <Content style={{ marginHorizontal: hp('2%') }}>
+            <Content >
 
-                <SafeAreaView style={{ margin:  hp('2%') }} >
+                <SafeAreaView  >
                     <Notifications />
                 </SafeAreaView >
             </Content>
