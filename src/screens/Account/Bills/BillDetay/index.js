@@ -17,7 +17,7 @@ const BillDetay = (props) => {
     }
     return (
         <Container>
-            <Header screen={'HomeAccount'} />
+            <Header  />
 
             <Footer style={{ marginHorizontal: wp('5%'), marginTop: wp('5%'), alignSelf: 'center', backgroundColor: 'transparent' }} >
                 <FooterTab style={{ backgroundColor: 'transparent' }} >

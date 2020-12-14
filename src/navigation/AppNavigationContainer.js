@@ -16,7 +16,7 @@ import HomeAccount from '../screens/Account/HomeAccount';
 import AddBill from '../screens/Account/AddBill';
 import AddBillManuel from '../screens/Account/AddBillManuel';
 import BillDetay from '../screens/Account/Bills/BillDetay';
-import Bills from '../screens/Account/Bills';
+import Bills from '../screens/Account/Bills/index';
 import AppProvider from '../provider/AppProvider'
 import Header from '../components/Header';
 import SideBar from './SideBar';
@@ -50,6 +50,8 @@ const AppStackScreen = () => {
       <AppStack.Screen name="DebtTracking" component={DebtTracking} />
       <AppStack.Screen name="Profile" component={Profile} />
       <AppStack.Screen name="BillDetay" component={BillDetay} />
+      <AppStack.Screen name="Bills" component={Bills} />
+
 
     </AppStack.Navigator>
   );

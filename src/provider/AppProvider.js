@@ -27,8 +27,8 @@ async function saveTokenToDatabase(token) {
 const AppProvider = (props) => {
 
 
-    const apiBaseUrl = 'http://10.0.3.2:5001/api';
-   // const apiBaseUrl = 'https://hesabinibiltezapi.azurewebsites.net/api';
+    //const apiBaseUrl = 'http://10.0.3.2:5001/api';
+    const apiBaseUrl = 'https://hesabinibiltezapi.azurewebsites.net/api';
     //const navigation = useNavigation();
     const [loginState, changeLoginState] = useState(false);
     const [userId, setUserId] = useState('');
@@ -39,6 +39,8 @@ const AppProvider = (props) => {
     const [bills, setBills] = React.useState([]);
     const [notify, setNotify] = React.useState([]);
     const [debt, setDebt] = React.useState([]);
+    const [deviceToken, setDeviceToken] = React.useState('');
+
 
     //modallar gidebilir
     const [modalJoin, setModalJoin] = React.useState({ modalVisible: false });
@@ -49,7 +51,6 @@ const AppProvider = (props) => {
     const [modalUpdateIban, setModalUpdateIban] = React.useState({ modalVisible: false, ibanNo: '', ibanId: '' });
 
 
-    var tokenUserId = '';
 
     useEffect(() => {
         loggedIn()
@@ -59,7 +60,7 @@ const AppProvider = (props) => {
             .getToken()
             .then(token => {
                 console.log("----", token)
-                addDeviceToken(token)
+                setDeviceToken(token)
                 return saveTokenToDatabase(token);
             });
 
@@ -74,16 +75,20 @@ const AppProvider = (props) => {
 
     }, [])
     useEffect(() => {
-        const unsubscribe = messaging().onMessage(async remoteMessage => {
-            const owner = JSON.parse(remoteMessage.data.owner);
-            const user = JSON.parse(remoteMessage.data.user);
-            const picture = JSON.parse(remoteMessage.data.picture);
+        addDeviceToken(deviceToken)
+    }, [userId]);
+    
+    // useEffect(() => {
+    //     const unsubscribe = messaging().onMessage(async remoteMessage => {
+    //         const owner = JSON.parse(remoteMessage.data.owner);
+    //         const user = JSON.parse(remoteMessage.data.user);
+    //         const picture = JSON.parse(remoteMessage.data.picture);
 
-            console.log(`The user "${user.name}" liked your picture "${picture.name}"`);
-        });
+    //         console.log(`The user "${user.name}" liked your picture "${picture.name}"`);
+    //     });
 
-        return unsubscribe;
-    }, []);
+    //     return unsubscribe;
+    // }, []);
     const loggedIn = async () => {
         var result = await getToken();
         result = JSON.parse(result)
@@ -100,7 +105,7 @@ const AppProvider = (props) => {
                 console.log("token geçerli")
                 changeLoginState(true)
                 setUserId(decoded.nameIdentifier)
-                tokenUserId = decoded.nameIdentifier;
+                addDeviceToken(deviceToken)
                 //  changeLoginState(result.token)
 
             }
@@ -123,7 +128,8 @@ const AppProvider = (props) => {
     };
     const addDeviceToken = (deviceToken) => {
 
-        if (deviceToken != undefined) {
+        console.log(userId, " -- ", deviceToken)
+        if (deviceToken != undefined && userId != undefined) {
             fetch(apiBaseUrl + '/auth/AddDeviceToken/' + userId + '/' + deviceToken,
                 {
                     method: 'POST',
@@ -152,12 +158,13 @@ const AppProvider = (props) => {
                 else { RNToasty.Error({ title: data.error, duration: 1 }); }
             })
             .catch(error =>
-                RNToasty.Error({ title: 'Bir hata oluştu, tekrar deneyiniz!', duration:1 }));
+                RNToasty.Error({ title: 'Bir hata oluştu, tekrar deneyiniz!', duration: 1 }));
     }
     const handleLogOut = async () => {
         try {
             await AsyncStorage.removeItem("token")
             console.log("çıkış yapıldı")
+            setUserId('')
             loggedIn();
         } catch (e) { }
     }
@@ -208,8 +215,8 @@ const AppProvider = (props) => {
     //SignInToAccount
     const signInToAccount = async (data) => {
         let model = {
-            kullaniciID:parseInt(userId),
-            hesapKodu:data
+            kullaniciID: parseInt(userId),
+            hesapKodu: data
         }
         fetch(apiBaseUrl + '/account/signInToAccount',
             {
@@ -220,7 +227,7 @@ const AppProvider = (props) => {
                 body: JSON.stringify(model)
             })
             .then(response => response.json())
-            .then(data => { RNToasty.Success({ title: data.message, duration: 1 });console.log(data); getAccounts(); })
+            .then(data => { RNToasty.Success({ title: data.message, duration: 1 }); console.log(data); getAccounts(); })
             .catch(error => { RNToasty.Error({ title: 'Hesaba katılma başarısız !', duration: 1 }) });
 
     }
@@ -271,7 +278,7 @@ const AppProvider = (props) => {
                 body: JSON.stringify(model)
             })
             .then(response => response.json())
-            .then(data => { RNToasty.Success({ title: data.message, duration: 1 }); getIban() })
+            .then(data => { console.log(data); RNToasty.Success({ title: data.message, duration: 1 }); getIban() })
             .catch(error => { RNToasty.Error({ title: "Iban ekleme sırasında bir hata oluştu", duration: 1 }); console.log(error.message) });
 
     }
@@ -331,8 +338,8 @@ const AppProvider = (props) => {
                 })
             })
             .then(response => response.json())
-            .then(data => { setAccountList(data) })
-        //.catch(error => { console.log("hata", error); })
+            .then(data => { setAccountList(data); })
+            .catch(error => { console.log("hata accounts", error); })
     }
 
     const getAccountMembers = (ortakHesapId) => {
@@ -419,14 +426,14 @@ const AppProvider = (props) => {
                 modalAddIban, setModalAddIban,
                 modalUpdateIban, setModalUpdateIban,
                 handleLogin, handleRegister, handleLogOut, deleteUserAccount,
-                createAccount, updateAccount, leaveAccount,signInToAccount,
+                createAccount, updateAccount, leaveAccount, signInToAccount,
                 getAccounts, accountList,
                 getAccountByID, account, setAccount,
                 getAccountMembers, accountMembers,
                 addIban, updateIban, deleteIban, getIban, iban,
                 addBill, getBill, bills,
                 getNotifications, notify,
-                getAllDebt,debt,
+                getAllDebt, debt,
 
             }}>
             {props.children}
