@@ -28,7 +28,6 @@ const AppProvider = (props) => {
 
 
     //const apiBaseUrl = 'http://10.0.3.2:5001/api';
-    const apiBaseUrl = 'https://hesabinibiltezapi.azurewebsites.net/api';
     //const navigation = useNavigation();
     const [loginState, changeLoginState] = useState(false);
     const [userId, setUserId] = useState('');
