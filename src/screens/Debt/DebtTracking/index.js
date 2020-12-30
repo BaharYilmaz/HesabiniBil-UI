@@ -25,11 +25,10 @@ const DebtTracking = (props) => {
     const [screen, chageScreen] = useState(1)
 
     useEffect(() => {
-        state.getAllDebt()
+        state.getAllCredits()
     }, []);
 
 
-    const [loginForm, setValid] = React.useState({ emailValid: true, passwordValid: true });
     const toggleScreen = (value) => {
         chageScreen(value)
     }

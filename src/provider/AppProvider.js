@@ -28,6 +28,7 @@ const AppProvider = (props) => {
 
 
     //const apiBaseUrl = 'http://10.0.3.2:5001/api';
+    apiBaseUrl = 'https://hesabinibiltezapi.azurewebsites.net/api'
     //const navigation = useNavigation();
     const [loginState, changeLoginState] = useState(false);
     const [userId, setUserId] = useState('');
@@ -38,6 +39,8 @@ const AppProvider = (props) => {
     const [bills, setBills] = React.useState([]);
     const [notify, setNotify] = React.useState([]);
     const [debt, setDebt] = React.useState([]);
+    const [credit, setCredit] = React.useState([]);
+
     const [deviceToken, setDeviceToken] = React.useState('');
 
 
@@ -58,7 +61,6 @@ const AppProvider = (props) => {
         messaging()
             .getToken()
             .then(token => {
-                console.log("----", token)
                 setDeviceToken(token)
                 return saveTokenToDatabase(token);
             });
@@ -404,14 +406,24 @@ const AppProvider = (props) => {
             .then(data => { setNotify(data) })
 
     }
-    const getAllDebt = () => {
-        fetch(apiBaseUrl + '/Debt/GetAllDebt/' + userId,
+    const getAllDebts = () => {
+        fetch(apiBaseUrl + '/Debt/BorcluOldugumKisileriGetir/' + userId,
             {
                 method: 'GET',
                 headers: new Headers({ 'Content-Type': 'application/json' }),
             })
             .then(response => response.json())
             .then(data => { setDebt(data) })
+
+    }
+    const getAllCredits = () => {
+        fetch(apiBaseUrl + '/Debt/BorcluListesiniGetir/' + userId,
+            {
+                method: 'GET',
+                headers: new Headers({ 'Content-Type': 'application/json' }),
+            })
+            .then(response => response.json())
+            .then(data => { setCredit(data) })
 
     }
     return (
@@ -432,7 +444,8 @@ const AppProvider = (props) => {
                 addIban, updateIban, deleteIban, getIban, iban,
                 addBill, getBill, bills,
                 getNotifications, notify,
-                getAllDebt, debt,
+                getAllDebts, debt,
+                getAllCredits,credit
 
             }}>
             {props.children}

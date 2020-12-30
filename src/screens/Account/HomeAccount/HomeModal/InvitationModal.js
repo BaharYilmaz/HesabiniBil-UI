@@ -4,18 +4,14 @@ import { useForm, Controller } from 'react-hook-form'
 
 import Clipboard from '@react-native-community/clipboard';
 import { Button, Text, Item } from 'native-base';
-import Modal from 'react-native-modal';
 import { AppContext } from '../../../../provider/AppProvider'
-import Toast from 'react-native-simple-toast';
 import { RNToasty } from 'react-native-toasty'
 
 import { Overlay } from 'react-native-elements';
-import { duration } from 'moment';
 
 const InvitationModal = (props) => {
 
     const state = useContext(AppContext);
-    const { control, handleSubmit, errors } = useForm();
 
     const toggleModal = () => {
         state.setModalInvitation({ modalVisible: false, modalMessage: '' });
