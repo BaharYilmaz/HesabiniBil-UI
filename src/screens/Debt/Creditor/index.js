@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState}from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../../provider/AppProvider'
 
 
@@ -18,26 +18,26 @@ const Creditor = () => {
             <Content >
 
                 <List >
-                {credit?
-                    <ScrollView>
-                        {
-                            credit.map(list =>
+                    {credit ?
+                        <ScrollView>
+                            {
+                                credit.map(list =>
 
-                                <ListItem thumbnail key={list.borcluID}  >
+                                    <ListItem thumbnail key={list.borcluID}  >
 
-                                    <Body>
-                                        <Text  style={{color:'slateblue',fontWeight:'bold'}}>{list.toplamTutar} TL</Text>
-                                        <Text note numberOfLines={1}>Kimden: {list.borcluAdSoyad}</Text>
-                                    </Body>
+                                        <Body>
+                                            <Text style={{ color: 'slateblue', fontWeight: 'bold' }}>{list.toplamTutar} TL</Text>
+                                            <Text note numberOfLines={1}>Kimden: {list.borcluAdSoyad}</Text>
+                                        </Body>
 
-                                </ListItem>
+                                    </ListItem>
 
-                            )
-                        }
+                                )
+                            }
 
-                    </ScrollView>
-                    :                    <Text style={{ color: 'lightgray', textAlign: 'center' }}>Alacağınız yok... </Text>
-}
+                        </ScrollView>
+                        : <Text style={{ color: 'lightgray', textAlign: 'center' }}>Alacağınız yok... </Text>
+                    }
                 </List>
 
 

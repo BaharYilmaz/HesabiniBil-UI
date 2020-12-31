@@ -40,7 +40,9 @@ const AppProvider = (props) => {
     const [notify, setNotify] = React.useState([]);
     const [debt, setDebt] = React.useState([]);
     const [credit, setCredit] = React.useState([]);
+    const [debtDetail, setDebtDetail] = React.useState([]);
 
+    
     const [deviceToken, setDeviceToken] = React.useState('');
 
 
@@ -78,7 +80,7 @@ const AppProvider = (props) => {
     useEffect(() => {
         addDeviceToken(deviceToken)
     }, [userId]);
-    
+
     // useEffect(() => {
     //     const unsubscribe = messaging().onMessage(async remoteMessage => {
     //         const owner = JSON.parse(remoteMessage.data.owner);
@@ -426,6 +428,16 @@ const AppProvider = (props) => {
             .then(data => { setCredit(data) })
 
     }
+    const getDebtDetail = (borcId, borcluId) => {
+        fetch(apiBaseUrl + '/Debt/BorcDetayGetir/' + borcId + '/' + borcluId,
+            {
+                method: 'GET',
+                headers: new Headers({ 'Content-Type': 'application/json' }),
+            })
+            .then(response => response.json())
+            .then(data => { setDebtDetail(data) })
+
+    }
     return (
         <AppContext.Provider
             value={{
@@ -445,7 +457,8 @@ const AppProvider = (props) => {
                 addBill, getBill, bills,
                 getNotifications, notify,
                 getAllDebts, debt,
-                getAllCredits,credit
+                getAllCredits, credit,
+                getDebtDetail,debtDetail,
 
             }}>
             {props.children}
