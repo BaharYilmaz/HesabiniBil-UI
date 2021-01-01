@@ -27,11 +27,17 @@ const Bills = (props) => {
                                 bills.map(list =>
                                     <ListItem onPress={() => props.props.navigation.navigate('BillDetay', { list: list })} thumbnail key={list.alisverisFisID} style={{ marginHorizontal: wp('2%') }}>
                                         <Body>
-                                            <Text>{list.toplamTutar} TL</Text>
+                                            <Text style={{color:'steelblue'}}>{list.toplamTutar} TL</Text>
                                             <Text note numberOfLines={1}>Yükleyen: {list.kullaniciAd} {list.kullaniciSoyad}</Text>
+                                            <Text note numberOfLines={1}>{list.tarih}</Text>
                                         </Body>
                                         <Right>
-                                            <Text note numberOfLines={1}>{list.tarih}</Text>
+                                            <TouchableOpacity  transparent onPress={() => props.props.navigation.navigate('BillDetay', { list: list })}>
+                                                {/* <Text style={styles.buttonText}>Hesaba Git</Text> */}
+                                                <Icon name='angle-right' type='font-awesome' color="gray" />
+
+                                            </TouchableOpacity>
+
                                         </Right>
                                     </ListItem>
                                 )

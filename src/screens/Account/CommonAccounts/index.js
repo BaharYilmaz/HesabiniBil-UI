@@ -37,14 +37,16 @@ const CommonAccounts = (props) => {
                                     accountList.map(list =>
                                         <ListItem thumbnail key={list.ortakHesapID} >
                                             <Body>
-                                                <Text style={{ margin: hp('1%') }}>{list.hesapAd}</Text>
+                                                <Text style={{ margin: hp('1%') }} onPress={() => props.navigation.navigate('HomeAccount', { account: list })}>{list.hesapAd}</Text>
                                                 <Badge warning>
                                                     <Text style={{ color: 'white' }} note numberOfLines={1}>{list.hesapTurID == 1 ? 'Aile' : 'Ev Arkadaşları'}</Text>
                                                 </Badge>
                                             </Body>
                                             <Right>
                                                 <TouchableOpacity style={styles.button} transparent onPress={() => props.navigation.navigate('HomeAccount', { account: list })}>
-                                                    <Text style={styles.buttonText}>Hesaba Git</Text>
+                                                    {/* <Text style={styles.buttonText}>Hesaba Git</Text> */}
+                                                    <Icon name='angle-right' type='font-awesome' color="steelblue" />
+
                                                 </TouchableOpacity>
                                             </Right>
                                         </ListItem>

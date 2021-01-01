@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'limegreen',
     },
     debtor: {
-        backgroundColor: 'lightsalmon',
+        backgroundColor: 'orange',
     },
     passive: {
         backgroundColor: 'lightgray',
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     },
     dividerDebtor:{
         height:4,
-        backgroundColor:'lightsalmon',
+        backgroundColor:'orange',
         marginHorizontal: wp('3%')    }
 });
 export default DebtTracking;

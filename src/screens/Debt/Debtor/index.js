@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../../provider/AppProvider'
 
-import { Dimensions, View, ScrollView, StyleSheet ,TouchableOpacity} from 'react-native';
+import { Dimensions, View, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { Container, Header, Content, Button, Form, Item, Input, Title, Picker, Left, Right, TabHeading, Body, List, ListItem, Badge, Tabs, Tab, Footer, FooterTab, Text, H1, H2, H3, H4 } from 'native-base';
 import { Overlay } from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 
 const Debtor = () => {
     const state = useContext(AppContext);
@@ -17,7 +18,15 @@ const Debtor = () => {
     }, []);
 
     const toggleModal = (alacakliID, borcID) => {
-        setSubList({ visible: !subList.visible, id: alacakliID });
+        if(alacakliID==subList.id)
+        {
+            setSubList({ visible: !subList.visible, id: alacakliID });
+
+        }
+        else{
+            setSubList({ visible: true, id: alacakliID });
+
+        }
         state.getDebtDetail(borcID, alacakliID)
     };
 
@@ -36,12 +45,17 @@ const Debtor = () => {
                                         <ListItem thumbnail key={list.alacakliID}  >
 
                                             <Body>
-                                                <Text style={{ color: 'slateblue', fontWeight: 'bold' }}>{list.toplamTutar} TL</Text>
+                                                <Text style={{ color: 'orange', fontWeight: 'bold' }}>{list.toplamTutar} TL</Text>
 
                                                 <Text note numberOfLines={1}>Kime: {list.alacaklıAdSoyad}</Text>
                                             </Body>
                                             <Right>
-                                                <Text onPress={() => toggleModal(list.alacakliID, list.borcID)}>Detay</Text>
+                                                {
+                                                    subList.visible == true && list.alacakliID == subList.id ?
+
+                                                        <Icon name='angle-down' type='font-awesome' color="gray" onPress={() => toggleModal(list.alacakliID, list.borcID)} />
+                                                        :
+                                                        <Icon name='angle-right' type='font-awesome' color="gray" onPress={() => toggleModal(list.alacakliID, list.borcID)} />}
                                             </Right>
 
                                         </ListItem>
@@ -55,12 +69,12 @@ const Debtor = () => {
                                                             <ListItem key={list.alisverisFisID}  >
 
                                                                 <Body>
-                                                                    <Text style={{ color: 'slateblue', fontWeight: 'bold' }}>{list.ortakHesapAd} </Text>
-                                                                    <Text note numberOfLines={1}>{list.borcTutar} TL</Text>
+                                                                   <Text note>Grup: <Text note style={{ color: 'orange', fontWeight: 'bold' }}>{list.ortakHesapAd} </Text></Text>
+                                                                    <Text note numberOfLines={1}>Tutar: {list.borcTutar} TL</Text>
 
-                                                                    <Text note numberOfLines={1}>{list.borcTarih}</Text>
+                                                                    <Text note numberOfLines={1}>Tarih: {list.borcTarih}</Text>
                                                                 </Body>
-                                                                <Right><TouchableOpacity><Text note>Ödeme Bildir</Text></TouchableOpacity></Right>
+                                                                {/* <Right><TouchableOpacity><Text note>Ödeme Bildir</Text></TouchableOpacity></Right> */}
 
                                                             </ListItem>
                                                         )}
