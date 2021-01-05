@@ -4,32 +4,39 @@ import { AppContext } from '../../../provider/AppProvider'
 import { Dimensions, View, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { Container, Header, Content, Button, Form, Item, Input, Title, Picker, Left, Right, TabHeading, Body, List, ListItem, Badge, Tabs, Tab, Footer, FooterTab, Text, H1, H2, H3, H4 } from 'native-base';
-import { Overlay } from 'react-native-elements';
-import { Icon } from 'react-native-elements';
+import { Icon, Overlay } from 'react-native-elements';
 
 const Debtor = () => {
     const state = useContext(AppContext);
     let debt = state.debt;
     const [subList, setSubList] = useState({ visible: false, id: '' })
+    const [modal, setModal] = useState({ modalVisible: false, data: {} })
 
     useEffect(() => {
         state.getAllDebts()
 
     }, []);
 
-    const toggleModal = (alacakliID, borcID) => {
-        if(alacakliID==subList.id)
-        {
+    const toggleList = (alacakliID, borcID) => {
+        if (alacakliID == subList.id) {
             setSubList({ visible: !subList.visible, id: alacakliID });
 
         }
-        else{
+        else {
             setSubList({ visible: true, id: alacakliID });
 
         }
         state.getDebtDetail(borcID, alacakliID)
     };
+    const toggleModal = (data) => {
+        setModal({ modalVisible: !modal.modalVisible, data: data });
+    };
 
+    const payDebt = (data) => {
+        state.payDebt(data)
+        toggleModal({})
+    };
+console.log(state.debtDetail)
     return (
         <Container>
             <Content >
@@ -53,9 +60,9 @@ const Debtor = () => {
                                                 {
                                                     subList.visible == true && list.alacakliID == subList.id ?
 
-                                                        <Icon name='angle-down' type='font-awesome' color="gray" onPress={() => toggleModal(list.alacakliID, list.borcID)} />
+                                                        <Icon name='angle-down' type='font-awesome' color="gray" onPress={() => toggleList(list.alacakliID, list.borcID)} />
                                                         :
-                                                        <Icon name='angle-right' type='font-awesome' color="gray" onPress={() => toggleModal(list.alacakliID, list.borcID)} />}
+                                                        <Icon name='angle-right' type='font-awesome' color="gray" onPress={() => toggleList(list.alacakliID, list.borcID)} />}
                                             </Right>
 
                                         </ListItem>
@@ -69,23 +76,19 @@ const Debtor = () => {
                                                             <ListItem key={list.alisverisFisID}  >
 
                                                                 <Body>
-                                                                   <Text note>Grup: <Text note style={{ color: 'orange', fontWeight: 'bold' }}>{list.ortakHesapAd} </Text></Text>
+                                                                    <Text note>Grup: <Text note style={{ color: 'orange', fontWeight: 'bold' }}>{list.ortakHesapAd} </Text></Text>
                                                                     <Text note numberOfLines={1}>Tutar: {list.borcTutar} TL</Text>
 
                                                                     <Text note numberOfLines={1}>Tarih: {list.borcTarih}</Text>
                                                                 </Body>
-                                                                {/* <Right><TouchableOpacity><Text note>Ödeme Bildir</Text></TouchableOpacity></Right> */}
+                                                                <Right><TouchableOpacity onPress={() => toggleModal(list)}><Text note>Ödeme Bildir</Text></TouchableOpacity></Right>
 
                                                             </ListItem>
                                                         )}
                                                     </List>
                                                     : null
-
-
                                                 : null
                                         }
-
-
                                     </View>
                                 )
                             }
@@ -95,7 +98,31 @@ const Debtor = () => {
                     }
                 </List>
 
+                <Overlay
+                    isVisible={modal.modalVisible} onBackdropPress={() => toggleModal({})}
+                >
 
+                    <View style={styles.modalBody}>
+                        <Text numberOfLines={4} style={styles.bodyText}>{modal.data.borcTutar} TL tutarındaki borcunuzu  ödediğinizi onaylıyor musunuz ?</Text>
+
+                        <View style={{ flexDirection: "row", marginVertical: 20, alignItems: 'center' }}>
+
+                            <Left>
+                                <Button block style={{ margin: 10, backgroundColor: 'slateblue' }} onPress={() => payDebt(modal.data)} >
+                                    <Text >Evet</Text>
+                                </Button>
+                            </Left>
+
+                            <Right>
+                                <Button block style={{ margin: 10, backgroundColor: 'indianred' }} onPress={() => toggleModal({})}>
+                                    <Text >Hayır</Text>
+                                </Button>
+                            </Right>
+
+                        </View>
+
+                    </View>
+                </Overlay>
 
             </Content>
         </Container>
@@ -112,6 +139,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         paddingVertical: 30,
         paddingHorizontal: 20,
+        width: wp('60%'),
         borderRadius: 5
     },
     bodyText: {

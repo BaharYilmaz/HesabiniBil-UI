@@ -34,7 +34,9 @@ const AddBill = (props) => {
       console.log("Image url", { url: url });
       let model = {
         ortakHesapID: params.account,
-        alisverisFoto: url
+        alisverisFoto: url,
+        alisverisFisDetay:{}
+        
       }
       state.addBill(model)
       Alert.alert(

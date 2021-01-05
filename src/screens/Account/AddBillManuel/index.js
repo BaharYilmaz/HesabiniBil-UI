@@ -42,6 +42,7 @@ const AddBillManuel = (props) => {
 
     }
     const deleteProduct = (id) => {
+        console.log(id)
         setProduct(product.filter((item) => (item.productId !== id)));
     }
     const saveBill = () => {

@@ -12,7 +12,7 @@ const IbanDeleteModal = (props) => {
     const state = useContext(AppContext);
 
     const deleteIban = () => {
-        console.log("delete")
+       // console.log("delete")
         state.setModalDeleteIban({ modalVisible: false });
         state.deleteIban(state.modalDeleteIban.ibanId)
 

@@ -27,8 +27,8 @@ async function saveTokenToDatabase(token) {
 const AppProvider = (props) => {
 
 
-    //const apiBaseUrl = 'http://10.0.3.2:5001/api';
-    apiBaseUrl = 'https://hesabinibiltezapi.azurewebsites.net/api'
+    const apiBaseUrl = 'http://10.0.3.2:5001/api';
+    //const apiBaseUrl = 'https://hesabinibiltezapi.azurewebsites.net/api'
     //const navigation = useNavigation();
     const [loginState, changeLoginState] = useState(false);
     const [userId, setUserId] = useState('');
@@ -131,7 +131,7 @@ const AppProvider = (props) => {
     };
     const addDeviceToken = (deviceToken) => {
 
-        console.log(userId, " -- ", deviceToken)
+      //  console.log(userId, " -- ", deviceToken)
         if (deviceToken != undefined && userId != undefined) {
             fetch(apiBaseUrl + '/auth/AddDeviceToken/' + userId + '/' + deviceToken,
                 {
@@ -173,7 +173,6 @@ const AppProvider = (props) => {
     }
 
     const handleRegister = (data) => {
-        console.log(data)
         fetch(apiBaseUrl + '/auth/register',
             {
                 method: 'POST',
@@ -230,7 +229,7 @@ const AppProvider = (props) => {
                 body: JSON.stringify(model)
             })
             .then(response => response.json())
-            .then(data => { RNToasty.Success({ title: data.message, duration: 1 }); console.log(data); getAccounts(); })
+            .then(data => { RNToasty.Success({ title: data.message, duration: 1 });  getAccounts(); })
             .catch(error => { RNToasty.Error({ title: 'Hesaba katılma başarısız !', duration: 1 }) });
 
     }
@@ -273,7 +272,6 @@ const AppProvider = (props) => {
             kullaniciID: parseInt(userId),
             ibanNo: data.value
         }
-        console.log("giden model", model)
         fetch(apiBaseUrl + '/Iban/AddIban',
             {
                 method: 'POST',
@@ -281,8 +279,8 @@ const AppProvider = (props) => {
                 body: JSON.stringify(model)
             })
             .then(response => response.json())
-            .then(data => { console.log(data); RNToasty.Success({ title: data.message, duration: 1 }); getIban() })
-            .catch(error => { RNToasty.Error({ title: "Iban ekleme sırasında bir hata oluştu", duration: 1 }); console.log(error.message) });
+            .then(data => {  RNToasty.Success({ title: data.message, duration: 1 }); getIban() })
+            .catch(error => { RNToasty.Error({ title: "Iban ekleme sırasında bir hata oluştu", duration: 1 })});
 
     }
     const updateIban = (data) => {
@@ -300,7 +298,7 @@ const AppProvider = (props) => {
             })
             .then(response => response.json())
             .then(data => { RNToasty.Success({ title: data.message, duration: 1 }); getIban() })
-            .catch(error => { RNToasty.Error({ title: "Güncelleme sırasında bir hata oluştu", duration: 1 }); console.log(error.message) });
+            .catch(error => { RNToasty.Error({ title: "Güncelleme sırasında bir hata oluştu", duration: 1 })});
 
     }
     const getIban = () => {
@@ -319,7 +317,6 @@ const AppProvider = (props) => {
             kullaniciID: parseInt(userId),
             ibanID: id
         }
-        console.log(model)
         fetch(apiBaseUrl + '/Iban/DeleteIban',
             {
                 method: 'POST',
@@ -328,7 +325,7 @@ const AppProvider = (props) => {
             })
             .then(response => response.json())
             .then(data => { RNToasty.Success({ title: data.message, duration: 1 }); getIban() })
-            .catch(error => { RNToasty.Error({ title: "Silme sırasında bir hata oluştu", duration: 1 }); console.log(error.message) });
+            .catch(error => { RNToasty.Error({ title: "Silme sırasında bir hata oluştu", duration: 1 }) });
 
     }
     ///api/Iban/AddIban
@@ -357,6 +354,7 @@ const AppProvider = (props) => {
             .then(data => { setAccountMembers(data) })
     }
     const getAccountByID = (ortakHesapId) => {
+        setAccount([])
         fetch(apiBaseUrl + '/account/getAccountByID/' + ortakHesapId,
             {
                 method: 'GET',
@@ -383,7 +381,7 @@ const AppProvider = (props) => {
             })
             .then(response => response.json())
             .then(data => { RNToasty.Success({ title: data.message, duration: 1 }); getBill(id) })
-            .catch(error => { RNToasty.Error({ title: "Fiş kaydetme sırasında bir hata oluştu", duration: 1 }); console.log(error.message) });
+            .catch(error => { RNToasty.Error({ title: "Fiş kaydetme sırasında bir hata oluştu", duration: 1 })});
 
     }
     const getBill = (ortakHesapId) => {
@@ -399,7 +397,7 @@ const AppProvider = (props) => {
             .then(data => { setBills(data.data) })
     }
     const getNotifications = () => {
-        fetch(apiBaseUrl + '/Notification/getNotification/' + 2,
+        fetch(apiBaseUrl + '/Notification/getNotification/' + userId,
             {
                 method: 'GET',
                 headers: new Headers({ 'Content-Type': 'application/json' }),
@@ -419,6 +417,7 @@ const AppProvider = (props) => {
 
     }
     const getAllCredits = () => {
+        setCredit([])
         fetch(apiBaseUrl + '/Debt/BorcluListesiniGetir/' + userId,
             {
                 method: 'GET',
@@ -429,6 +428,7 @@ const AppProvider = (props) => {
 
     }
     const getDebtDetail = (borcId, borcluId) => {
+        setDebtDetail([])
         fetch(apiBaseUrl + '/Debt/BorcDetayGetir/' + borcId + '/' + borcluId,
             {
                 method: 'GET',
@@ -436,6 +436,19 @@ const AppProvider = (props) => {
             })
             .then(response => response.json())
             .then(data => { setDebtDetail(data) })
+
+    }
+    const payDebt = (data) => {
+        fetch(apiBaseUrl + '/Debt/BorcOdendiBildir/',
+            {
+                method: 'Post',
+                headers: new Headers({ 'Content-Type': 'application/json' }),
+                body: JSON.stringify(data)
+
+            })
+            .then(response => response.json())
+            .then(data => { RNToasty.Success({ title: data.message, duration: 1 });getAllDebts() })
+            .catch(error => { RNToasty.Error({ title: "Bir hata oluştu. Lütfen tekrar deneyiniz !", duration: 1 })})
 
     }
     return (
@@ -459,6 +472,7 @@ const AppProvider = (props) => {
                 getAllDebts, debt,
                 getAllCredits, credit,
                 getDebtDetail,debtDetail,
+                payDebt,
 
             }}>
             {props.children}

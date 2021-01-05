@@ -11,7 +11,7 @@ const BillFoto = (props) => {
     const bill = props.route.params.list;
     const { height: screenHeight } = Dimensions.get('window');
     const screenWidth = Math.round(Dimensions.get('window').width);
-    console.log(bill.alisverisFoto)
+    //console.log(bill.alisverisFoto)
 
 
     return (
