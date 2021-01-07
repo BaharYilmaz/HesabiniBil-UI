@@ -42,7 +42,7 @@ const AppProvider = (props) => {
     const [credit, setCredit] = React.useState([]);
     const [debtDetail, setDebtDetail] = React.useState([]);
 
-    
+
     const [deviceToken, setDeviceToken] = React.useState('');
 
 
@@ -131,7 +131,7 @@ const AppProvider = (props) => {
     };
     const addDeviceToken = (deviceToken) => {
 
-      //  console.log(userId, " -- ", deviceToken)
+        //  console.log(userId, " -- ", deviceToken)
         if (deviceToken != undefined && userId != undefined) {
             fetch(apiBaseUrl + '/auth/AddDeviceToken/' + userId + '/' + deviceToken,
                 {
@@ -229,7 +229,7 @@ const AppProvider = (props) => {
                 body: JSON.stringify(model)
             })
             .then(response => response.json())
-            .then(data => { RNToasty.Success({ title: data.message, duration: 1 });  getAccounts(); })
+            .then(data => { RNToasty.Success({ title: data.message, duration: 1 }); getAccounts(); })
             .catch(error => { RNToasty.Error({ title: 'Hesaba katılma başarısız !', duration: 1 }) });
 
     }
@@ -279,8 +279,8 @@ const AppProvider = (props) => {
                 body: JSON.stringify(model)
             })
             .then(response => response.json())
-            .then(data => {  RNToasty.Success({ title: data.message, duration: 1 }); getIban() })
-            .catch(error => { RNToasty.Error({ title: "Iban ekleme sırasında bir hata oluştu", duration: 1 })});
+            .then(data => { RNToasty.Success({ title: data.message, duration: 1 }); getIban() })
+            .catch(error => { RNToasty.Error({ title: "Iban ekleme sırasında bir hata oluştu", duration: 1 }) });
 
     }
     const updateIban = (data) => {
@@ -298,7 +298,7 @@ const AppProvider = (props) => {
             })
             .then(response => response.json())
             .then(data => { RNToasty.Success({ title: data.message, duration: 1 }); getIban() })
-            .catch(error => { RNToasty.Error({ title: "Güncelleme sırasında bir hata oluştu", duration: 1 })});
+            .catch(error => { RNToasty.Error({ title: "Güncelleme sırasında bir hata oluştu", duration: 1 }) });
 
     }
     const getIban = () => {
@@ -381,7 +381,7 @@ const AppProvider = (props) => {
             })
             .then(response => response.json())
             .then(data => { RNToasty.Success({ title: data.message, duration: 1 }); getBill(id) })
-            .catch(error => { RNToasty.Error({ title: "Fiş kaydetme sırasında bir hata oluştu", duration: 1 })});
+            .catch(error => { RNToasty.Error({ title: "Fiş kaydetme sırasında bir hata oluştu", duration: 1 }) });
 
     }
     const getBill = (ortakHesapId) => {
@@ -447,9 +447,32 @@ const AppProvider = (props) => {
 
             })
             .then(response => response.json())
-            .then(data => { RNToasty.Success({ title: data.message, duration: 1 });getAllDebts() })
-            .catch(error => { RNToasty.Error({ title: "Bir hata oluştu. Lütfen tekrar deneyiniz !", duration: 1 })})
+            .then(data => { RNToasty.Success({ title: data.message, duration: 1 }); getAllDebts() })
+            .catch(error => { RNToasty.Error({ title: "Bir hata oluştu. Lütfen tekrar deneyiniz !", duration: 1 }) })
 
+    }
+    const confirmPayment = (data) => {
+        
+        fetch(apiBaseUrl + '/Debt/OdemeOnayla/'+data,
+            {
+                method: 'Post',
+                headers: new Headers({ 'Content-Type': 'application/json' }),
+               // body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => { RNToasty.Success({ title: data.message, duration: 1 }); deleteNotify(data); })
+            .catch(error => { RNToasty.Error({ title: "Bir hata oluştu. Lütfen tekrar deneyiniz !", duration: 1 }) })
+
+    }
+    const deleteNotify = (data) => {
+        fetch(apiBaseUrl + '/Notification/BildirimSil/'+data,
+            {
+                method: 'Post',
+                headers: new Headers({ 'Content-Type': 'application/json' }),
+            })
+            .then(response => response.json())
+            .then(data => { RNToasty.Success({ title: data.message, duration: 1 }); getNotifications() })
+            .catch(error => { RNToasty.Error({ title: "Bir hata oluştu. Lütfen tekrar deneyiniz !", duration: 1 }) })
     }
     return (
         <AppContext.Provider
@@ -471,8 +494,8 @@ const AppProvider = (props) => {
                 getNotifications, notify,
                 getAllDebts, debt,
                 getAllCredits, credit,
-                getDebtDetail,debtDetail,
-                payDebt,
+                getDebtDetail, debtDetail,
+                payDebt, confirmPayment,
 
             }}>
             {props.children}

@@ -36,13 +36,13 @@ const Debtor = () => {
         state.payDebt(data)
         toggleModal({})
     };
-console.log(state.debtDetail)
+    console.log(state.debtDetail)
     return (
         <Container>
             <Content >
 
                 <List >
-                    {debt ?
+                    {debt.length > 0 ?
                         <ScrollView>
                             {
                                 debt.map(list =>
@@ -81,7 +81,10 @@ console.log(state.debtDetail)
 
                                                                     <Text note numberOfLines={1}>Tarih: {list.borcTarih}</Text>
                                                                 </Body>
-                                                                <Right><TouchableOpacity onPress={() => toggleModal(list)}><Text note>Ödeme Bildir</Text></TouchableOpacity></Right>
+                                                                {list.borcDurumID == 2 ?
+                                                                    <Right><Icon name='clock-o' type='font-awesome' color="gray" /></Right>
+                                                                    : <Right><TouchableOpacity onPress={() => toggleModal(list)}><Text note>Ödeme Bildir</Text></TouchableOpacity></Right>
+                                                                }
 
                                                             </ListItem>
                                                         )}
@@ -94,7 +97,7 @@ console.log(state.debtDetail)
                             }
 
                         </ScrollView>
-                        : <Text style={{ color: 'lightgray', textAlign: 'center' }}>Borcunuz yok... </Text>
+                        : <Text style={{ color: 'lightgray', textAlign: 'center',margin:wp('10%') }}>Borcunuz yok... </Text>
                     }
                 </List>
 
@@ -125,28 +128,28 @@ console.log(state.debtDetail)
                 </Overlay>
 
             </Content>
-        </Container>
+        </Container >
     );
 };
 const styles = StyleSheet.create({
 
-    divider: {
-        height: wp('20%'),
+                divider: {
+                height: wp('20%'),
         width: 4,
         backgroundColor: 'steelblue',
     },
     modalBody: {
-        backgroundColor: "#fff",
+                backgroundColor: "#fff",
         paddingVertical: 30,
         paddingHorizontal: 20,
         width: wp('60%'),
         borderRadius: 5
     },
     bodyText: {
-        textAlign: 'center'
+                textAlign: 'center'
     },
     textDetail: {
-        textAlign: 'center',
+                textAlign: 'center',
         color: 'gray',
         marginTop: 20,
         fontSize: 20,

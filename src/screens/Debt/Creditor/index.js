@@ -33,7 +33,7 @@ const Creditor = () => {
             <Content >
 
                 <List >
-                    {credit ?
+                    {credit.length > 0 ?
                         <ScrollView>
                             {
                                 credit.map(list =>
@@ -87,7 +87,7 @@ const Creditor = () => {
                             }
 
                         </ScrollView>
-                        : <Text style={{ color: 'lightgray', textAlign: 'center' }}>Alacağınız yok... </Text>
+                        : <Text style={{ color: 'lightgray', textAlign: 'center' ,margin:wp('10%')}}>Alacağınız yok... </Text>
                     }
                 </List>
 
